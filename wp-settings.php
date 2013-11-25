@@ -35,15 +35,8 @@ wp_initial_constants();
 // Check for the required PHP version and for the MySQL extension or a database drop-in.
 wp_check_php_mysql_versions();
 
-// Disable magic quotes at runtime. Magic quotes are added using wpdb later in wp-settings.php.
-@ini_set( 'magic_quotes_runtime', 0 );
-@ini_set( 'magic_quotes_sybase',  0 );
-
 // WordPress calculates offsets from UTC.
 date_default_timezone_set( 'UTC' );
-
-// Turn register_globals off.
-wp_unregister_GLOBALS();
 
 // Standardize $_SERVER variables across setups.
 wp_fix_server_vars();
@@ -232,9 +225,6 @@ do_action( 'plugins_loaded' );
 
 // Define constants which affect functionality if not already defined.
 wp_functionality_constants();
-
-// Add magic quotes and set up $_REQUEST ( $_GET + $_POST )
-wp_magic_quotes();
 
 /**
  * Fires when comment cookies are sanitized.
