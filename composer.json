@@ -1,0 +1,11 @@
+{
+    "name": "amenophis/wordpress",
+    "authors": [
+        {
+            "name": "Jeremy LEHERPEUR",
+            "email": "amenophis@leherpeur.net"
+        }
+    ],
+    "require": {
+    }
+}
