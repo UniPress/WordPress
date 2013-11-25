@@ -7,5 +7,6 @@
         }
     ],
     "require": {
+        "symfony/http-foundation": "2.3.*"
     }
 }

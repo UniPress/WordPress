@@ -5,6 +5,15 @@
  * @package WordPress
  */
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+require_once __DIR__.'/vendor/autoload.php';
+
+$request = Request::createFromGlobals();
+
+ob_start();
+
 if ( !isset($wp_did_header) ) {
 
 	$wp_did_header = true;
@@ -16,3 +25,8 @@ if ( !isset($wp_did_header) ) {
 	require_once( ABSPATH . WPINC . '/template-loader.php' );
 
 }
+
+$buffer = ob_get_clean();
+$response = Response::create($buffer);
+
+$response->send();
