@@ -6,6 +6,9 @@
             "email": "amenophis@leherpeur.net"
         }
     ],
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
     "require": {
         "symfony/http-foundation": "2.3.*"
     }
