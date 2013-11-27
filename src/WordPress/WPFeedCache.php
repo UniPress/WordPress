@@ -2,9 +2,9 @@
 
 namespace WordPress;
 
-class WPFeedCache extends SimplePie_Cache {
+class WPFeedCache extends \SimplePie_Cache {
 	/**
-	 * Create a new SimplePie_Cache object
+	 * Create a new \SimplePie_Cache object
 	 *
 	 * @static
 	 * @access public

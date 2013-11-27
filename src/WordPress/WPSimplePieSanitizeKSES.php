@@ -11,7 +11,7 @@ namespace WordPress;
  * @package WordPress
  * @since 3.5.0
  */
-class WPSimplePieSanitizeKSES extends SimplePie_Sanitize {
+class WPSimplePieSanitizeKSES extends \SimplePie_Sanitize {
     public function sanitize( $data, $type, $base = '' ) {
         $data = trim( $data );
         if ( $type & SIMPLEPIE_CONSTRUCT_MAYBE_HTML ) {
