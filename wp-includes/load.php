@@ -7,29 +7,6 @@
  * @package WordPress
  */
 
-/**
- * Turn register globals off.
- *
- * @access private
- * @since 2.1.0
- * @return null Will return null if register_globals PHP directive was disabled
- */
-function wp_unregister_GLOBALS() {
-	if ( !ini_get( 'register_globals' ) )
-		return;
-
-	if ( isset( $_REQUEST['GLOBALS'] ) )
-		die( 'GLOBALS overwrite attempt detected' );
-
-	// Variables that shouldn't be unset
-	$no_unset = array( 'GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', 'table_prefix' );
-
-	$input = array_merge( $_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset( $_SESSION ) && is_array( $_SESSION ) ? $_SESSION : array() );
-	foreach ( $input as $k => $v )
-		if ( !in_array( $k, $no_unset ) && isset( $GLOBALS[$k] ) ) {
-			unset( $GLOBALS[$k] );
-		}
-}
 
 /**
  * Fix $_SERVER variables for various setups.
@@ -324,14 +301,14 @@ function wp_set_lang_dir() {
 function require_wp_db() {
 	global $wpdb;
 
-	require_once( ABSPATH . WPINC . '/wp-db.php' );
+	require_once( ABSPATH . '/src/WordPress/WP_DB.php' );
 	if ( file_exists( WP_CONTENT_DIR . '/db.php' ) )
 		require_once( WP_CONTENT_DIR . '/db.php' );
 
 	if ( isset( $wpdb ) )
 		return;
 
-	$wpdb = new wpdb( DB_USER, DB_PASSWORD, DB_NAME, DB_HOST );
+	$wpdb = new WP_DB( DB_USER, DB_PASSWORD, DB_NAME, DB_HOST );
 }
 
 /**
@@ -339,11 +316,11 @@ function require_wp_db() {
  *
  * Columns not listed here default to %s.
  *
- * @see wpdb::$field_types Since 2.8.0
- * @see wpdb::prepare()
- * @see wpdb::insert()
- * @see wpdb::update()
- * @see wpdb::set_prefix()
+ * @see WP_DB::$field_types Since 2.8.0
+ * @see WP_DB::prepare()
+ * @see WP_DB::insert()
+ * @see WP_DB::update()
+ * @see WP_DB::set_prefix()
  *
  * @access private
  * @since 3.0.0
@@ -536,33 +513,6 @@ function wp_set_internal_encoding() {
 		if ( ! $charset || ! @mb_internal_encoding( $charset ) )
 			mb_internal_encoding( 'UTF-8' );
 	}
-}
-
-/**
- * Add magic quotes to $_GET, $_POST, $_COOKIE, and $_SERVER.
- *
- * Also forces $_REQUEST to be $_GET + $_POST. If $_SERVER, $_COOKIE,
- * or $_ENV are needed, use those superglobals directly.
- *
- * @access private
- * @since 3.0.0
- */
-function wp_magic_quotes() {
-	// If already slashed, strip.
-	if ( get_magic_quotes_gpc() ) {
-		$_GET    = stripslashes_deep( $_GET    );
-		$_POST   = stripslashes_deep( $_POST   );
-		$_COOKIE = stripslashes_deep( $_COOKIE );
-	}
-
-	// Escape with wpdb.
-	$_GET    = add_magic_quotes( $_GET    );
-	$_POST   = add_magic_quotes( $_POST   );
-	$_COOKIE = add_magic_quotes( $_COOKIE );
-	$_SERVER = add_magic_quotes( $_SERVER );
-
-	// Force REQUEST to be GET + POST.
-	$_REQUEST = array_merge( $_GET, $_POST );
 }
 
 /**

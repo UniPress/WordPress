@@ -1,4 +1,8 @@
 <?php
+
+namespace WordPress;
+
+
 /**
  * API for creating dynamic sidebar without hardcoding functionality into
  * themes. Includes both internal WordPress routines and theme use routines.

@@ -1,68 +1,14 @@
 <?php
-/**
- * Atom Syndication Format PHP Library
- *
- * @package AtomLib
- * @link http://code.google.com/p/phpatomlib/
- *
- * @author Elias Torres <elias@torrez.us>
- * @version 0.4
- * @since 2.3
- */
 
-/**
- * Structure that store common Atom Feed Properties
- *
- * @package AtomLib
- */
-class AtomFeed {
-	/**
-	 * Stores Links
-	 * @var array
-	 * @access public
-	 */
-    var $links = array();
-    /**
-     * Stores Categories
-     * @var array
-     * @access public
-     */
-    var $categories = array();
-	/**
-	 * Stores Entries
-	 *
-	 * @var array
-	 * @access public
-	 */
-    var $entries = array();
-}
+namespace WordPress\Atom;
 
-/**
- * Structure that store Atom Entry Properties
- *
- * @package AtomLib
- */
-class AtomEntry {
-	/**
-	 * Stores Links
-	 * @var array
-	 * @access public
-	 */
-    var $links = array();
-    /**
-     * Stores Categories
-     * @var array
-	 * @access public
-     */
-    var $categories = array();
-}
 
 /**
  * AtomLib Atom Parser API
  *
  * @package AtomLib
  */
-class AtomParser {
+class Parser {
 
     var $NS = 'http://www.w3.org/2005/Atom';
     var $ATOM_CONTENT_ELEMENTS = array('content','summary','title','subtitle','rights');
@@ -89,7 +35,7 @@ class AtomParser {
 
     function AtomParser() {
 
-        $this->feed = new AtomFeed();
+        $this->feed = new \WordPress\Atom\Feed();
         $this->current = null;
         $this->map_attrs_func = create_function('$k,$v', 'return "$k=\"$v\"";');
         $this->map_xmlns_func = create_function('$p,$n', '$xd = "xmlns"; if(strlen($n[0])>0) $xd .= ":{$n[0]}"; return "{$xd}=\"{$n[1]}\"";');
@@ -148,14 +94,14 @@ class AtomParser {
 
     function start_element($parser, $name, $attrs) {
 
-        $tag = array_pop(split(":", $name));
+        $tag = array_pop(explode(":", $name));
 
         switch($name) {
             case $this->NS . ':feed':
                 $this->current = $this->feed;
                 break;
             case $this->NS . ':entry':
-                $this->current = new AtomEntry();
+                $this->current = new \WordPress\Atom\Entry();
                 break;
         };
 
@@ -227,7 +173,7 @@ class AtomParser {
 
     function end_element($parser, $name) {
 
-        $tag = array_pop(split(":", $name));
+        $tag = array_pop(explode(":", $name));
 
         $ccount = count($this->in_content);
 
@@ -302,7 +248,7 @@ class AtomParser {
 
     function ns_to_prefix($qname, $attr=false) {
         # split 'http://www.w3.org/1999/xhtml:div' into ('http','//www.w3.org/1999/xhtml','div')
-        $components = split(":", $qname);
+        $components = explode(":", $qname);
 
         # grab the last one (e.g 'div')
         $name = array_pop($components);
@@ -345,8 +291,8 @@ class AtomParser {
 
     function xml_escape($string)
     {
-             return str_replace(array('&','"',"'",'<','>'),
-                array('&amp;','&quot;','&apos;','&lt;','&gt;'),
-                $string );
+        return str_replace(array('&','"',"'",'<','>'),
+            array('&amp;','&quot;','&apos;','&lt;','&gt;'),
+            $string );
     }
 }

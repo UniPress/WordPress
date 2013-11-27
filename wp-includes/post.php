@@ -2668,7 +2668,7 @@ function wp_get_recent_posts( $args = array(), $output = ARRAY_A ) {
  * and 'post_date_gmt' keys. You can close the comments or open the comments by
  * setting the value for 'comment_status' key.
  *
- * @global wpdb $wpdb    WordPress database abstraction object.
+ * @global WP_DB $wpdb    WordPress database abstraction object.
  *
  * @since 1.0.0
  *
@@ -3085,7 +3085,7 @@ function check_and_publish_future_post($post_id) {
  *
  * @since 2.8.0
  *
- * @global wpdb $wpdb
+ * @global WP_DB $wpdb
  * @global WP_Rewrite $wp_rewrite
  * @param string $slug the desired slug (post_name)
  * @param integer $post_ID
@@ -3647,7 +3647,7 @@ function get_page_uri( $page ) {
 /**
  * Retrieve a list of pages.
  *
- * @global wpdb $wpdb WordPress database abstraction object
+ * @global WP_DB $wpdb WordPress database abstraction object
  *
  * @since 1.5.0
  *

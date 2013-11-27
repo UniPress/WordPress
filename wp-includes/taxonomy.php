@@ -2093,7 +2093,7 @@ function wp_get_object_terms($object_ids, $taxonomies, $args = array()) {
  * If the term already exists on the same hierarchical level,
  * or the term slug and name are not unique, a WP_Error object will be returned.
  *
- * @global wpdb $wpdb The WordPress database object.
+ * @global WP_DB $wpdb The WordPress database object.
 
  * @since 2.3.0
  *

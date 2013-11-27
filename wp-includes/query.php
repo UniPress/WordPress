@@ -1924,7 +1924,7 @@ class WP_Query {
 	 *
 	 * @since 3.7.0
 	 *
-	 * @global wpdb $wpdb
+	 * @global WP_DB $wpdb
 	 * @param array $q Query variables.
 	 * @return string WHERE clause.
 	 */
@@ -2052,7 +2052,7 @@ class WP_Query {
 	/**
 	 * Generate SQL for the ORDER BY condition based on passed search terms.
 	 *
-	 * @global wpdb $wpdb
+	 * @global WP_DB $wpdb
 	 * @param array $q Query variables.
 	 * @return string ORDER BY clause.
 	 */

@@ -1775,9 +1775,6 @@ function wp_text_diff( $left_string, $right_string, $args = null ) {
 	$defaults = array( 'title' => '', 'title_left' => '', 'title_right' => '' );
 	$args = wp_parse_args( $args, $defaults );
 
-	if ( !class_exists( 'WP_Text_Diff_Renderer_Table' ) )
-		require( ABSPATH . WPINC . '/wp-diff.php' );
-
 	$left_string  = normalize_whitespace($left_string);
 	$right_string = normalize_whitespace($right_string);
 

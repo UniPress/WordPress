@@ -1,4 +1,8 @@
 <?php
+
+namespace WordPress;
+
+
 /**
  * WordPress Diff bastard child of old MediaWiki Diff Formatter.
  *
@@ -10,11 +14,11 @@
 
 if ( !class_exists( 'Text_Diff' ) ) {
 	/** Text_Diff class */
-	require( dirname(__FILE__).'/Text/Diff.php' );
+	require(dirname(__FILE__) . '/Text/Diff.php');
 	/** Text_Diff_Renderer class */
-	require( dirname(__FILE__).'/Text/Diff/Renderer.php' );
+	require(dirname(__FILE__) . '/Text/Diff/Renderer.php');
 	/** Text_Diff_Renderer_inline class */
-	require( dirname(__FILE__).'/Text/Diff/Renderer/inline.php' );
+	require(dirname(__FILE__) . '/Text/Diff/Renderer/inline.php');
 }
 
 /**
