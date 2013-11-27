@@ -2,7 +2,7 @@
 
 namespace WordPress;
 
-class WPSimplePieFile extends SimplePie_File {
+class WPSimplePieFile extends \SimplePie_File {
 
     function __construct($url, $timeout = 10, $redirects = 5, $headers = null, $useragent = null, $force_fsockopen = false) {
         $this->url = $url;
