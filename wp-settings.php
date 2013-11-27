@@ -70,8 +70,8 @@ wp_set_lang_dir();
 // Load early WordPress files.
 require( ABSPATH . WPINC . '/compat.php' );
 require( ABSPATH . WPINC . '/functions.php' );
-require( ABSPATH . WPINC . '/class-wp.php' );
-require( ABSPATH . WPINC . '/class-wp-error.php' );
+require(ABSPATH . WPINC . '/class-wp.php');
+require(ABSPATH . WPINC . '/class-wp-error.php');
 require( ABSPATH . WPINC . '/plugin.php' );
 require( ABSPATH . WPINC . '/pomo/mo.php' );
 
@@ -109,14 +109,14 @@ require_once( ABSPATH . WPINC . '/l10n.php' );
 wp_not_installed();
 
 // Load most of WordPress.
-require( ABSPATH . WPINC . '/class-wp-walker.php' );
-require( ABSPATH . WPINC . '/class-wp-ajax-response.php' );
+require(ABSPATH . WPINC . '/class-wp-walker.php');
+require(ABSPATH . WPINC . '/class-wp-ajax-response.php');
 require( ABSPATH . WPINC . '/formatting.php' );
 require( ABSPATH . WPINC . '/capabilities.php' );
 require( ABSPATH . WPINC . '/query.php' );
 require( ABSPATH . WPINC . '/date.php' );
 require( ABSPATH . WPINC . '/theme.php' );
-require( ABSPATH . WPINC . '/class-wp-theme.php' );
+require(ABSPATH . WPINC . '/class-wp-theme.php');
 require( ABSPATH . WPINC . '/template.php' );
 require( ABSPATH . WPINC . '/user.php' );
 require( ABSPATH . WPINC . '/meta.php' );
@@ -144,10 +144,10 @@ require( ABSPATH . WPINC . '/taxonomy.php' );
 require( ABSPATH . WPINC . '/update.php' );
 require( ABSPATH . WPINC . '/canonical.php' );
 require( ABSPATH . WPINC . '/shortcodes.php' );
-require( ABSPATH . WPINC . '/class-wp-embed.php' );
+require(ABSPATH . WPINC . '/class-wp-embed.php');
 require( ABSPATH . WPINC . '/media.php' );
 require( ABSPATH . WPINC . '/http.php' );
-require( ABSPATH . WPINC . '/class-http.php' );
+require(ABSPATH . WPINC . '/class-http.php');
 require( ABSPATH . WPINC . '/widgets.php' );
 require( ABSPATH . WPINC . '/nav-menu.php' );
 require( ABSPATH . WPINC . '/nav-menu-template.php' );

@@ -22,16 +22,16 @@
  */
 
 /** BackPress: WordPress Dependencies Class */
-require( ABSPATH . WPINC . '/class.wp-dependencies.php' );
+require(ABSPATH . WPINC . '/class.wp-dependencies.php');
 
 /** BackPress: WordPress Scripts Class */
-require( ABSPATH . WPINC . '/class.wp-scripts.php' );
+require(ABSPATH . WPINC . '/class.wp-scripts.php');
 
 /** BackPress: WordPress Scripts Functions */
 require( ABSPATH . WPINC . '/functions.wp-scripts.php' );
 
 /** BackPress: WordPress Styles Class */
-require( ABSPATH . WPINC . '/class.wp-styles.php' );
+require(ABSPATH . WPINC . '/class.wp-styles.php');
 
 /** BackPress: WordPress Styles Functions */
 require( ABSPATH . WPINC . '/functions.wp-styles.php' );

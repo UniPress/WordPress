@@ -66,7 +66,7 @@ if ( !function_exists('json_encode') ) {
 		global $wp_json;
 
 		if ( !is_a($wp_json, 'Services_JSON') ) {
-			require_once( ABSPATH . WPINC . '/class-json.php' );
+			require_once(ABSPATH . WPINC . '/class-json.php');
 			$wp_json = new Services_JSON();
 		}
 
@@ -79,7 +79,7 @@ if ( !function_exists('json_decode') ) {
 		global $wp_json;
 
 		if ( !is_a($wp_json, 'Services_JSON') ) {
-			require_once( ABSPATH . WPINC . '/class-json.php' );
+			require_once(ABSPATH . WPINC . '/class-json.php');
 			$wp_json = new Services_JSON();
 		}
 

@@ -1376,8 +1376,8 @@ function wp_expand_dimensions( $example_width, $example_height, $max_width, $max
  * @return bool|string False on failure or the embed HTML on success.
  */
 function wp_oembed_get( $url, $args = '' ) {
-	require_once( ABSPATH . WPINC . '/class-oembed.php' );
-	$oembed = _wp_oembed_get_object();
+	require_once(ABSPATH . WPINC . '/class-oembed.php');
+	$oembed = WP_oEmbed::getInstance();//_wp_oembed_get_object();
 	return $oembed->get_html( $url, $args );
 }
 
@@ -1394,8 +1394,8 @@ function wp_oembed_get( $url, $args = '' ) {
  * @param boolean $regex Whether the $format parameter is in a regex format.
  */
 function wp_oembed_add_provider( $format, $provider, $regex = false ) {
-	require_once( ABSPATH . WPINC . '/class-oembed.php' );
-	$oembed = _wp_oembed_get_object();
+	require_once(ABSPATH . WPINC . '/class-oembed.php');
+	$oembed = WP_oEmbed::getInstance();//_wp_oembed_get_object();
 	$oembed->providers[$format] = array( $provider, $regex );
 }
 
@@ -1410,9 +1410,9 @@ function wp_oembed_add_provider( $format, $provider, $regex = false ) {
  * @param string $format The URL format for the oEmbed provider to remove.
  */
 function wp_oembed_remove_provider( $format ) {
-	require_once( ABSPATH . WPINC . '/class-oembed.php' );
+	require_once(ABSPATH . WPINC . '/class-oembed.php');
 
-	$oembed = _wp_oembed_get_object();
+	$oembed = WP_oEmbed::getInstance();//_wp_oembed_get_object();
 
 	if ( isset( $oembed->providers[ $format ] ) ) {
 		unset( $oembed->providers[ $format ] );

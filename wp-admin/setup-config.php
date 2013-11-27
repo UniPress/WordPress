@@ -200,7 +200,7 @@ switch($step) {
 	// Fetch or generate keys and salts.
 	$no_api = isset( $_POST['noapi'] );
 	if ( ! $no_api ) {
-		require_once( ABSPATH . WPINC . '/class-http.php' );
+		require_once(ABSPATH . WPINC . '/class-http.php');
 		require_once( ABSPATH . WPINC . '/http.php' );
 		/**#@+
 		 * @ignore

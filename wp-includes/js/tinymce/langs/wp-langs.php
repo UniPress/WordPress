@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 if ( ! class_exists( '_WP_Editors' ) )
-	require( ABSPATH . WPINC . '/class-wp-editor.php' );
+	require(ABSPATH . WPINC . '/class-wp-editor.php');
 
 // deprecated, not used
 function mce_escape($text) {
