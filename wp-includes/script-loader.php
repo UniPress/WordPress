@@ -715,7 +715,7 @@ function print_head_scripts() {
 	}
 
 	if ( !is_a($wp_scripts, 'WPScripts') )
-		$wp_scripts = new WP_Scripts();
+		$wp_scripts = new \WordPress\WPScripts();
 
 	script_concat_settings();
 	$wp_scripts->do_concat = $concatenate_scripts;
@@ -843,7 +843,7 @@ function print_admin_styles() {
 	global $wp_styles, $concatenate_scripts, $compress_css;
 
 	if ( !is_a($wp_styles, 'WPStyles') )
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 
 	script_concat_settings();
 	$wp_styles->do_concat = $concatenate_scripts;

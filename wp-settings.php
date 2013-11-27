@@ -142,7 +142,7 @@ $GLOBALS['wp_embed'] = new \WordPress\WPEmbed();
 require( ABSPATH . WPINC . '/media.php' );
 require( ABSPATH . WPINC . '/http.php' );
 //require(ABSPATH . WPINC . '/class-http.php');
-//require( ABSPATH . WPINC . '/widgets.php' );
+require( ABSPATH . WPINC . '/widgets.php' );
 require( ABSPATH . WPINC . '/nav-menu.php' );
 require( ABSPATH . WPINC . '/nav-menu-template.php' );
 require( ABSPATH . WPINC . '/admin-bar.php' );
@@ -297,6 +297,19 @@ $locale_file = WP_LANG_DIR . "/$locale.php";
 if ( ( 0 === validate_file( $locale ) ) && is_readable( $locale_file ) )
 	require( $locale_file );
 unset( $locale_file );
+
+
+/**
+ * Checks if current locale is RTL.
+ *
+ * @since 3.0.0
+ * @return bool Whether locale is RTL.
+ */
+function is_rtl() {
+    global $wp_locale;
+    return $wp_locale->is_rtl();
+}
+
 
 /**
  * WordPress Locale object for loading locale domain date and various strings.

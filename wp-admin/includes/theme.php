@@ -391,7 +391,7 @@ function wp_prepare_themes_for_js( $themes = null ) {
 		}
 	}
 
-	WP_Theme::sort_by_name( $themes );
+    \WordPress\WP_Theme::sort_by_name( $themes );
 	foreach ( $themes as $slug => $theme ) {
 		$parent = false;
 		if ( $theme->parent() ) {

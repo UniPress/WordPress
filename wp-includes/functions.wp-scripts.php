@@ -43,7 +43,7 @@ function wp_print_scripts( $handles = false ) {
 		if ( !$handles )
 			return array(); // No need to instantiate if nothing is there.
 		else
-			$wp_scripts = new WP_Scripts();
+			$wp_scripts = new \WordPress\WPScripts();
 	}
 
 	return $wp_scripts->do_items( $handles );
@@ -76,7 +76,7 @@ function wp_register_script( $handle, $src, $deps = array(), $ver = false, $in_f
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new WP_Scripts();
+		$wp_scripts = new \WordPress\WPScripts();
 	}
 
 	$wp_scripts->add( $handle, $src, $deps, $ver );
@@ -142,7 +142,7 @@ function wp_deregister_script( $handle ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new WP_Scripts();
+		$wp_scripts = new \WordPress\WPScripts();
 	}
 
 	/**
@@ -198,7 +198,7 @@ function wp_enqueue_script( $handle, $src = false, $deps = array(), $ver = false
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new WP_Scripts();
+		$wp_scripts = new \WordPress\WPScripts();
 	}
 
 	if ( $src ) {
@@ -226,7 +226,7 @@ function wp_dequeue_script( $handle ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new WP_Scripts();
+		$wp_scripts = new \WordPress\WPScripts();
 	}
 
 	$wp_scripts->dequeue( $handle );
@@ -251,7 +251,7 @@ function wp_script_is( $handle, $list = 'enqueued' ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new WP_Scripts();
+		$wp_scripts = new \WordPress\WPScripts();
 	}
 
 	return (bool) $wp_scripts->query( $handle, $list );

@@ -2138,7 +2138,7 @@ function register_admin_color_schemes() {
 /**
  * Display the URL of a WordPress admin CSS file.
  *
- * @see WP_Styles::_css_href and its style_loader_src filter.
+ * @see WPStyles::_css_href and its style_loader_src filter.
  *
  * @since 2.3.0
  *
@@ -2180,7 +2180,7 @@ function wp_admin_css_uri( $file = 'wp-admin' ) {
 function wp_admin_css( $file = 'wp-admin', $force_echo = false ) {
 	global $wp_styles;
 	if ( !is_a($wp_styles, 'WPStyles') )
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 
 	// For backward compatibility
 	$handle = 0 === strpos( $file, 'css/' ) ? substr( $file, 4 ) : $file;

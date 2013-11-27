@@ -3,9 +3,9 @@
 namespace WordPress\Pomo;
 
 
-class POMOFileReader extends POMOReader {
-    function POMO_FileReader($filename) {
-        parent::POMO_Reader();
+class FileReader extends POMOReader {
+    function __construct($filename) {
+        parent::Reader();
         $this->_f = fopen($filename, 'rb');
     }
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace WordPress\Pomo;
+namespace WordPress\Pomo\Cached;
 
 /**
  * Reads the contents of the file in the beginning.
  */
-class POMOCachedFileReader extends POMO_StringReader {
-    function POMO_CachedFileReader($filename) {
-        parent::POMO_StringReader();
+class FileReader extends StringReader {
+    function __construct($filename) {
+        parent::StringReader();
         $this->_str = file_get_contents($filename);
         if (false === $this->_str)
             return false;

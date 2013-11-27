@@ -95,7 +95,7 @@ class WP_MS_Themes_List_Table extends WP_List_Table {
 			$status = 'all';
 
 		$this->items = $themes[ $status ];
-		WP_Theme::sort_by_name( $this->items );
+		\WordPress\WPTheme::sort_by_name( $this->items );
 
 		$this->has_items = ! empty( $themes['all'] );
 		$total_this_page = $totals[ $status ];

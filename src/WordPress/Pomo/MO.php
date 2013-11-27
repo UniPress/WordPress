@@ -13,9 +13,6 @@ use WordPress\Pomo\GettextTranslations;
  * @subpackage mo
  */
 
-require_once dirname(__FILE__) . '/Translations.php';
-require_once dirname(__FILE__) . '/streams.php';
-
 class MO extends GettextTranslations {
 
 	var $_nplurals = 2;

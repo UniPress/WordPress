@@ -42,7 +42,7 @@ function wp_print_styles( $handles = false ) {
 		if ( !$handles )
 			return array(); // No need to instantiate if nothing is there.
 		else
-			$wp_styles = new WP_Styles();
+			$wp_styles = new \WordPress\WPStyles();
 	}
 
 	return $wp_styles->do_items( $handles );
@@ -56,7 +56,7 @@ function wp_print_styles( $handles = false ) {
  * are added to the same stylesheet $handle, they will be printed in the order
  * they were added, i.e. the latter added styles can redeclare the previous.
  *
- * @see WP_Styles::add_inline_style()
+ * @see WPStyles::add_inline_style()
  * @global WPStyles $wp_styles The WPStyles object for printing styles.
  *
  * @since 3.3.0
@@ -71,7 +71,7 @@ function wp_add_inline_style( $handle, $data ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 	}
 
 	if ( false !== stripos( $data, '</style>' ) ) {
@@ -106,7 +106,7 @@ function wp_register_style( $handle, $src, $deps = array(), $ver = false, $media
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 	}
 
 	$wp_styles->add( $handle, $src, $deps, $ver, $media );
@@ -128,7 +128,7 @@ function wp_deregister_style( $handle ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 	}
 
 	$wp_styles->remove( $handle );
@@ -161,7 +161,7 @@ function wp_enqueue_style( $handle, $src = false, $deps = array(), $ver = false,
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 	}
 
 	if ( $src ) {
@@ -187,7 +187,7 @@ function wp_dequeue_style( $handle ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 	}
 
 	$wp_styles->dequeue( $handle );
@@ -211,7 +211,7 @@ function wp_style_is( $handle, $list = 'enqueued' ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new WP_Styles();
+		$wp_styles = new \WordPress\WPStyles();
 	}
 
 	return (bool) $wp_styles->query( $handle, $list );

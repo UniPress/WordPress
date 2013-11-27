@@ -107,7 +107,7 @@ $rtl = ( isset($_GET['dir']) && 'rtl' == $_GET['dir'] );
 $expires_offset = 31536000; // 1 year
 $out = '';
 
-$wp_styles = new WP_Styles();
+$wp_styles = new \WordPress\WPStyles();
 wp_default_styles($wp_styles);
 
 foreach( $load as $handle ) {

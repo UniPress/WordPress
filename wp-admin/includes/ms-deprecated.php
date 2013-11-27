@@ -67,12 +67,12 @@ function is_wpmu_sitewide_plugin( $file ) {
 
 function get_site_allowed_themes() {
 	_deprecated_function( __FUNCTION__, '3.4', 'WPTheme::get_allowed_on_network()' );
-	return array_map( 'intval', WP_Theme::get_allowed_on_network() );
+	return array_map( 'intval', \WordPress\WP_Theme::get_allowed_on_network() );
 }
 
 function wpmu_get_blog_allowedthemes( $blog_id = 0 ) {
 	_deprecated_function( __FUNCTION__, '3.4', 'WPTheme::get_allowed_on_site()' );
-	return array_map( 'intval', WP_Theme::get_allowed_on_site( $blog_id ) );
+	return array_map( 'intval', \WordPress\::get_allowed_on_site( $blog_id ) );
 }
 
 function ms_deprecated_blogs_file() {}

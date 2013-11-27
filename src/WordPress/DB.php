@@ -51,7 +51,7 @@ define( 'ARRAY_N', 'ARRAY_N' );
  * @subpackage Database
  * @since 0.71
  */
-class WPDB {
+class DB {
 
 	/**
 	 * Whether to show SQL/DB errors

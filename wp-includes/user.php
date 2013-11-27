@@ -1610,7 +1610,7 @@ function check_password_reset_key($key, $login) {
 
 	if ( empty( $wp_hasher ) ) {
 		require_once ABSPATH . 'wp-includes/class-phpass.php';
-		$wp_hasher = new PasswordHash( 8, true );
+		$wp_hasher = new WordPress\PasswordHash( 8, true );
 	}
 
 	if ( $wp_hasher->CheckPassword( $key, $row->user_activation_key ) )

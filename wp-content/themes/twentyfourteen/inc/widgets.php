@@ -11,7 +11,7 @@
  * @since Twenty Fourteen 1.0
  */
 
-class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
+class Twenty_Fourteen_Ephemera_Widget extends WordPress\WPWidget {
 
 	/**
 	 * The supported post formats.

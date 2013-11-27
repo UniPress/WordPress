@@ -1721,7 +1721,7 @@ class PHPMailer {
   public function AddAttachment($path, $name = '', $encoding = 'base64', $type = 'application/octet-stream') {
     try {
       if ( !@is_file($path) ) {
-        throw new phpmailerException($this->Lang('file_access') . $path, self::STOP_CONTINUE);
+        throw new \WordPress\phpmailerException($this->Lang('file_access') . $path, self::STOP_CONTINUE);
       }
       $filename = basename($path);
       if ( $name == '' ) {

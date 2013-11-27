@@ -1,4 +1,7 @@
 <?php
+
+namespace WordPress;
+
 /**
  * Simple and uniform HTTP request API.
  *
@@ -145,7 +148,7 @@ class WPHttp {
 			$r['headers'] = array();
 
 		if ( ! is_array( $r['headers'] ) ) {
-			$processedHeaders = WPHttp::processHeaders( $r['headers'], $url );
+			$processedHeaders = \WordPress\WPHttp::processHeaders( $r['headers'], $url );
 			$r['headers'] = $processedHeaders['headers'];
 		}
 
@@ -170,7 +173,7 @@ class WPHttp {
 		mbstring_binary_safe_encoding();
 
 		if ( ! isset( $r['headers']['Accept-Encoding'] ) ) {
-			if ( $encoding = WP_Http_Encoding::accept_encoding( $url, $r ) )
+			if ( $encoding = \WordPress\WPHttpEncoding::accept_encoding( $url, $r ) )
 				$r['headers']['Accept-Encoding'] = $encoding;
 		}
 
@@ -225,7 +228,7 @@ class WPHttp {
 
 		// Loop over each transport on each HTTP request looking for one which will serve this request's needs
 		foreach ( $request_order as $transport ) {
-			$class = 'WP_HTTP_' . $transport;
+			$class = '\\WordPress\\WPHTTP' . $transport;
 
 			// Check to see if this transport is a possibility, calls the transport statically
 			if ( !call_user_func( array( $class, 'test' ), $args, $url ) )
@@ -620,7 +623,7 @@ class WPHttp {
 		if ( is_array( $redirect_location ) )
 			$redirect_location = array_pop( $redirect_location );
 
-		$redirect_location = WPHttp::make_absolute_url( $redirect_location, $url );
+		$redirect_location = \WordPress\WPHttp::make_absolute_url( $redirect_location, $url );
 
 		// POST requests should not POST to a redirected location
 		if ( 'POST' == $args['method'] ) {

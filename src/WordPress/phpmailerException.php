@@ -6,7 +6,7 @@ namespace WordPress;
  * Exception handler for PHPMailer
  * @package PHPMailer
  */
-class phpmailerException extends Exception {
+class phpmailerException extends \Exception {
     /**
      * Prettify error message output
      * @return string

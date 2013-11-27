@@ -345,7 +345,7 @@ function retrieve_password() {
 	// Now insert the key, hashed, into the DB.
 	if ( empty( $wp_hasher ) ) {
 		require_once ABSPATH . 'wp-includes/class-phpass.php';
-		$wp_hasher = new PasswordHash( 8, true );
+		$wp_hasher = new WordPress\PasswordHash( 8, true );
 	}
 	$hashed = $wp_hasher->HashPassword( $key );
 	$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user_login ) );
@@ -446,7 +446,7 @@ switch ($action) {
 
 case 'postpass' :
 	require_once ABSPATH . 'wp-includes/class-phpass.php';
-	$hasher = new PasswordHash( 8, true );
+	$hasher = new WordPress\PasswordHash( 8, true );
 
 	/**
 	 * Filter the life span of the post password cookie.

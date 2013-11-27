@@ -10,7 +10,7 @@
  * @subpackage Twenty_Eleven
  * @since Twenty Eleven 1.0
  */
-class Twenty_Eleven_Ephemera_Widget extends WP_Widget {
+class Twenty_Eleven_Ephemera_Widget extends WordPress\WPWidget {
 
 	/**
 	 * Constructor

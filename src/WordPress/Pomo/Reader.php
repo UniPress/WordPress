@@ -3,7 +3,7 @@
 namespace WordPress\Pomo;
 
 
-class POMOReader {
+class Reader {
 
     var $endian = 'little';
     var $_post = '';

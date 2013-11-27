@@ -23,7 +23,7 @@ function _wp_http_get_object() {
 	static $http;
 
 	if ( is_null($http) )
-		$http = new WPHttp();
+		$http = new \WordPress\WPHttp();
 
 	return $http;
 }

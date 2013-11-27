@@ -1486,7 +1486,7 @@ function wp_hash_password($password) {
 	if ( empty($wp_hasher) ) {
 		require_once(ABSPATH . 'wp-includes/class-phpass.php');
 		// By default, use the portable hash from phpass
-		$wp_hasher = new PasswordHash(8, true);
+		$wp_hasher = new \WordPress\PasswordHash(8, true);
 	}
 
 	return $wp_hasher->HashPassword( trim( $password ) );
@@ -1534,7 +1534,7 @@ function wp_check_password($password, $hash, $user_id = '') {
 	if ( empty($wp_hasher) ) {
 		require_once(ABSPATH . 'wp-includes/class-phpass.php');
 		// By default, use the portable hash from phpass
-		$wp_hasher = new PasswordHash(8, true);
+		$wp_hasher = new WordPress\PasswordHash(8, true);
 	}
 
 	$check = $wp_hasher->CheckPassword($password, $hash);

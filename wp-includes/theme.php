@@ -50,13 +50,13 @@ function wp_get_themes( $args = array() ) {
 	if ( is_multisite() && null !== $args['allowed'] ) {
 		$allowed = $args['allowed'];
 		if ( 'network' === $allowed )
-			$theme_directories = array_intersect_key( $theme_directories, WP_Theme::get_allowed_on_network() );
+			$theme_directories = array_intersect_key( $theme_directories, \WordPress\WPTheme::get_allowed_on_network() );
 		elseif ( 'site' === $allowed )
-			$theme_directories = array_intersect_key( $theme_directories, WP_Theme::get_allowed_on_site( $args['blog_id'] ) );
+			$theme_directories = array_intersect_key( $theme_directories, \WordPress\WPTheme::get_allowed_on_site( $args['blog_id'] ) );
 		elseif ( $allowed )
-			$theme_directories = array_intersect_key( $theme_directories, WP_Theme::get_allowed( $args['blog_id'] ) );
+			$theme_directories = array_intersect_key( $theme_directories, \WordPress\WPTheme::get_allowed( $args['blog_id'] ) );
 		else
-			$theme_directories = array_diff_key( $theme_directories, WP_Theme::get_allowed( $args['blog_id'] ) );
+			$theme_directories = array_diff_key( $theme_directories, \WordPress\WPTheme::get_allowed( $args['blog_id'] ) );
 	}
 
 	$themes = array();
@@ -66,7 +66,7 @@ function wp_get_themes( $args = array() ) {
 		if ( isset( $_themes[ $theme_root['theme_root'] . '/' . $theme ] ) )
 			$themes[ $theme ] = $_themes[ $theme_root['theme_root'] . '/' . $theme ];
 		else
-			$themes[ $theme ] = $_themes[ $theme_root['theme_root'] . '/' . $theme ] = new WP_Theme( $theme, $theme_root['theme_root'] );
+			$themes[ $theme ] = $_themes[ $theme_root['theme_root'] . '/' . $theme ] = new \WordPress\WPTheme( $theme, $theme_root['theme_root'] );
 	}
 
 	if ( null !== $args['errors'] ) {
@@ -103,7 +103,7 @@ function wp_get_theme( $stylesheet = null, $theme_root = null ) {
 			$theme_root = WP_CONTENT_DIR . $theme_root;
 	}
 
-	return new WP_Theme( $stylesheet, $theme_root );
+	return new \WordPress\WPTheme( $stylesheet, $theme_root );
 }
 
 /**
