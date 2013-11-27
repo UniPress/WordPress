@@ -1475,7 +1475,7 @@ function wp_set_comment_status($comment_id, $comment_status, $wp_error = false) 
 
 	if ( !$wpdb->update( $wpdb->comments, array('comment_approved' => $status), array('comment_ID' => $comment_id) ) ) {
 		if ( $wp_error )
-			return new WP_Error('db_update_error', __('Could not update comment status'), $wpdb->last_error);
+			return new WordPress\WP_Error('db_update_error', __('Could not update comment status'), $wpdb->last_error);
 		else
 			return false;
 	}

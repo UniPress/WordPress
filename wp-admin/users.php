@@ -202,7 +202,7 @@ case 'delete':
 	}
 
 	if ( ! current_user_can( 'delete_users' ) )
-		$errors = new WP_Error( 'edit_users', __( 'You can&#8217;t delete users.' ) );
+		$errors = new WordPress\WP_Error( 'edit_users', __( 'You can&#8217;t delete users.' ) );
 
 	if ( empty($_REQUEST['users']) )
 		$userids = array( intval( $_REQUEST['user'] ) );
@@ -309,7 +309,7 @@ case 'remove':
 	}
 
 	if ( !current_user_can('remove_users') )
-		$error = new WP_Error('edit_users', __('You can&#8217;t remove users.'));
+		$error = new WordPress\WP_Error('edit_users', __('You can&#8217;t remove users.'));
 
 	if ( empty($_REQUEST['users']) )
 		$userids = array(intval($_REQUEST['user']));

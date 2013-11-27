@@ -856,7 +856,7 @@ endif;
 function populate_network( $network_id = 1, $domain = '', $email = '', $site_name = '', $path = '/', $subdomain_install = false ) {
 	global $wpdb, $current_site, $wp_db_version, $wp_rewrite;
 
-	$errors = new WP_Error();
+	$errors = new WordPress\WP_Error();
 	if ( '' == $domain )
 		$errors->add( 'empty_domain', __( 'You must provide a domain name.' ) );
 	if ( '' == $site_name )
@@ -1004,7 +1004,7 @@ We hope you enjoy your new site. Thanks!
 			$msg .= '</p>';
 			$msg .= '<p>' . __( 'To use a subdomain configuration, you must have a wildcard entry in your DNS. This usually means adding a <code>*</code> hostname record pointing at your web server in your DNS configuration tool.' ) . '</p>';
 			$msg .= '<p>' . __( 'You can still use your site but any subdomain you create may not be accessible. If you know your DNS is correct, ignore this message.' ) . '</p>';
-			return new WP_Error( 'no_wildcard_dns', $msg );
+			return new WordPress\WP_Error( 'no_wildcard_dns', $msg );
 		}
 	}
 

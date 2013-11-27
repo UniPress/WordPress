@@ -115,10 +115,10 @@ class WP_Http {
 		$arrURL = @parse_url( $url );
 
 		if ( empty( $url ) || empty( $arrURL['scheme'] ) )
-			return new WP_Error('http_request_failed', __('A valid URL was not provided.'));
+			return new WordPress\WP_Error('http_request_failed', __('A valid URL was not provided.'));
 
 		if ( $this->block_request( $url ) )
-			return new WP_Error( 'http_request_failed', __( 'User has blocked requests through HTTP.' ) );
+			return new WordPress\WP_Error( 'http_request_failed', __( 'User has blocked requests through HTTP.' ) );
 
 		// Determine if this is a https call and pass that on to the transport functions
 		// so that we can blacklist the transports that do not support ssl verification
@@ -138,7 +138,7 @@ class WP_Http {
 		if ( $r['stream'] ) {
 			$r['blocking'] = true;
 			if ( ! wp_is_writable( dirname( $r['filename'] ) ) )
-				return new WP_Error( 'http_request_failed', __( 'Destination directory for file streaming does not exist or is not writable.' ) );
+				return new WordPress\WP_Error( 'http_request_failed', __( 'Destination directory for file streaming does not exist or is not writable.' ) );
 		}
 
 		if ( is_null( $r['headers'] ) )
@@ -257,7 +257,7 @@ class WP_Http {
 
 		$class = $this->_get_first_available_transport( $args, $url );
 		if ( !$class )
-			return new WP_Error( 'http_failure', __( 'There are no HTTP transports available which can complete the requested request.' ) );
+			return new WordPress\WP_Error( 'http_failure', __( 'There are no HTTP transports available which can complete the requested request.' ) );
 
 		// Transport claims to support request, instantiate it and give it a whirl.
 		if ( empty( $transports[$class] ) )
@@ -612,7 +612,7 @@ class WP_Http {
 
 		// Don't redirect if we've run out of redirects
 		if ( $args['redirection']-- <= 0 )
-			return new WP_Error( 'http_request_failed', __('Too many redirects.') );
+			return new WordPress\WP_Error( 'http_request_failed', __('Too many redirects.') );
 
 		$redirect_location = $response['headers']['location'];
 

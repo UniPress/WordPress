@@ -102,7 +102,7 @@ function edit_user( $user_id = 0 ) {
 	if ( !empty($_POST['use_ssl']) )
 		$user->use_ssl = 1;
 
-	$errors = new WP_Error();
+	$errors = new WordPress\WP_Error();
 
 	/* checking that username has been typed */
 	if ( $user->user_login == '' )
@@ -239,7 +239,7 @@ function wp_delete_user( $id, $reassign = 'novalue' ) {
 	global $wpdb;
 
 	$id = (int) $id;
-	$user = new WP_User( $id );
+	$user = new WordPress\WP_User( $id );
 
 	if ( !$user->exists() )
 		return false;
@@ -317,7 +317,7 @@ function wp_delete_user( $id, $reassign = 'novalue' ) {
 function wp_revoke_user($id) {
 	$id = (int) $id;
 
-	$user = new WP_User($id);
+	$user = new WordPress\WP_User($id);
 	$user->remove_all_caps();
 }
 

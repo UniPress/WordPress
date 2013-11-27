@@ -232,14 +232,14 @@ function wp_update_nav_menu_object( $menu_id = 0, $menu_data = array() ) {
 		isset( $_possible_existing->term_id ) &&
 		$_possible_existing->term_id != $menu_id
 	)
-		return new WP_Error( 'menu_exists', sprintf( __('The menu name <strong>%s</strong> conflicts with another menu name. Please try another.'), esc_html( $menu_data['menu-name'] ) ) );
+		return new WordPress\WP_Error( 'menu_exists', sprintf( __('The menu name <strong>%s</strong> conflicts with another menu name. Please try another.'), esc_html( $menu_data['menu-name'] ) ) );
 
 	// menu doesn't already exist, so create a new menu
 	if ( ! $_menu || is_wp_error( $_menu ) ) {
 		$menu_exists = get_term_by( 'name', $menu_data['menu-name'], 'nav_menu' );
 
 		if ( $menu_exists )
-			return new WP_Error( 'menu_exists', sprintf( __('The menu name <strong>%s</strong> conflicts with another menu name. Please try another.'), esc_html( $menu_data['menu-name'] ) ) );
+			return new WordPress\WP_Error( 'menu_exists', sprintf( __('The menu name <strong>%s</strong> conflicts with another menu name. Please try another.'), esc_html( $menu_data['menu-name'] ) ) );
 
 		$_menu = wp_insert_term( $menu_data['menu-name'], 'nav_menu', $args );
 
@@ -281,7 +281,7 @@ function wp_update_nav_menu_item( $menu_id = 0, $menu_item_db_id = 0, $menu_item
 
 	// make sure that we don't convert non-nav_menu_item objects into nav_menu_item objects
 	if ( ! empty( $menu_item_db_id ) && ! is_nav_menu_item( $menu_item_db_id ) )
-		return new WP_Error('update_nav_menu_item_failed', __('The given object ID is not that of a menu item.'));
+		return new WordPress\WP_Error('update_nav_menu_item_failed', __('The given object ID is not that of a menu item.'));
 
 	$menu = wp_get_nav_menu_object( $menu_id );
 

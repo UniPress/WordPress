@@ -660,7 +660,7 @@ class wpdb {
 	function set_prefix( $prefix, $set_table_names = true ) {
 
 		if ( preg_match( '|[^a-z0-9_]|i', $prefix ) )
-			return new WP_Error('invalid_db_prefix', 'Invalid database prefix' );
+			return new WordPress\WP_Error('invalid_db_prefix', 'Invalid database prefix' );
 
 		$old_prefix = is_multisite() ? '' : $prefix;
 
@@ -1643,7 +1643,7 @@ class wpdb {
 	function bail( $message, $error_code = '500' ) {
 		if ( !$this->show_errors ) {
 			if ( class_exists( 'WP_Error' ) )
-				$this->error = new WP_Error($error_code, $message);
+				$this->error = new WordPress\WP_Error($error_code, $message);
 			else
 				$this->error = $message;
 			return false;
@@ -1664,7 +1664,7 @@ class wpdb {
 		global $wp_version, $required_mysql_version;
 		// Make sure the server has the required MySQL version
 		if ( version_compare($this->db_version(), $required_mysql_version, '<') )
-			return new WP_Error('database_version', sprintf( __( '<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher' ), $wp_version, $required_mysql_version ));
+			return new WordPress\WP_Error('database_version', sprintf( __( '<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher' ), $wp_version, $required_mysql_version ));
 	}
 
 	/**

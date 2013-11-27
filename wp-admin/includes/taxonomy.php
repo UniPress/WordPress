@@ -98,7 +98,7 @@ function wp_insert_category($catarr, $wp_error = false) {
 		if ( ! $wp_error )
 			return 0;
 		else
-			return new WP_Error( 'cat_name', __('You did not enter a category name.') );
+			return new WordPress\WP_Error( 'cat_name', __('You did not enter a category name.') );
 	}
 
 	$cat_ID = (int) $cat_ID;

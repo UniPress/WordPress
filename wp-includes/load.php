@@ -678,9 +678,7 @@ function wp_load_translations_early() {
 	require ABSPATH . WPINC . '/version.php';
 
 	// Translation and localization
-	require_once ABSPATH . WPINC . '/pomo/mo.php';
 	require_once ABSPATH . WPINC . '/l10n.php';
-	require_once ABSPATH . WPINC . '/locale.php';
 
 	// General libraries
 	require_once ABSPATH . WPINC . '/plugin.php';
@@ -731,5 +729,5 @@ function wp_load_translations_early() {
 		break;
 	}
 
-	$wp_locale = new WP_Locale();
+	$wp_locale = new \WordPress\WP_Locale();
 }

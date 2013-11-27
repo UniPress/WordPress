@@ -157,7 +157,7 @@ class WP_Http_Curl {
             else
                 $this->stream_handle = fopen( $r['filename'], 'w+' );
             if ( ! $this->stream_handle )
-                return new WP_Error( 'http_request_failed', sprintf( __( 'Could not open handle for fopen() to %s' ), $r['filename'] ) );
+                return new WordPress\WP_Error( 'http_request_failed', sprintf( __( 'Could not open handle for fopen() to %s' ), $r['filename'] ) );
         } else {
             $this->stream_handle = false;
         }
@@ -186,11 +186,11 @@ class WP_Http_Curl {
 
             if ( $curl_error = curl_error( $handle ) ) {
                 curl_close( $handle );
-                return new WP_Error( 'http_request_failed', $curl_error );
+                return new WordPress\WP_Error( 'http_request_failed', $curl_error );
             }
             if ( in_array( curl_getinfo( $handle, CURLINFO_HTTP_CODE ), array( 301, 302 ) ) ) {
                 curl_close( $handle );
-                return new WP_Error( 'http_request_failed', __( 'Too many redirects.' ) );
+                return new WordPress\WP_Error( 'http_request_failed', __( 'Too many redirects.' ) );
             }
 
             curl_close( $handle );
@@ -210,15 +210,15 @@ class WP_Http_Curl {
         if ( $curl_error || ( 0 == strlen( $theBody ) && empty( $theHeaders['headers'] ) ) ) {
             if ( CURLE_WRITE_ERROR /* 23 */ == $curl_error &&  $r['stream'] ) {
                 fclose( $this->stream_handle );
-                return new WP_Error( 'http_request_failed', __( 'Failed to write request to temporary file.' ) );
+                return new WordPress\WP_Error( 'http_request_failed', __( 'Failed to write request to temporary file.' ) );
             }
             if ( $curl_error = curl_error( $handle ) ) {
                 curl_close( $handle );
-                return new WP_Error( 'http_request_failed', $curl_error );
+                return new WordPress\WP_Error( 'http_request_failed', $curl_error );
             }
             if ( in_array( curl_getinfo( $handle, CURLINFO_HTTP_CODE ), array( 301, 302 ) ) ) {
                 curl_close( $handle );
-                return new WP_Error( 'http_request_failed', __( 'Too many redirects.' ) );
+                return new WordPress\WP_Error( 'http_request_failed', __( 'Too many redirects.' ) );
             }
         }
 

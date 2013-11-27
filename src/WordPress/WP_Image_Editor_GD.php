@@ -87,18 +87,18 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 			return true;
 
 		if ( ! is_file( $this->file ) && ! preg_match( '|^https?://|', $this->file ) )
-			return new WP_Error( 'error_loading_image', __('File doesn&#8217;t exist?'), $this->file );
+			return new WordPress\WP_Error( 'error_loading_image', __('File doesn&#8217;t exist?'), $this->file );
 
 		// Set artificially high because GD uses uncompressed images in memory
 		@ini_set( 'memory_limit', apply_filters( 'image_memory_limit', WP_MAX_MEMORY_LIMIT ) );
 		$this->image = @imagecreatefromstring( file_get_contents( $this->file ) );
 
 		if ( ! is_resource( $this->image ) )
-			return new WP_Error( 'invalid_image', __('File is not an image.'), $this->file );
+			return new WordPress\WP_Error( 'invalid_image', __('File is not an image.'), $this->file );
 
 		$size = @getimagesize( $this->file );
 		if ( ! $size )
-			return new WP_Error( 'invalid_image', __('Could not read image size.'), $this->file );
+			return new WordPress\WP_Error( 'invalid_image', __('Could not read image size.'), $this->file );
 
 		if ( function_exists( 'imagealphablending' ) && function_exists( 'imagesavealpha' ) ) {
 			imagealphablending( $this->image, false );
@@ -156,13 +156,13 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 		} elseif ( is_wp_error( $resized ) )
 			return $resized;
 
-		return new WP_Error( 'image_resize_error', __('Image resize failed.'), $this->file );
+		return new WordPress\WP_Error( 'image_resize_error', __('Image resize failed.'), $this->file );
 	}
 
 	protected function _resize( $max_w, $max_h, $crop = false ) {
 		$dims = image_resize_dimensions( $this->size['width'], $this->size['height'], $max_w, $max_h, $crop );
 		if ( ! $dims ) {
-			return new WP_Error( 'error_getting_dimensions', __('Could not calculate resized image dimensions'), $this->file );
+			return new WordPress\WP_Error( 'error_getting_dimensions', __('Could not calculate resized image dimensions'), $this->file );
 		}
 		list( $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h ) = $dims;
 
@@ -174,7 +174,7 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 			return $resized;
 		}
 
-		return new WP_Error( 'image_resize_error', __('Image resize failed.'), $this->file );
+		return new WordPress\WP_Error( 'image_resize_error', __('Image resize failed.'), $this->file );
 	}
 
 	/**
@@ -267,7 +267,7 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 			return true;
 		}
 
-		return new WP_Error( 'image_crop_error', __('Image crop failed.'), $this->file );
+		return new WordPress\WP_Error( 'image_crop_error', __('Image crop failed.'), $this->file );
 	}
 
 	/**
@@ -291,7 +291,7 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 				return true;
 			}
 		}
-		return new WP_Error( 'image_rotate_error', __('Image rotate failed.'), $this->file );
+		return new WordPress\WP_Error( 'image_rotate_error', __('Image rotate failed.'), $this->file );
 	}
 
 	/**
@@ -321,7 +321,7 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 				return true;
 			}
 		}
-		return new WP_Error( 'image_flip_error', __('Image flip failed.'), $this->file );
+		return new WordPress\WP_Error( 'image_flip_error', __('Image flip failed.'), $this->file );
 	}
 
 	/**
@@ -353,7 +353,7 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 
 		if ( 'image/gif' == $mime_type ) {
 			if ( ! $this->make_image( $filename, 'imagegif', array( $image, $filename ) ) )
-				return new WP_Error( 'image_save_error', __('Image Editor Save Failed') );
+				return new WordPress\WP_Error( 'image_save_error', __('Image Editor Save Failed') );
 		}
 		elseif ( 'image/png' == $mime_type ) {
 			// convert from full colors to index colors, like original PNG.
@@ -361,14 +361,14 @@ class WP_Image_Editor_GD extends WP_Image_Editor {
 				imagetruecolortopalette( $image, false, imagecolorstotal( $image ) );
 
 			if ( ! $this->make_image( $filename, 'imagepng', array( $image, $filename ) ) )
-				return new WP_Error( 'image_save_error', __('Image Editor Save Failed') );
+				return new WordPress\WP_Error( 'image_save_error', __('Image Editor Save Failed') );
 		}
 		elseif ( 'image/jpeg' == $mime_type ) {
 			if ( ! $this->make_image( $filename, 'imagejpeg', array( $image, $filename, apply_filters( 'jpeg_quality', $this->quality, 'image_resize' ) ) ) )
-				return new WP_Error( 'image_save_error', __('Image Editor Save Failed') );
+				return new WordPress\WP_Error( 'image_save_error', __('Image Editor Save Failed') );
 		}
 		else {
-			return new WP_Error( 'image_save_error', __('Image Editor Save Failed') );
+			return new WordPress\WP_Error( 'image_save_error', __('Image Editor Save Failed') );
 		}
 
 		// Set correct file permissions

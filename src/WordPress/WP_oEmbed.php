@@ -245,7 +245,7 @@ class WP_oEmbed {
 		$provider_url_with_args = add_query_arg( 'format', $format, $provider_url_with_args );
 		$response = wp_safe_remote_get( $provider_url_with_args );
 		if ( 501 == wp_remote_retrieve_response_code( $response ) )
-			return new WP_Error( 'not-implemented' );
+			return new WordPress\WP_Error( 'not-implemented' );
 		if ( ! $body = wp_remote_retrieve_body( $response ) )
 			return false;
 		$parse_method = "_parse_$format";

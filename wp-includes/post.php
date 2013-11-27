@@ -1216,7 +1216,7 @@ function register_post_type( $post_type, $args = array() ) {
 	$args->name = $post_type;
 
 	if ( strlen( $post_type ) > 20 )
-		return new WP_Error( 'post_type_too_long', __( 'Post types cannot exceed 20 characters in length' ) );
+		return new WordPress\WP_Error( 'post_type_too_long', __( 'Post types cannot exceed 20 characters in length' ) );
 
 	// If not set, default to the setting for public.
 	if ( null === $args->publicly_queryable )
@@ -2725,7 +2725,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		$post_before = get_post( $post_ID );
 		if ( is_null( $post_before ) ) {
 			if ( $wp_error )
-				return new WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
+				return new WordPress\WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
 			return 0;
 		}
 
@@ -2740,7 +2740,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 
 	if ( apply_filters( 'wp_insert_post_empty_content', $maybe_empty, $postarr ) ) {
 		if ( $wp_error )
-			return new WP_Error( 'empty_content', __( 'Content, title, and excerpt are empty.' ) );
+			return new WordPress\WP_Error( 'empty_content', __( 'Content, title, and excerpt are empty.' ) );
 		else
 			return 0;
 	}
@@ -2797,7 +2797,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		$valid_date = wp_checkdate( $mm, $jj, $aa, $post_date );
 		if ( !$valid_date ) {
 			if ( $wp_error )
-				return new WP_Error( 'invalid_date', __( 'Whoops, the provided date is invalid.' ) );
+				return new WordPress\WP_Error( 'invalid_date', __( 'Whoops, the provided date is invalid.' ) );
 			else
 				return 0;
 		}
@@ -2872,7 +2872,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		do_action( 'pre_post_update', $post_ID, $data );
 		if ( false === $wpdb->update( $wpdb->posts, $data, $where ) ) {
 			if ( $wp_error )
-				return new WP_Error('db_update_error', __('Could not update post in the database'), $wpdb->last_error);
+				return new WordPress\WP_Error('db_update_error', __('Could not update post in the database'), $wpdb->last_error);
 			else
 				return 0;
 		}
@@ -2888,7 +2888,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		}
 		if ( false === $wpdb->insert( $wpdb->posts, $data ) ) {
 			if ( $wp_error )
-				return new WP_Error('db_insert_error', __('Could not insert post into the database'), $wpdb->last_error);
+				return new WordPress\WP_Error('db_insert_error', __('Could not insert post into the database'), $wpdb->last_error);
 			else
 				return 0;
 		}
@@ -2935,7 +2935,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		$page_templates = wp_get_theme()->get_page_templates();
 		if ( 'default' != $page_template && ! isset( $page_templates[ $page_template ] ) ) {
 			if ( $wp_error )
-				return new WP_Error('invalid_page_template', __('The page template is invalid.'));
+				return new WordPress\WP_Error('invalid_page_template', __('The page template is invalid.'));
 			else
 				return 0;
 		}
@@ -2981,7 +2981,7 @@ function wp_update_post( $postarr = array(), $wp_error = false ) {
 
 	if ( is_null( $post ) ) {
 		if ( $wp_error )
-			return new WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
+			return new WordPress\WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
 		return 0;
 	}
 

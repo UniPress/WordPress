@@ -227,7 +227,7 @@ function _wp_put_post_revision( $post = null, $autosave = false ) {
 		return;
 
 	if ( isset($post['post_type']) && 'revision' == $post['post_type'] )
-		return new WP_Error( 'post_type', __( 'Cannot create a revision of a revision' ) );
+		return new WordPress\WP_Error( 'post_type', __( 'Cannot create a revision of a revision' ) );
 
 	$post_id = $post['ID'];
 	$post = _wp_post_revision_fields( $post, $autosave );

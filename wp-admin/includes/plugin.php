@@ -589,7 +589,7 @@ function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silen
 
 		if ( ob_get_length() > 0 ) {
 			$output = ob_get_clean();
-			return new WP_Error('unexpected_output', __('The plugin generated unexpected output.'), $output);
+			return new WordPress\WP_Error('unexpected_output', __('The plugin generated unexpected output.'), $output);
 		}
 		ob_end_clean();
 	}
@@ -718,7 +718,7 @@ function activate_plugins( $plugins, $redirect = '', $network_wide = false, $sil
 	}
 
 	if ( !empty($errors) )
-		return new WP_Error('plugins_invalid', __('One of the plugins is invalid.'), $errors);
+		return new WordPress\WP_Error('plugins_invalid', __('One of the plugins is invalid.'), $errors);
 
 	return true;
 }
@@ -773,15 +773,15 @@ function delete_plugins($plugins, $redirect = '' ) {
 	}
 
 	if ( ! is_object($wp_filesystem) )
-		return new WP_Error('fs_unavailable', __('Could not access filesystem.'));
+		return new WordPress\WP_Error('fs_unavailable', __('Could not access filesystem.'));
 
 	if ( is_wp_error($wp_filesystem->errors) && $wp_filesystem->errors->get_error_code() )
-		return new WP_Error('fs_error', __('Filesystem error.'), $wp_filesystem->errors);
+		return new WordPress\WP_Error('fs_error', __('Filesystem error.'), $wp_filesystem->errors);
 
 	//Get the base plugin folder
 	$plugins_dir = $wp_filesystem->wp_plugins_dir();
 	if ( empty($plugins_dir) )
-		return new WP_Error('fs_no_plugins_dir', __('Unable to locate WordPress Plugin directory.'));
+		return new WordPress\WP_Error('fs_no_plugins_dir', __('Unable to locate WordPress Plugin directory.'));
 
 	$plugins_dir = trailingslashit( $plugins_dir );
 
@@ -816,7 +816,7 @@ function delete_plugins($plugins, $redirect = '' ) {
 	}
 
 	if ( ! empty($errors) )
-		return new WP_Error('could_not_remove_plugin', sprintf(__('Could not fully remove the plugin(s) %s.'), implode(', ', $errors)) );
+		return new WordPress\WP_Error('could_not_remove_plugin', sprintf(__('Could not fully remove the plugin(s) %s.'), implode(', ', $errors)) );
 
 	return true;
 }
@@ -871,13 +871,13 @@ function validate_active_plugins() {
  */
 function validate_plugin($plugin) {
 	if ( validate_file($plugin) )
-		return new WP_Error('plugin_invalid', __('Invalid plugin path.'));
+		return new WordPress\WP_Error('plugin_invalid', __('Invalid plugin path.'));
 	if ( ! file_exists(WP_PLUGIN_DIR . '/' . $plugin) )
-		return new WP_Error('plugin_not_found', __('Plugin file does not exist.'));
+		return new WordPress\WP_Error('plugin_not_found', __('Plugin file does not exist.'));
 
 	$installed_plugins = get_plugins();
 	if ( ! isset($installed_plugins[$plugin]) )
-		return new WP_Error('no_plugin_header', __('The plugin does not have a valid header.'));
+		return new WordPress\WP_Error('no_plugin_header', __('The plugin does not have a valid header.'));
 	return 0;
 }
 

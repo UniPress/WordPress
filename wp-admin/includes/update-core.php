@@ -655,7 +655,7 @@ function update_core($from, $to) {
 	}
 	if ( ! $distro ) {
 		$wp_filesystem->delete( $from, true );
-		return new WP_Error( 'insane_distro', __('The update could not be unpacked') );
+		return new WordPress\WP_Error( 'insane_distro', __('The update could not be unpacked') );
 	}
 
 	// Import $wp_version, $required_php_version, and $required_mysql_version from the new version
@@ -663,7 +663,7 @@ function update_core($from, $to) {
 	$versions_file = trailingslashit( $wp_filesystem->wp_content_dir() ) . 'upgrade/version-current.php';
 	if ( ! $wp_filesystem->copy( $from . $distro . 'wp-includes/version.php', $versions_file ) ) {
 		 $wp_filesystem->delete( $from, true );
-		 return new WP_Error( 'copy_failed_for_version_file', __( 'The update cannot be installed because we will be unable to copy some files. This is usually due to inconsistent file permissions.' ), 'wp-includes/version.php' );
+		 return new WordPress\WP_Error( 'copy_failed_for_version_file', __( 'The update cannot be installed because we will be unable to copy some files. This is usually due to inconsistent file permissions.' ), 'wp-includes/version.php' );
 	}
 
 	$wp_filesystem->chmod( $versions_file, FS_CHMOD_FILE );
@@ -684,11 +684,11 @@ function update_core($from, $to) {
 		$wp_filesystem->delete($from, true);
 
 	if ( !$mysql_compat && !$php_compat )
-		return new WP_Error( 'php_mysql_not_compatible', sprintf( __('The update cannot be installed because WordPress %1$s requires PHP version %2$s or higher and MySQL version %3$s or higher. You are running PHP version %4$s and MySQL version %5$s.'), $wp_version, $required_php_version, $required_mysql_version, $php_version, $mysql_version ) );
+		return new WordPress\WP_Error( 'php_mysql_not_compatible', sprintf( __('The update cannot be installed because WordPress %1$s requires PHP version %2$s or higher and MySQL version %3$s or higher. You are running PHP version %4$s and MySQL version %5$s.'), $wp_version, $required_php_version, $required_mysql_version, $php_version, $mysql_version ) );
 	elseif ( !$php_compat )
-		return new WP_Error( 'php_not_compatible', sprintf( __('The update cannot be installed because WordPress %1$s requires PHP version %2$s or higher. You are running version %3$s.'), $wp_version, $required_php_version, $php_version ) );
+		return new WordPress\WP_Error( 'php_not_compatible', sprintf( __('The update cannot be installed because WordPress %1$s requires PHP version %2$s or higher. You are running version %3$s.'), $wp_version, $required_php_version, $php_version ) );
 	elseif ( !$mysql_compat )
-		return new WP_Error( 'mysql_not_compatible', sprintf( __('The update cannot be installed because WordPress %1$s requires MySQL version %2$s or higher. You are running version %3$s.'), $wp_version, $required_mysql_version, $mysql_version ) );
+		return new WordPress\WP_Error( 'mysql_not_compatible', sprintf( __('The update cannot be installed because WordPress %1$s requires MySQL version %2$s or higher. You are running version %3$s.'), $wp_version, $required_mysql_version, $mysql_version ) );
 
 	apply_filters( 'update_feedback', __( 'Preparing to install the latest version&#8230;' ) );
 
@@ -736,7 +736,7 @@ function update_core($from, $to) {
 			$error_data = version_compare( $old_wp_version, '3.7-beta2', '>' ) ? array_keys( $files_not_writable ) : '';
 
 			if ( $files_not_writable )
-				return new WP_Error( 'files_not_writable', __( 'The update cannot be installed because we will be unable to copy some files. This is usually due to inconsistent file permissions.' ), implode( ', ', $error_data ) );
+				return new WordPress\WP_Error( 'files_not_writable', __( 'The update cannot be installed because we will be unable to copy some files. This is usually due to inconsistent file permissions.' ), implode( ', ', $error_data ) );
 		}
 	}
 
@@ -751,7 +751,7 @@ function update_core($from, $to) {
 	// Copy new versions of WP files into place.
 	$result = _copy_dir( $from . $distro, $to, $skip );
 	if ( is_wp_error( $result ) )
-		$result = new WP_Error( $result->get_error_code(), $result->get_error_message(), substr( $result->get_error_data(), strlen( $to ) ) );
+		$result = new WordPress\WP_Error( $result->get_error_code(), $result->get_error_message(), substr( $result->get_error_data(), strlen( $to ) ) );
 
 	// Check to make sure everything copied correctly, ignoring the contents of wp-content
 	$skip = array( 'wp-content' );
@@ -781,11 +781,11 @@ function update_core($from, $to) {
 		// Unlikely to be hit due to the check in unzip_file().
 		$available_space = @disk_free_space( ABSPATH );
 		if ( $available_space && $total_size >= $available_space ) {
-			$result = new WP_Error( 'disk_full', __( 'There is not enough free disk space to complete the update.' ) );
+			$result = new WordPress\WP_Error( 'disk_full', __( 'There is not enough free disk space to complete the update.' ) );
 		} else {
 			$result = _copy_dir( $from . $distro, $to, $skip );
 			if ( is_wp_error( $result ) )
-				$result = new WP_Error( $result->get_error_code() . '_retry', $result->get_error_message(), substr( $result->get_error_data(), strlen( $to ) ) );
+				$result = new WordPress\WP_Error( $result->get_error_code() . '_retry', $result->get_error_message(), substr( $result->get_error_data(), strlen( $to ) ) );
 		}
 	}
 
@@ -807,7 +807,7 @@ function update_core($from, $to) {
 			if ( $wp_lang_dir ) {
 				$result = copy_dir($from . $distro . 'wp-content/languages/', $wp_lang_dir);
 				if ( is_wp_error( $result ) )
-					$result = new WP_Error( $result->get_error_code() . '_languages', $result->get_error_message(), substr( $result->get_error_data(), strlen( $wp_lang_dir ) ) );
+					$result = new WordPress\WP_Error( $result->get_error_code() . '_languages', $result->get_error_message(), substr( $result->get_error_data(), strlen( $wp_lang_dir ) ) );
 			}
 		}
 	}
@@ -849,7 +849,7 @@ function update_core($from, $to) {
 						continue;
 
 					if ( ! $wp_filesystem->copy($from . $distro . 'wp-content/' . $file, $dest . $filename, FS_CHMOD_FILE) )
-						$result = new WP_Error( "copy_failed_for_new_bundled_$type", __( 'Could not copy file.' ), $dest . $filename );
+						$result = new WordPress\WP_Error( "copy_failed_for_new_bundled_$type", __( 'Could not copy file.' ), $dest . $filename );
 				} else {
 					if ( ! $development_build && $wp_filesystem->is_dir( $dest . $filename ) )
 						continue;
@@ -860,7 +860,7 @@ function update_core($from, $to) {
 					// If a error occurs partway through this final step, keep the error flowing through, but keep process going.
 					if ( is_wp_error( $_result ) ) {
 						if ( ! is_wp_error( $result ) )
-							$result = new WP_Error;
+							$result = new WordPress\WP_Error;
 						$result->add( $_result->get_error_code() . "_$type", $_result->get_error_message(), substr( $_result->get_error_data(), strlen( $dest ) ) );
 					}
 				}
@@ -940,12 +940,12 @@ function _copy_dir($from, $to, $skip_list = array() ) {
 				// If copy failed, chmod file to 0644 and try again.
 				$wp_filesystem->chmod( $to . $filename, FS_CHMOD_FILE );
 				if ( ! $wp_filesystem->copy($from . $filename, $to . $filename, true, FS_CHMOD_FILE) )
-					return new WP_Error( 'copy_failed__copy_dir', __( 'Could not copy file.' ), $to . $filename );
+					return new WordPress\WP_Error( 'copy_failed__copy_dir', __( 'Could not copy file.' ), $to . $filename );
 			}
 		} elseif ( 'd' == $fileinfo['type'] ) {
 			if ( !$wp_filesystem->is_dir($to . $filename) ) {
 				if ( !$wp_filesystem->mkdir($to . $filename, FS_CHMOD_DIR) )
-					return new WP_Error( 'mkdir_failed__copy_dir', __( 'Could not create directory.' ), $to . $filename );
+					return new WordPress\WP_Error( 'mkdir_failed__copy_dir', __( 'Could not create directory.' ), $to . $filename );
 			}
 
 			// generate the $sub_skip_list for the subdirectory as a sub-set of the existing $skip_list

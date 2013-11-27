@@ -547,7 +547,7 @@ function fetch_feed( $url ) {
 	$feed->handle_content_type();
 
 	if ( $feed->error() )
-		return new WP_Error( 'simplepie-error', $feed->error() );
+		return new WordPress\WP_Error( 'simplepie-error', $feed->error() );
 
 	return $feed;
 }

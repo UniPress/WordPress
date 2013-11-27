@@ -1567,7 +1567,7 @@ function wp_get_image_editor( $path, $args = array() ) {
 		return $editor;
 	}
 
-	return new WP_Error( 'image_no_editor', __('No editor could be selected.') );
+	return new WordPress\WP_Error( 'image_no_editor', __('No editor could be selected.') );
 }
 
 /**

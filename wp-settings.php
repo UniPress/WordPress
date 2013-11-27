@@ -272,7 +272,7 @@ $GLOBALS['wp_widget_factory'] = new WP_Widget_Factory();
  * @global object $wp_roles
  * @since 2.0.0
  */
-$GLOBALS['wp_roles'] = new WP_Roles();
+$GLOBALS['wp_roles'] = new \WordPress\WP_Roles();
 
 /**
  * Fires before the theme is loaded.
@@ -293,15 +293,12 @@ if ( ( 0 === validate_file( $locale ) ) && is_readable( $locale_file ) )
 	require( $locale_file );
 unset( $locale_file );
 
-// Pull in locale data after loading text domain.
-require_once( ABSPATH . WPINC . '/locale.php' );
-
 /**
  * WordPress Locale object for loading locale domain date and various strings.
  * @global object $wp_locale
  * @since 2.1.0
  */
-$GLOBALS['wp_locale'] = new WP_Locale();
+$GLOBALS['wp_locale'] = new \WordPress\WP_Locale();
 
 // Load the functions for the active theme, for both parent and child theme if applicable.
 if ( ! defined( 'WP_INSTALLING' ) || 'wp-activate.php' === $pagenow ) {

@@ -159,7 +159,7 @@ function wpmu_delete_user( $id ) {
 	global $wpdb;
 
 	$id = (int) $id;
-	$user = new WP_User( $id );
+	$user = new WordPress\WP_User( $id );
 
 	if ( !$user->exists() )
 		return false;
@@ -274,7 +274,7 @@ function send_confirmation_on_profile_email() {
 	global $errors, $wpdb;
 	$current_user = wp_get_current_user();
 	if ( ! is_object($errors) )
-		$errors = new WP_Error();
+		$errors = new WordPress\WP_Error();
 
 	if ( $current_user->ID != $_POST['user_id'] )
 		return false;
@@ -443,7 +443,7 @@ function update_user_status( $id, $pref, $value, $deprecated = null ) {
 
 	$wpdb->update( $wpdb->users, array( sanitize_key( $pref ) => $value ), array( 'ID' => $id ) );
 
-	$user = new WP_User( $id );
+	$user = new WordPress\WP_User( $id );
 	clean_user_cache( $user );
 
 	if ( $pref == 'spam' ) {

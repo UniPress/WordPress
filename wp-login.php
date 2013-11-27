@@ -40,7 +40,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 		add_action( 'login_head', 'wp_login_viewport_meta' );
 
 	if ( empty($wp_error) )
-		$wp_error = new WP_Error();
+		$wp_error = new WordPress\WP_Error();
 
 	// Shake it!
 	$shake_error_codes = array( 'empty_password', 'empty_email', 'invalid_email', 'invalidcombo', 'empty_username', 'invalid_username', 'incorrect_password' );
@@ -264,7 +264,7 @@ function wp_login_viewport_meta() {
 function retrieve_password() {
 	global $wpdb, $wp_hasher;
 
-	$errors = new WP_Error();
+	$errors = new WordPress\WP_Error();
 
 	if ( empty( $_POST['user_login'] ) ) {
 		$errors->add('empty_username', __('<strong>ERROR</strong>: Enter a username or e-mail address.'));
@@ -325,7 +325,7 @@ function retrieve_password() {
 	$allow = apply_filters( 'allow_password_reset', true, $user_data->ID );
 
 	if ( ! $allow )
-		return new WP_Error('no_password_reset', __('Password reset is not allowed for this user'));
+		return new WordPress\WP_Error('no_password_reset', __('Password reset is not allowed for this user'));
 	else if ( is_wp_error($allow) )
 		return $allow;
 
@@ -395,7 +395,7 @@ function retrieve_password() {
 //
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'login';
-$errors = new WP_Error();
+$errors = new WordPress\WP_Error();
 
 if ( isset($_GET['key']) )
 	$action = 'resetpass';
@@ -567,7 +567,7 @@ case 'rp' :
 		exit;
 	}
 
-	$errors = new WP_Error();
+	$errors = new WordPress\WP_Error();
 
 	if ( isset($_POST['pass1']) && $_POST['pass1'] != $_POST['pass2'] )
 		$errors->add( 'password_reset_mismatch', __( 'The passwords do not match.' ) );
@@ -742,7 +742,7 @@ default:
 
 	// If cookies are disabled we can't log in even with a valid user+pass
 	if ( isset($_POST['testcookie']) && empty($_COOKIE[TEST_COOKIE]) )
-		$user = new WP_Error('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
+		$user = new WordPress\WP_Error('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
 	else
 		$user = wp_signon('', $secure_cookie);
 
@@ -790,7 +790,7 @@ default:
 	$errors = $user;
 	// Clear errors if loggedout is set.
 	if ( !empty($_GET['loggedout']) || $reauth )
-		$errors = new WP_Error();
+		$errors = new WordPress\WP_Error();
 
 	if ( $interim_login ) {
 		if ( ! $errors->get_error_code() )

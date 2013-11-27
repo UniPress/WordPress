@@ -50,22 +50,22 @@ function delete_theme($stylesheet, $redirect = '') {
 	}
 
 	if ( ! is_object($wp_filesystem) )
-		return new WP_Error('fs_unavailable', __('Could not access filesystem.'));
+		return new WordPress\WP_Error('fs_unavailable', __('Could not access filesystem.'));
 
 	if ( is_wp_error($wp_filesystem->errors) && $wp_filesystem->errors->get_error_code() )
-		return new WP_Error('fs_error', __('Filesystem error.'), $wp_filesystem->errors);
+		return new WordPress\WP_Error('fs_error', __('Filesystem error.'), $wp_filesystem->errors);
 
 	//Get the base plugin folder
 	$themes_dir = $wp_filesystem->wp_themes_dir();
 	if ( empty($themes_dir) )
-		return new WP_Error('fs_no_themes_dir', __('Unable to locate WordPress theme directory.'));
+		return new WordPress\WP_Error('fs_no_themes_dir', __('Unable to locate WordPress theme directory.'));
 
 	$themes_dir = trailingslashit( $themes_dir );
 	$theme_dir = trailingslashit($themes_dir . $stylesheet);
 	$deleted = $wp_filesystem->delete($theme_dir, true);
 
 	if ( ! $deleted )
-		return new WP_Error('could_not_remove_theme', sprintf(__('Could not fully remove the theme %s.'), $stylesheet) );
+		return new WordPress\WP_Error('could_not_remove_theme', sprintf(__('Could not fully remove the theme %s.'), $stylesheet) );
 
 	// Force refresh of theme update information
 	delete_site_transient('update_themes');
@@ -344,11 +344,11 @@ function themes_api( $action, $args = null ) {
 		}
 
 		if ( is_wp_error($request) ) {
-			$res = new WP_Error('themes_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), $request->get_error_message() );
+			$res = new WordPress\WP_Error('themes_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), $request->get_error_message() );
 		} else {
 			$res = maybe_unserialize( wp_remote_retrieve_body( $request ) );
 			if ( ! is_object( $res ) && ! is_array( $res ) )
-				$res = new WP_Error('themes_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), wp_remote_retrieve_body( $request ) );
+				$res = new WordPress\WP_Error('themes_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), wp_remote_retrieve_body( $request ) );
 		}
 	}
 

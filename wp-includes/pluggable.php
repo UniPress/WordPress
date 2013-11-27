@@ -30,7 +30,7 @@ function wp_set_current_user($id, $name = '') {
 	if ( isset( $current_user ) && ( $current_user instanceof WP_User ) && ( $id == $current_user->ID ) )
 		return $current_user;
 
-	$current_user = new WP_User( $id, $name );
+	$current_user = new WordPress\WP_User( $id, $name );
 
 	setup_userdata( $current_user->ID );
 
@@ -75,7 +75,7 @@ function get_currentuserinfo() {
 	global $current_user;
 
 	if ( ! empty( $current_user ) ) {
-		if ( $current_user instanceof WP_User )
+		if ( $current_user instanceof WordPress\WP_User )
 			return;
 
 		// Upgrade stdClass to WP_User
@@ -133,12 +133,12 @@ if ( !function_exists('get_user_by') ) :
  * @return WP_User|bool WP_User object on success, false on failure.
  */
 function get_user_by( $field, $value ) {
-	$userdata = WP_User::get_data_by( $field, $value );
+	$userdata = WordPress\WP_User::get_data_by( $field, $value );
 
 	if ( !$userdata )
 		return false;
 
-	$user = new WP_User;
+	$user = new WordPress\WP_User;
 	$user->init( $userdata );
 
 	return $user;
@@ -471,7 +471,7 @@ function wp_authenticate($username, $password) {
 	if ( $user == null ) {
 		// TODO what should the error message be? (Or would these even happen?)
 		// Only needed if all authentication handlers fail to return anything.
-		$user = new WP_Error('authentication_failed', __('<strong>ERROR</strong>: Invalid username or incorrect password.'));
+		$user = new WordPress\WP_Error('authentication_failed', __('<strong>ERROR</strong>: Invalid username or incorrect password.'));
 	}
 
 	$ignore_codes = array('empty_username', 'empty_password');
