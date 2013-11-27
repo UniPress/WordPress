@@ -1,4 +1,8 @@
 <?php
+
+namespace WordPress\Pomo;
+
+
 /**
  * Contains Translation_Entry class
  *
@@ -7,7 +11,6 @@
  * @subpackage entry
  */
 
-if ( !class_exists( 'Translation_Entry' ) ):
 /**
  * Translation_Entry class encapsulates a translatable string
  */
@@ -75,4 +78,3 @@ class Translation_Entry {
 
 	}
 }
-endif;

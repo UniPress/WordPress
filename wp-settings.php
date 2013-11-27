@@ -66,7 +66,6 @@ require( ABSPATH . WPINC . '/functions.php' );
 require(ABSPATH . WPINC . '/class-wp.php');
 require(ABSPATH . WPINC . '/class-wp-error.php');
 require( ABSPATH . WPINC . '/plugin.php' );
-require( ABSPATH . WPINC . '/pomo/mo.php' );
 
 // Include the wpdb class and, if present, a db.php database drop-in.
 require_wp_db();

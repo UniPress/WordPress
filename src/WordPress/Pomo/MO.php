@@ -1,4 +1,10 @@
 <?php
+
+namespace WordPress\Pomo;
+
+use WordPress\Pomo\Gettext_Translations;
+
+
 /**
  * Class for working with MO files
  *
@@ -7,10 +13,9 @@
  * @subpackage mo
  */
 
-require_once dirname(__FILE__) . '/translations.php';
+require_once dirname(__FILE__) . '/Translations.php';
 require_once dirname(__FILE__) . '/streams.php';
 
-if ( !class_exists( 'MO' ) ):
 class MO extends Gettext_Translations {
 
 	var $_nplurals = 2;
@@ -138,7 +143,7 @@ class MO extends Gettext_Translations {
 	}
 
 	function import_from_reader($reader) {
-		$endian_string = MO::get_byteorder($reader->readint32());
+		$endian_string = \WordPress\Pomo\MO::get_byteorder($reader->readint32());
 		if (false === $endian_string) {
 			return false;
 		}
@@ -254,4 +259,3 @@ class MO extends Gettext_Translations {
 		return $this->_nplurals;
 	}
 }
-endif;
