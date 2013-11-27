@@ -189,11 +189,11 @@ class WPHttpCurl {
 
             if ( $curl_error = curl_error( $handle ) ) {
                 curl_close( $handle );
-                return new WordPress\WPError( 'http_request_failed', $curl_error );
+                return new \WordPress\WPError( 'http_request_failed', $curl_error );
             }
             if ( in_array( curl_getinfo( $handle, CURLINFO_HTTP_CODE ), array( 301, 302 ) ) ) {
                 curl_close( $handle );
-                return new WordPress\WPError( 'http_request_failed', __( 'Too many redirects.' ) );
+                return new \WordPress\WPError( 'http_request_failed', __( 'Too many redirects.' ) );
             }
 
             curl_close( $handle );
