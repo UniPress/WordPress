@@ -1,4 +1,7 @@
 <?php
+
+namespace WordPress;
+
 /**
  * Date and Time Locale object
  *

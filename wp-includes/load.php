@@ -729,5 +729,5 @@ function wp_load_translations_early() {
 		break;
 	}
 
-	$wp_locale = new \WordPress\WP_Locale();
+	$wp_locale = new \WordPress\WPLocale();
 }

@@ -105,7 +105,7 @@ class WPRoles {
         $this->role_objects = array();
         $this->role_names =  array();
         foreach ( array_keys( $this->roles ) as $role ) {
-            $this->role_objects[$role] = new WP_Role( $role, $this->roles[$role]['capabilities'] );
+            $this->role_objects[$role] = new WPRole( $role, $this->roles[$role]['capabilities'] );
             $this->role_names[$role] = $this->roles[$role]['name'];
         }
     }
@@ -135,7 +135,7 @@ class WPRoles {
         $this->role_objects = array();
         $this->role_names =  array();
         foreach ( array_keys( $this->roles ) as $role ) {
-            $this->role_objects[$role] = new WP_Role( $role, $this->roles[$role]['capabilities'] );
+            $this->role_objects[$role] = new \WordPress\WPRole( $role, $this->roles[$role]['capabilities'] );
             $this->role_names[$role] = $this->roles[$role]['name'];
         }
     }

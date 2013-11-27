@@ -29,6 +29,7 @@ require( ABSPATH . WPINC . '/default-constants.php' );
 global $wp_version, $wp_db_version, $tinymce_version, $required_php_version, $required_mysql_version;
 require( ABSPATH . WPINC . '/version.php' );
 
+
 // Set initial default constants including WP_MEMORY_LIMIT, WP_MAX_MEMORY_LIMIT, WP_DEBUG, WP_CONTENT_DIR and WP_CACHE.
 wp_initial_constants();
 
@@ -64,6 +65,8 @@ wp_set_lang_dir();
 require( ABSPATH . WPINC . '/compat.php' );
 require( ABSPATH . WPINC . '/functions.php' );
 require( ABSPATH . WPINC . '/plugin.php' );
+
+
 
 // Include the wpdb class and, if present, a db.php database drop-in.
 require_wp_db();
@@ -133,6 +136,8 @@ require( ABSPATH . WPINC . '/taxonomy.php' );
 require( ABSPATH . WPINC . '/update.php' );
 require( ABSPATH . WPINC . '/canonical.php' );
 require( ABSPATH . WPINC . '/shortcodes.php' );
+$GLOBALS['wp_embed'] = new \WordPress\WPEmbed();
+
 //require(ABSPATH . WPINC . '/class-wp-embed.php');
 require( ABSPATH . WPINC . '/media.php' );
 require( ABSPATH . WPINC . '/http.php' );
@@ -256,14 +261,14 @@ $GLOBALS['wp_rewrite'] = new WP_Rewrite();
  * @global object $wp
  * @since 2.0.0
  */
-$wp = new WP();
+$wp = new \WordPress\WP();
 
 /**
  * WordPress Widget Factory Object
  * @global object $wp_widget_factory
  * @since 2.8.0
  */
-$GLOBALS['wp_widget_factory'] = new WP_Widget_Factory();
+$GLOBALS['wp_widget_factory'] = new WordPress\Widget\Factory();
 
 /**
  * WordPress User Roles
@@ -271,6 +276,8 @@ $GLOBALS['wp_widget_factory'] = new WP_Widget_Factory();
  * @since 2.0.0
  */
 $GLOBALS['wp_roles'] = new \WordPress\WPRoles();
+
+
 
 /**
  * Fires before the theme is loaded.
@@ -296,7 +303,7 @@ unset( $locale_file );
  * @global object $wp_locale
  * @since 2.1.0
  */
-$GLOBALS['wp_locale'] = new \WordPress\WP_Locale();
+$GLOBALS['wp_locale'] = new \WordPress\WPLocale();
 
 // Load the functions for the active theme, for both parent and child theme if applicable.
 if ( ! defined( 'WP_INSTALLING' ) || 'wp-activate.php' === $pagenow ) {

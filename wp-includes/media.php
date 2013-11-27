@@ -1394,8 +1394,8 @@ function wp_oembed_get( $url, $args = '' ) {
  * @param boolean $regex Whether the $format parameter is in a regex format.
  */
 function wp_oembed_add_provider( $format, $provider, $regex = false ) {
-	require_once(ABSPATH . WPINC . '/class-oembed.php');
-	$oembed = WP_oEmbed::getInstance();//_wp_oembed_get_object();
+	//require_once(ABSPATH . WPINC . '/class-oembed.php');
+	$oembed = \WordPress\WPoEmbed::getInstance();//_wp_oembed_get_object();
 	$oembed->providers[$format] = array( $provider, $regex );
 }
 
@@ -1412,7 +1412,7 @@ function wp_oembed_add_provider( $format, $provider, $regex = false ) {
 function wp_oembed_remove_provider( $format ) {
 	require_once(ABSPATH . WPINC . '/class-oembed.php');
 
-	$oembed = WP_oEmbed::getInstance();//_wp_oembed_get_object();
+	$oembed = \WordPress\WPoEmbed::getInstance();//_wp_oembed_get_object();
 
 	if ( isset( $oembed->providers[ $format ] ) ) {
 		unset( $oembed->providers[ $format ] );

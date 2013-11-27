@@ -14,7 +14,7 @@ namespace WordPress\Pomo;
 /**
  * Translation_Entry class encapsulates a translatable string
  */
-class Translation_Entry {
+class TranslationEntry {
 
 	/**
 	 * Whether the entry contains a string and its plural form, default is false

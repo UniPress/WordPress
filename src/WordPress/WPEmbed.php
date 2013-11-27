@@ -23,16 +23,16 @@ class WPEmbed {
 		\add_filter( 'the_content', array( $this, 'run_shortcode' ), 8 );
 
 		// Shortcode placeholder for strip_shortcodes()
-		add_shortcode( 'embed', '__return_false' );
+		\add_shortcode( 'embed', '__return_false' );
 
 		// Attempts to embed all URLs in a post
-		add_filter( 'the_content', array( $this, 'autoembed' ), 8 );
+		\add_filter( 'the_content', array( $this, 'autoembed' ), 8 );
 
 		// When a post is saved, invalidate the oEmbed cache
-		add_action( 'pre_post_update', array( $this, 'delete_oembed_caches' ) );
+		\add_action( 'pre_post_update', array( $this, 'delete_oembed_caches' ) );
 
 		// After a post is saved, cache oEmbed items via AJAX
-		add_action( 'edit_form_advanced', array( $this, 'maybe_run_ajax_cache' ) );
+		\add_action( 'edit_form_advanced', array( $this, 'maybe_run_ajax_cache' ) );
 	}
 
 	/**
@@ -325,4 +325,3 @@ class WPEmbed {
 
     public static function amenophisLoad(){}
 }
-$GLOBALS['wp_embed'] = new \WordPress\WPEmbed();
