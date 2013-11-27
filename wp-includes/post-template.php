@@ -990,7 +990,7 @@ function walk_page_dropdown_tree() {
  * @since 2.1.0
  * @uses Walker
  */
-class Walker_Page extends Walker {
+class Walker_Page extends \WordPress\Walker {
 	/**
 	 * @see Walker::$tree_type
 	 * @since 2.1.0
@@ -1106,7 +1106,7 @@ class Walker_Page extends Walker {
  * @since 2.1.0
  * @uses Walker
  */
-class Walker_PageDropdown extends Walker {
+class Walker_PageDropdown extends \WordPress\Walker {
 	/**
 	 * @see Walker::$tree_type
 	 * @since 2.1.0

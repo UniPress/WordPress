@@ -229,7 +229,7 @@ function signup_another_blog( $blogname = '', $blog_title = '', $errors = '' ) {
 	$current_user = wp_get_current_user();
 
 	if ( ! is_wp_error($errors) ) {
-		$errors = new WordPress\WP_Error();
+		$errors = new WordPress\WPError();
 	}
 
 	$signup_defaults = array(
@@ -398,7 +398,7 @@ function signup_user( $user_name = '', $user_email = '', $errors = '' ) {
 	global $active_signup;
 
 	if ( !is_wp_error($errors) )
-		$errors = new WordPress\WP_Error();
+		$errors = new WordPress\WPError();
 
 	$signup_for = isset( $_POST[ 'signup_for' ] ) ? esc_html( $_POST[ 'signup_for' ] ) : 'blog';
 
@@ -521,7 +521,7 @@ function confirm_user_signup($user_name, $user_email) {
  */
 function signup_blog($user_name = '', $user_email = '', $blogname = '', $blog_title = '', $errors = '') {
 	if ( !is_wp_error($errors) )
-		$errors = new WordPress\WP_Error();
+		$errors = new WordPress\WPError();
 
 	$signup_blog_defaults = array(
 		'user_name'  => $user_name,

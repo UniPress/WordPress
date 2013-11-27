@@ -24,7 +24,7 @@
  *
  * @param string $action
  * @param array|object $args Optional. Arguments to serialize for the Plugin Info API.
- * @return object plugins_api response object on success, WP_Error on failure.
+ * @return object plugins_api response object on success, WPError on failure.
  */
 function plugins_api($action, $args = null) {
 
@@ -79,11 +79,11 @@ function plugins_api($action, $args = null) {
 		}
 
 		if ( is_wp_error($request) ) {
-			$res = new WordPress\WP_Error('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), $request->get_error_message() );
+			$res = new WordPress\WPError('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), $request->get_error_message() );
 		} else {
 			$res = maybe_unserialize( wp_remote_retrieve_body( $request ) );
 			if ( ! is_object( $res ) && ! is_array( $res ) )
-				$res = new WordPress\WP_Error('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), wp_remote_retrieve_body( $request ) );
+				$res = new WordPress\WPError('plugins_api_failed', __( 'An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.' ), wp_remote_retrieve_body( $request ) );
 		}
 	} elseif ( !is_wp_error($res) ) {
 		$res->external = true;
@@ -94,7 +94,7 @@ function plugins_api($action, $args = null) {
 	 *
 	 * @since 2.7.0
 	 *
-	 * @param object|WP_Error $res    Response object or WP_Error.
+	 * @param object|WPError $res    Response object or WPError.
 	 * @param string          $action The type of information being requested from the Plugin Install API.
 	 * @param object          $args   Plugin API arguments.
 	 */

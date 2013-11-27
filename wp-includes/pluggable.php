@@ -30,7 +30,7 @@ function wp_set_current_user($id, $name = '') {
 	if ( isset( $current_user ) && ( $current_user instanceof WP_User ) && ( $id == $current_user->ID ) )
 		return $current_user;
 
-	$current_user = new WordPress\WP_User( $id, $name );
+	$current_user = new WordPress\WPUser( $id, $name );
 
 	setup_userdata( $current_user->ID );
 
@@ -46,7 +46,7 @@ if ( !function_exists('wp_get_current_user') ) :
  *
  * @since 2.0.3
  *
- * @return WP_User Current user WP_User object
+ * @return WPUser Current user WPUser object
  */
 function wp_get_current_user() {
 	global $current_user;
@@ -75,10 +75,10 @@ function get_currentuserinfo() {
 	global $current_user;
 
 	if ( ! empty( $current_user ) ) {
-		if ( $current_user instanceof WordPress\WP_User )
+		if ( $current_user instanceof WordPress\WPUser )
 			return;
 
-		// Upgrade stdClass to WP_User
+		// Upgrade stdClass to WPUser
 		if ( is_object( $current_user ) && isset( $current_user->ID ) ) {
 			$cur_id = $current_user->ID;
 			$current_user = null;
@@ -86,7 +86,7 @@ function get_currentuserinfo() {
 			return;
 		}
 
-		// $current_user has a junk value. Force to WP_User with ID 0.
+		// $current_user has a junk value. Force to WPUser with ID 0.
 		$current_user = null;
 		wp_set_current_user( 0 );
 		return false;
@@ -115,7 +115,7 @@ if ( !function_exists('get_userdata') ) :
  * @since 0.71
  *
  * @param int $user_id User ID
- * @return WP_User|bool WP_User object on success, false on failure.
+ * @return WPUser|bool WPUser object on success, false on failure.
  */
 function get_userdata( $user_id ) {
 	return get_user_by( 'id', $user_id );
@@ -130,15 +130,15 @@ if ( !function_exists('get_user_by') ) :
  *
  * @param string $field The field to retrieve the user with. id | slug | email | login
  * @param int|string $value A value for $field. A user ID, slug, email address, or login name.
- * @return WP_User|bool WP_User object on success, false on failure.
+ * @return WPUser|bool WPUser object on success, false on failure.
  */
 function get_user_by( $field, $value ) {
-	$userdata = WordPress\WP_User::get_data_by( $field, $value );
+	$userdata = WordPress\WPUser::get_data_by( $field, $value );
 
 	if ( !$userdata )
 		return false;
 
-	$user = new WordPress\WP_User;
+	$user = new WordPress\WPUser;
 	$user->init( $userdata );
 
 	return $user;
@@ -460,7 +460,7 @@ if ( !function_exists('wp_authenticate') ) :
  *
  * @param string $username User's username
  * @param string $password User's password
- * @return WP_User|WP_Error WP_User object if login successful, otherwise WP_Error object.
+ * @return WPUser|WPError WPUser object if login successful, otherwise WPError object.
  */
 function wp_authenticate($username, $password) {
 	$username = sanitize_user($username);
@@ -471,7 +471,7 @@ function wp_authenticate($username, $password) {
 	if ( $user == null ) {
 		// TODO what should the error message be? (Or would these even happen?)
 		// Only needed if all authentication handlers fail to return anything.
-		$user = new WordPress\WP_Error('authentication_failed', __('<strong>ERROR</strong>: Invalid username or incorrect password.'));
+		$user = new WordPress\WPError('authentication_failed', __('<strong>ERROR</strong>: Invalid username or incorrect password.'));
 	}
 
 	$ignore_codes = array('empty_username', 'empty_password');
@@ -1764,7 +1764,7 @@ if ( !function_exists( 'wp_text_diff' ) ) :
  * @since 2.6
  * @see wp_parse_args() Used to change defaults to user defined settings.
  * @uses Text_Diff
- * @uses WP_Text_Diff_Renderer_Table
+ * @uses WPTextDiffRendererTable
  *
  * @param string $left_string "old" (left) version of string
  * @param string $right_string "new" (right) version of string

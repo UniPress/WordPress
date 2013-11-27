@@ -29,7 +29,7 @@ function get_importers() {
  * @param string $name Importer name and title.
  * @param string $description Importer description.
  * @param callback $callback Callback to run.
- * @return WP_Error Returns WP_Error when $callback is WP_Error.
+ * @return WPError Returns WPError when $callback is WPError.
  */
 function register_importer( $id, $name, $description, $callback ) {
 	global $wp_importers;

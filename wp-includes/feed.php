@@ -525,20 +525,20 @@ function feed_content_type( $type = '' ) {
  * using SimplePie's multifeed feature.
  * See also {@link ​http://simplepie.org/wiki/faq/typical_multifeed_gotchas}
  *
- * @return WP_Error|SimplePie WP_Error object on failure or SimplePie object on success
+ * @return WPError|SimplePie WPError object on failure or SimplePie object on success
  */
 function fetch_feed( $url ) {
 	require_once(ABSPATH . WPINC . '/class-feed.php');
 
 	$feed = new SimplePie();
 
-	$feed->set_sanitize_class( 'WP_SimplePie_Sanitize_KSES' );
+	$feed->set_sanitize_class( 'WPSimplePieSanitizeKSES' );
 	// We must manually overwrite $feed->sanitize because SimplePie's
 	// constructor sets it before we have a chance to set the sanitization class
 	$feed->sanitize = new WP_SimplePie_Sanitize_KSES();
 
-	$feed->set_cache_class( 'WP_Feed_Cache' );
-	$feed->set_file_class( 'WP_SimplePie_File' );
+	$feed->set_cache_class( 'WPFeedCache' );
+	$feed->set_file_class( 'WPSimplePieFile' );
 
 	$feed->set_feed_url( $url );
 	$feed->set_cache_duration( apply_filters( 'wp_feed_cache_transient_lifetime', 12 * HOUR_IN_SECONDS, $url ) );
@@ -547,7 +547,7 @@ function fetch_feed( $url ) {
 	$feed->handle_content_type();
 
 	if ( $feed->error() )
-		return new WordPress\WP_Error( 'simplepie-error', $feed->error() );
+		return new WordPress\WPError( 'simplepie-error', $feed->error() );
 
 	return $feed;
 }

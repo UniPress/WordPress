@@ -11,7 +11,7 @@
  *
  * @since 2.0
  *
- * @return null|WP_Error|int Null when adding user, WP_Error or User ID integer when no parameters.
+ * @return null|WPError|int Null when adding user, WPError or User ID integer when no parameters.
  */
 function add_user() {
 	return edit_user();
@@ -102,7 +102,7 @@ function edit_user( $user_id = 0 ) {
 	if ( !empty($_POST['use_ssl']) )
 		$user->use_ssl = 1;
 
-	$errors = new WordPress\WP_Error();
+	$errors = new WordPress\WPError();
 
 	/* checking that username has been typed */
 	if ( $user->user_login == '' )
@@ -195,7 +195,7 @@ function get_editable_roles() {
  * @since 2.0.5
  *
  * @param int $user_id User ID.
- * @return WP_User|bool WP_User object on success, false on failure.
+ * @return WPUser|bool WPUser object on success, false on failure.
  */
 function get_user_to_edit( $user_id ) {
 	$user = get_userdata( $user_id );
@@ -239,7 +239,7 @@ function wp_delete_user( $id, $reassign = 'novalue' ) {
 	global $wpdb;
 
 	$id = (int) $id;
-	$user = new WordPress\WP_User( $id );
+	$user = new WordPress\WPUser( $id );
 
 	if ( !$user->exists() )
 		return false;
@@ -317,7 +317,7 @@ function wp_delete_user( $id, $reassign = 'novalue' ) {
 function wp_revoke_user($id) {
 	$id = (int) $id;
 
-	$user = new WordPress\WP_User($id);
+	$user = new WordPress\WPUser($id);
 	$user->remove_all_caps();
 }
 

@@ -40,7 +40,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 		add_action( 'login_head', 'wp_login_viewport_meta' );
 
 	if ( empty($wp_error) )
-		$wp_error = new WordPress\WP_Error();
+		$wp_error = new WordPress\WPError();
 
 	// Shake it!
 	$shake_error_codes = array( 'empty_password', 'empty_email', 'invalid_email', 'invalidcombo', 'empty_username', 'invalid_username', 'incorrect_password' );
@@ -259,12 +259,12 @@ function wp_login_viewport_meta() {
  *
  * @uses $wpdb WordPress Database object
  *
- * @return bool|WP_Error True: when finish. WP_Error on error
+ * @return bool|WPError True: when finish. WPError on error
  */
 function retrieve_password() {
 	global $wpdb, $wp_hasher;
 
-	$errors = new WordPress\WP_Error();
+	$errors = new WordPress\WPError();
 
 	if ( empty( $_POST['user_login'] ) ) {
 		$errors->add('empty_username', __('<strong>ERROR</strong>: Enter a username or e-mail address.'));
@@ -325,7 +325,7 @@ function retrieve_password() {
 	$allow = apply_filters( 'allow_password_reset', true, $user_data->ID );
 
 	if ( ! $allow )
-		return new WordPress\WP_Error('no_password_reset', __('Password reset is not allowed for this user'));
+		return new WordPress\WPError('no_password_reset', __('Password reset is not allowed for this user'));
 	else if ( is_wp_error($allow) )
 		return $allow;
 
@@ -395,7 +395,7 @@ function retrieve_password() {
 //
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'login';
-$errors = new WordPress\WP_Error();
+$errors = new WordPress\WPError();
 
 if ( isset($_GET['key']) )
 	$action = 'resetpass';
@@ -567,7 +567,7 @@ case 'rp' :
 		exit;
 	}
 
-	$errors = new WordPress\WP_Error();
+	$errors = new WordPress\WPError();
 
 	if ( isset($_POST['pass1']) && $_POST['pass1'] != $_POST['pass2'] )
 		$errors->add( 'password_reset_mismatch', __( 'The passwords do not match.' ) );
@@ -578,7 +578,7 @@ case 'rp' :
 	 * @since 3.5.0
 	 *
 	 * @param object           $errors WP Error object.
-	 * @param WP_User|WP_Error $user   WP_User object if the login and reset key match. WP_Error object otherwise.
+	 * @param WPUser|WPError $user   WPUser object if the login and reset key match. WPError object otherwise.
 	 */
 	do_action( 'validate_password_reset', $errors, $user );
 
@@ -742,7 +742,7 @@ default:
 
 	// If cookies are disabled we can't log in even with a valid user+pass
 	if ( isset($_POST['testcookie']) && empty($_COOKIE[TEST_COOKIE]) )
-		$user = new WordPress\WP_Error('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
+		$user = new WordPress\WPError('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
 	else
 		$user = wp_signon('', $secure_cookie);
 
@@ -754,7 +754,7 @@ default:
 	 *
 	 * @param string           $redirect_to           The redirect destination URL.
 	 * @param string           $requested_redirect_to The requested redirect destination URL passed as a parameter.
-	 * @param WP_User|WP_Error $user                  WP_User object if login was successful, WP_Error object otherwise.
+	 * @param WPUser|WPError $user                  WPUser object if login was successful, WPError object otherwise.
 	 */
 	$redirect_to = apply_filters( 'login_redirect', $redirect_to, $requested_redirect_to, $user );
 
@@ -790,7 +790,7 @@ default:
 	$errors = $user;
 	// Clear errors if loggedout is set.
 	if ( !empty($_GET['loggedout']) || $reauth )
-		$errors = new WordPress\WP_Error();
+		$errors = new WordPress\WPError();
 
 	if ( $interim_login ) {
 		if ( ! $errors->get_error_code() )

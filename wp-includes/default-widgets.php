@@ -11,7 +11,7 @@
  *
  * @since 2.8.0
  */
-class WP_Widget_Pages extends WP_Widget {
+class WP_Widget_Pages extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_pages', 'description' => __( 'Your site&#8217;s WordPress Pages') );
@@ -87,7 +87,7 @@ class WP_Widget_Pages extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Links extends WP_Widget {
+class WP_Widget_Links extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('description' => __( "Your blogroll" ) );
@@ -187,7 +187,7 @@ class WP_Widget_Links extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Search extends WP_Widget {
+class WP_Widget_Search extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_search', 'description' => __( "A search form for your site") );
@@ -230,7 +230,7 @@ class WP_Widget_Search extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Archives extends WP_Widget {
+class WP_Widget_Archives extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_archive', 'description' => __( 'A monthly archive of your site&#8217;s posts') );
@@ -295,7 +295,7 @@ class WP_Widget_Archives extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Meta extends WP_Widget {
+class WP_Widget_Meta extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_meta', 'description' => __( "Log in/out, admin, feed and WordPress links") );
@@ -347,7 +347,7 @@ class WP_Widget_Meta extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Calendar extends WP_Widget {
+class WP_Widget_Calendar extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_calendar', 'description' => __( 'A calendar of your site&#8217;s posts') );
@@ -388,7 +388,7 @@ class WP_Widget_Calendar extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Text extends WP_Widget {
+class WP_Widget_Text extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_text', 'description' => __('Arbitrary text or HTML'));
@@ -438,7 +438,7 @@ class WP_Widget_Text extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Categories extends WP_Widget {
+class WP_Widget_Categories extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_categories', 'description' => __( "A list or dropdown of categories" ) );
@@ -530,7 +530,7 @@ class WP_Widget_Categories extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Recent_Posts extends WP_Widget {
+class WP_Widget_Recent_Posts extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_recent_entries', 'description' => __( "The most recent posts on your site") );
@@ -632,7 +632,7 @@ class WP_Widget_Recent_Posts extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_Recent_Comments extends WP_Widget {
+class WP_Widget_Recent_Comments extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_recent_comments', 'description' => __( 'The most recent comments' ) );
@@ -739,7 +739,7 @@ class WP_Widget_Recent_Comments extends WP_Widget {
  *
  * @since 2.8.0
  */
-class WP_Widget_RSS extends WP_Widget {
+class WP_Widget_RSS extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array( 'description' => __('Entries from any RSS or Atom feed') );
@@ -1030,7 +1030,7 @@ function wp_widget_rss_process( $widget_rss, $check_feed = true ) {
  *
  * @since 2.8.0
  */
-class WP_Widget_Tag_Cloud extends WP_Widget {
+class WP_Widget_Tag_Cloud extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array( 'description' => __( "Your most used tags in cloud format") );
@@ -1097,7 +1097,7 @@ class WP_Widget_Tag_Cloud extends WP_Widget {
  *
  * @since 3.0.0
  */
- class WP_Nav_Menu_Widget extends WP_Widget {
+ class WP_Nav_Menu_Widget extends \WordPress\WPWidget {
 
 	function __construct() {
 		$widget_ops = array( 'description' => __('Use this widget to add one of your custom menus as a widget.') );

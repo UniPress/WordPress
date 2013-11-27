@@ -193,10 +193,10 @@ function wp_image_editor($post_id, $msg = false) {
 }
 
 /**
- * Streams image in WP_Image_Editor to browser.
+ * Streams image in WPImageEditor to browser.
  * Provided for backcompat reasons
  *
- * @param WP_Image_Editor $image
+ * @param WPImageEditor $image
  * @param string $mime_type
  * @param int $post_id
  * @return boolean
@@ -210,7 +210,7 @@ function wp_stream_image( $image, $mime_type, $post_id ) {
 
 		return true;
 	} else {
-		_deprecated_argument( __FUNCTION__, '3.5', __( '$image needs to be an WP_Image_Editor object' ) );
+		_deprecated_argument( __FUNCTION__, '3.5', __( '$image needs to be an WPImageEditor object' ) );
 
 		$image = apply_filters('image_save_pre', $image, $post_id);
 
@@ -249,7 +249,7 @@ function wp_save_image_file( $filename, $image, $mime_type, $post_id ) {
 
 		return $image->save( $filename, $mime_type );
 	} else {
-		_deprecated_argument( __FUNCTION__, '3.5', __( '$image needs to be an WP_Image_Editor object' ) );
+		_deprecated_argument( __FUNCTION__, '3.5', __( '$image needs to be an WPImageEditor object' ) );
 
 		$image = apply_filters('image_save_pre', $image, $post_id);
 		$saved = apply_filters('wp_save_image_file', null, $filename, $image, $mime_type, $post_id);
@@ -277,7 +277,7 @@ function _image_get_preview_ratio($w, $h) {
 
 // @TODO: Returns GD resource, but is NOT public
 function _rotate_image_resource($img, $angle) {
-	_deprecated_function( __FUNCTION__, '3.5', __( 'Use WP_Image_Editor::rotate' ) );
+	_deprecated_function( __FUNCTION__, '3.5', __( 'Use WPImageEditor::rotate' ) );
 	if ( function_exists('imagerotate') ) {
 		$rotated = imagerotate($img, $angle, 0);
 		if ( is_resource($rotated) ) {
@@ -299,7 +299,7 @@ function _rotate_image_resource($img, $angle) {
  * @return GD_Resource
  */
 function _flip_image_resource($img, $horz, $vert) {
-	_deprecated_function( __FUNCTION__, '3.5', __( 'Use WP_Image_Editor::flip' ) );
+	_deprecated_function( __FUNCTION__, '3.5', __( 'Use WPImageEditor::flip' ) );
 	$w = imagesx($img);
 	$h = imagesy($img);
 	$dst = wp_imagecreatetruecolor($w, $h);
@@ -349,7 +349,7 @@ function _crop_image_resource($img, $x, $y, $w, $h) {
  */
 function image_edit_apply_changes( $image, $changes ) {
 	if ( is_resource( $image ) )
-		_deprecated_argument( __FUNCTION__, '3.5', __( '$image needs to be an WP_Image_Editor object' ) );
+		_deprecated_argument( __FUNCTION__, '3.5', __( '$image needs to be an WPImageEditor object' ) );
 
 	if ( !is_array($changes) )
 		return $image;

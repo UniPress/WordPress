@@ -75,7 +75,7 @@ function wp_install( $blog_title, $user_name, $user_email, $public, $deprecated 
 		$message = __('User already exists. Password inherited.');
 	}
 
-	$user = new WordPress\WP_User($user_id);
+	$user = new WordPress\WPUser($user_id);
 	$user->set_role('administrator');
 
 	wp_install_defaults($user_id);
@@ -230,7 +230,7 @@ As a new WordPress user, you should go to <a href=\"%s\">your dashboard</a> to d
 		$wp_rewrite->init();
 		$wp_rewrite->flush_rules();
 
-		$user = new WordPress\WP_User($user_id);
+		$user = new WordPress\WPUser($user_id);
 		$wpdb->update( $wpdb->options, array('option_value' => $user->user_email), array('option_name' => 'admin_email') );
 
 		// Remove all perms except for the login user.
@@ -258,7 +258,7 @@ if ( !function_exists('wp_new_blog_notification') ) :
  * @param string $password User's Password.
  */
 function wp_new_blog_notification($blog_title, $blog_url, $user_id, $password) {
-	$user = new WordPress\WP_User( $user_id );
+	$user = new WordPress\WPUser( $user_id );
 	$email = $user->user_email;
 	$name = $user->user_login;
 	$message = sprintf(__("Your new WordPress site has been successfully set up at:

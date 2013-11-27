@@ -115,7 +115,7 @@ function get_author_template() {
 
 	$templates = array();
 
-	if ( is_a( $author, 'WP_User' ) ) {
+	if ( is_a( $author, 'WPUser' ) ) {
 		$templates[] = "author-{$author->user_nicename}.php";
 		$templates[] = "author-{$author->ID}.php";
 	}

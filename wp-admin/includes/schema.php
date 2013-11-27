@@ -850,13 +850,13 @@ endif;
  * @since 3.0.0
  *
  * @param int $network_id ID of network to populate.
- * @return bool|WP_Error True on success, or WP_Error on warning (with the install otherwise successful,
+ * @return bool|WPError True on success, or WPError on warning (with the install otherwise successful,
  *                       so the error code must be checked) or failure.
  */
 function populate_network( $network_id = 1, $domain = '', $email = '', $site_name = '', $path = '/', $subdomain_install = false ) {
 	global $wpdb, $current_site, $wp_db_version, $wp_rewrite;
 
-	$errors = new WordPress\WP_Error();
+	$errors = new WordPress\WPError();
 	if ( '' == $domain )
 		$errors->add( 'empty_domain', __( 'You must provide a domain name.' ) );
 	if ( '' == $site_name )
@@ -1004,7 +1004,7 @@ We hope you enjoy your new site. Thanks!
 			$msg .= '</p>';
 			$msg .= '<p>' . __( 'To use a subdomain configuration, you must have a wildcard entry in your DNS. This usually means adding a <code>*</code> hostname record pointing at your web server in your DNS configuration tool.' ) . '</p>';
 			$msg .= '<p>' . __( 'You can still use your site but any subdomain you create may not be accessible. If you know your DNS is correct, ignore this message.' ) . '</p>';
-			return new WordPress\WP_Error( 'no_wildcard_dns', $msg );
+			return new WordPress\WPError( 'no_wildcard_dns', $msg );
 		}
 	}
 

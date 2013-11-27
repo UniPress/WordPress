@@ -86,8 +86,8 @@ function wp_create_categories($categories, $post_id = '') {
  * @since 2.0.0
  *
  * @param mixed $catarr See defaults below. Set 'cat_ID' to a non-zero value to update an existing category. The 'taxonomy' key was added in 3.0.0.
- * @param bool $wp_error Optional, since 2.5.0. Set this to true if the caller handles WP_Error return values.
- * @return int|object The ID number of the new or updated Category on success. Zero or a WP_Error on failure, depending on param $wp_error.
+ * @param bool $wp_error Optional, since 2.5.0. Set this to true if the caller handles WPError return values.
+ * @return int|object The ID number of the new or updated Category on success. Zero or a WPError on failure, depending on param $wp_error.
  */
 function wp_insert_category($catarr, $wp_error = false) {
 	$cat_defaults = array('cat_ID' => 0, 'taxonomy' => 'category', 'cat_name' => '', 'category_description' => '', 'category_nicename' => '', 'category_parent' => '');
@@ -98,7 +98,7 @@ function wp_insert_category($catarr, $wp_error = false) {
 		if ( ! $wp_error )
 			return 0;
 		else
-			return new WordPress\WP_Error( 'cat_name', __('You did not enter a category name.') );
+			return new WordPress\WPError( 'cat_name', __('You did not enter a category name.') );
 	}
 
 	$cat_ID = (int) $cat_ID;

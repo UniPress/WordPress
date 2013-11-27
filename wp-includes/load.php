@@ -301,14 +301,14 @@ function wp_set_lang_dir() {
 function require_wp_db() {
 	global $wpdb;
 
-	require_once( ABSPATH . '/src/WordPress/WP_DB.php' );
-	if ( file_exists( WP_CONTENT_DIR . '/db.php' ) )
-		require_once( WP_CONTENT_DIR . '/db.php' );
+	//require_once( ABSPATH . '/src/WordPress/WPDB.php' );
+	//if ( file_exists( WP_CONTENT_DIR . '/db.php' ) )
+	//	require_once( WP_CONTENT_DIR . '/db.php' );
 
 	if ( isset( $wpdb ) )
 		return;
 
-	$wpdb = new WP_DB( DB_USER, DB_PASSWORD, DB_NAME, DB_HOST );
+	$wpdb = new \WordPress\WPDB( DB_USER, DB_PASSWORD, DB_NAME, DB_HOST );
 }
 
 /**

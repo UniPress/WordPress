@@ -14,7 +14,7 @@
  * @since 3.0.0
  * @uses Walker
  */
-class Walker_Nav_Menu extends Walker {
+class Walker_Nav_Menu extends \WordPress\Walker {
 	/**
 	 * What the class handles.
 	 *

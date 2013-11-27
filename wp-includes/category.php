@@ -106,7 +106,7 @@ function get_category( $category, $output = OBJECT, $filter = 'raw' ) {
  * match, then it will return the first category matching slug, if $full_match,
  * is set to false. If it does not, then it will return null.
  *
- * It is also possible that it will return a WP_Error object on failure. Check
+ * It is also possible that it will return a WPError object on failure. Check
  * for it when using this function.
  *
  * @since 2.1.0

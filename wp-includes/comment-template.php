@@ -1478,7 +1478,7 @@ function comment_form_title( $noreplytext = false, $replytext = false, $linktopa
  * @uses Walker
  * @since 2.7.0
  */
-class Walker_Comment extends Walker {
+class Walker_Comment extends \WordPress\Walker {
 	/**
 	 * What the class handles.
 	 *

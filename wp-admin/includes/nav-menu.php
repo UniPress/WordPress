@@ -1185,7 +1185,7 @@ function wp_get_nav_menu_to_edit( $menu_id = 0 ) {
 		if ( class_exists( $walker_class_name ) )
 			$walker = new $walker_class_name;
 		else
-			return new WordPress\WP_Error( 'menu_walker_not_exist', sprintf( __('The Walker class named <strong>%s</strong> does not exist.'), $walker_class_name ) );
+			return new WordPress\WPError( 'menu_walker_not_exist', sprintf( __('The Walker class named <strong>%s</strong> does not exist.'), $walker_class_name ) );
 
 		$some_pending_menu_items = $some_invalid_menu_items = false;
 		foreach( (array) $menu_items as $menu_item ) {

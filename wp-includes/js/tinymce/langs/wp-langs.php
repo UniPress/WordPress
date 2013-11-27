@@ -3,7 +3,7 @@
 if ( ! defined( 'ABSPATH' ) )
 	exit;
 
-if ( ! class_exists( '_WP_Editors' ) )
+if ( ! class_exists( 'WPEditors' ) )
 	require(ABSPATH . WPINC . '/class-wp-editor.php');
 
 // deprecated, not used

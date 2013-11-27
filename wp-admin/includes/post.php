@@ -16,7 +16,7 @@
  *
  * @param bool $update Are we updating a pre-existing post?
  * @param array $post_data Array of post data. Defaults to the contents of $_POST.
- * @return object|bool WP_Error on failure, true on success.
+ * @return object|bool WPError on failure, true on success.
  */
 function _wp_translate_postdata( $update = false, $post_data = null ) {
 
@@ -30,14 +30,14 @@ function _wp_translate_postdata( $update = false, $post_data = null ) {
 
 	if ( $update && ! current_user_can( 'edit_post', $post_data['ID'] ) ) {
 		if ( 'page' == $post_data['post_type'] )
-			return new WordPress\WP_Error( 'edit_others_pages', __( 'You are not allowed to edit pages as this user.' ) );
+			return new WordPress\WPError( 'edit_others_pages', __( 'You are not allowed to edit pages as this user.' ) );
 		else
-			return new WordPress\WP_Error( 'edit_others_posts', __( 'You are not allowed to edit posts as this user.' ) );
+			return new WordPress\WPError( 'edit_others_posts', __( 'You are not allowed to edit posts as this user.' ) );
 	} elseif ( ! $update && ! current_user_can( $ptype->cap->create_posts ) ) {
 		if ( 'page' == $post_data['post_type'] )
-			return new WordPress\WP_Error( 'edit_others_pages', __( 'You are not allowed to create pages as this user.' ) );
+			return new WordPress\WPError( 'edit_others_pages', __( 'You are not allowed to create pages as this user.' ) );
 		else
-			return new WordPress\WP_Error( 'edit_others_posts', __( 'You are not allowed to create posts as this user.' ) );
+			return new WordPress\WPError( 'edit_others_posts', __( 'You are not allowed to create posts as this user.' ) );
 	}
 
 	if ( isset( $post_data['content'] ) )
@@ -68,14 +68,14 @@ function _wp_translate_postdata( $update = false, $post_data = null ) {
 		 && ! current_user_can( $ptype->cap->edit_others_posts ) ) {
 		if ( $update ) {
 			if ( 'page' == $post_data['post_type'] )
-				return new WordPress\WP_Error( 'edit_others_pages', __( 'You are not allowed to edit pages as this user.' ) );
+				return new WordPress\WPError( 'edit_others_pages', __( 'You are not allowed to edit pages as this user.' ) );
 			else
-				return new WordPress\WP_Error( 'edit_others_posts', __( 'You are not allowed to edit posts as this user.' ) );
+				return new WordPress\WPError( 'edit_others_posts', __( 'You are not allowed to edit posts as this user.' ) );
 		} else {
 			if ( 'page' == $post_data['post_type'] )
-				return new WordPress\WP_Error( 'edit_others_pages', __( 'You are not allowed to create pages as this user.' ) );
+				return new WordPress\WPError( 'edit_others_pages', __( 'You are not allowed to create pages as this user.' ) );
 			else
-				return new WordPress\WP_Error( 'edit_others_posts', __( 'You are not allowed to create posts as this user.' ) );
+				return new WordPress\WPError( 'edit_others_posts', __( 'You are not allowed to create posts as this user.' ) );
 		}
 	}
 
@@ -141,7 +141,7 @@ function _wp_translate_postdata( $update = false, $post_data = null ) {
 		$post_data['post_date'] = sprintf( "%04d-%02d-%02d %02d:%02d:%02d", $aa, $mm, $jj, $hh, $mn, $ss );
 		$valid_date = wp_checkdate( $mm, $jj, $aa, $post_data['post_date'] );
 		if ( !$valid_date ) {
-			return new WordPress\WP_Error( 'invalid_date', __( 'Whoops, the provided date is invalid.' ) );
+			return new WordPress\WPError( 'invalid_date', __( 'Whoops, the provided date is invalid.' ) );
 		}
 		$post_data['post_date_gmt'] = get_gmt_from_date( $post_data['post_date'] );
 	}
@@ -555,9 +555,9 @@ function wp_write_post() {
 
 	if ( !current_user_can( $ptype->cap->edit_posts ) ) {
 		if ( 'page' == $ptype->name )
-			return new WordPress\WP_Error( 'edit_pages', __( 'You are not allowed to create pages on this site.' ) );
+			return new WordPress\WPError( 'edit_pages', __( 'You are not allowed to create pages on this site.' ) );
 		else
-			return new WordPress\WP_Error( 'edit_posts', __( 'You are not allowed to create posts or drafts on this site.' ) );
+			return new WordPress\WPError( 'edit_posts', __( 'You are not allowed to create posts or drafts on this site.' ) );
 	}
 
 	$_POST['post_mime_type'] = '';
@@ -759,7 +759,7 @@ function update_meta( $meta_id, $meta_key, $meta_value ) {
  * @access private
  *
  * @param int|object $post Post ID or post object.
- * @return void|int|WP_Error Void if nothing fixed. 0 or WP_Error on update failure. The post ID on update success.
+ * @return void|int|WPError Void if nothing fixed. 0 or WPError on update failure. The post ID on update success.
  */
 function _fix_attachment_links( $post ) {
 	$post = get_post( $post, ARRAY_A );

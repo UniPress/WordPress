@@ -227,7 +227,7 @@ function _wp_put_post_revision( $post = null, $autosave = false ) {
 		return;
 
 	if ( isset($post['post_type']) && 'revision' == $post['post_type'] )
-		return new WordPress\WP_Error( 'post_type', __( 'Cannot create a revision of a revision' ) );
+		return new WordPress\WPError( 'post_type', __( 'Cannot create a revision of a revision' ) );
 
 	$post_id = $post['ID'];
 	$post = _wp_post_revision_fields( $post, $autosave );
@@ -341,7 +341,7 @@ function wp_restore_post_revision( $revision_id, $fields = null ) {
  * @uses wp_delete_post()
  *
  * @param int|object $revision_id Revision ID or revision object.
- * @return mixed Null or WP_Error if error, deleted post if success.
+ * @return mixed Null or WPError if error, deleted post if success.
  */
 function wp_delete_post_revision( $revision_id ) {
 	if ( !$revision = wp_get_post_revision( $revision_id ) )

@@ -205,7 +205,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 								 *
 								 * @param array   $actions An array of action links to be displayed.
 								 *                         Default 'Edit', 'Delete'.
-								 * @param WP_User $user    WP_User object.
+								 * @param WPUser $user    WPUser object.
 								 */
 								$actions = apply_filters( 'ms_user_row_actions', $actions, $user );
 								echo $this->row_actions( $actions );

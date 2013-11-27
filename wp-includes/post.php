@@ -1216,7 +1216,7 @@ function register_post_type( $post_type, $args = array() ) {
 	$args->name = $post_type;
 
 	if ( strlen( $post_type ) > 20 )
-		return new WordPress\WP_Error( 'post_type_too_long', __( 'Post types cannot exceed 20 characters in length' ) );
+		return new WordPress\WPError( 'post_type_too_long', __( 'Post types cannot exceed 20 characters in length' ) );
 
 	// If not set, default to the setting for public.
 	if ( null === $args->publicly_queryable )
@@ -2691,8 +2691,8 @@ function wp_get_recent_posts( $args = array(), $output = ARRAY_A ) {
  *     @type string 'post_content_filtered' The filtered post content. Default empty string.
  *     @type string 'post_excerpt'          The post excerpt. Default empty string.
  * }
- * @param bool  $wp_error Optional. Allow return of WP_Error on failure.
- * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
+ * @param bool  $wp_error Optional. Allow return of WPError on failure.
+ * @return int|WPError The post ID on success. The value 0 or WPError on failure.
  */
 function wp_insert_post( $postarr, $wp_error = false ) {
 	global $wpdb;
@@ -2725,7 +2725,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		$post_before = get_post( $post_ID );
 		if ( is_null( $post_before ) ) {
 			if ( $wp_error )
-				return new WordPress\WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
+				return new WordPress\WPError( 'invalid_post', __( 'Invalid post ID.' ) );
 			return 0;
 		}
 
@@ -2740,7 +2740,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 
 	if ( apply_filters( 'wp_insert_post_empty_content', $maybe_empty, $postarr ) ) {
 		if ( $wp_error )
-			return new WordPress\WP_Error( 'empty_content', __( 'Content, title, and excerpt are empty.' ) );
+			return new WordPress\WPError( 'empty_content', __( 'Content, title, and excerpt are empty.' ) );
 		else
 			return 0;
 	}
@@ -2797,7 +2797,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		$valid_date = wp_checkdate( $mm, $jj, $aa, $post_date );
 		if ( !$valid_date ) {
 			if ( $wp_error )
-				return new WordPress\WP_Error( 'invalid_date', __( 'Whoops, the provided date is invalid.' ) );
+				return new WordPress\WPError( 'invalid_date', __( 'Whoops, the provided date is invalid.' ) );
 			else
 				return 0;
 		}
@@ -2872,7 +2872,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		do_action( 'pre_post_update', $post_ID, $data );
 		if ( false === $wpdb->update( $wpdb->posts, $data, $where ) ) {
 			if ( $wp_error )
-				return new WordPress\WP_Error('db_update_error', __('Could not update post in the database'), $wpdb->last_error);
+				return new WordPress\WPError('db_update_error', __('Could not update post in the database'), $wpdb->last_error);
 			else
 				return 0;
 		}
@@ -2888,7 +2888,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		}
 		if ( false === $wpdb->insert( $wpdb->posts, $data ) ) {
 			if ( $wp_error )
-				return new WordPress\WP_Error('db_insert_error', __('Could not insert post into the database'), $wpdb->last_error);
+				return new WordPress\WPError('db_insert_error', __('Could not insert post into the database'), $wpdb->last_error);
 			else
 				return 0;
 		}
@@ -2935,7 +2935,7 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 		$page_templates = wp_get_theme()->get_page_templates();
 		if ( 'default' != $page_template && ! isset( $page_templates[ $page_template ] ) ) {
 			if ( $wp_error )
-				return new WordPress\WP_Error('invalid_page_template', __('The page template is invalid.'));
+				return new WordPress\WPError('invalid_page_template', __('The page template is invalid.'));
 			else
 				return 0;
 		}
@@ -2966,8 +2966,8 @@ function wp_insert_post( $postarr, $wp_error = false ) {
  * @since 1.0.0
  *
  * @param array|object $postarr Post data. Arrays are expected to be escaped, objects are not.
- * @param bool $wp_error Optional. Allow return of WP_Error on failure.
- * @return int|WP_Error The value 0 or WP_Error on failure. The post ID on success.
+ * @param bool $wp_error Optional. Allow return of WPError on failure.
+ * @return int|WPError The value 0 or WPError on failure. The post ID on success.
  */
 function wp_update_post( $postarr = array(), $wp_error = false ) {
 	if ( is_object($postarr) ) {
@@ -2981,7 +2981,7 @@ function wp_update_post( $postarr = array(), $wp_error = false ) {
 
 	if ( is_null( $post ) ) {
 		if ( $wp_error )
-			return new WordPress\WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
+			return new WordPress\WPError( 'invalid_post', __( 'Invalid post ID.' ) );
 		return 0;
 	}
 
@@ -3206,7 +3206,7 @@ function wp_add_post_tags($post_id = 0, $tags = '') {
  * @param int $post_id Post ID.
  * @param string $tags The tags to set for the post, separated by commas.
  * @param bool $append If true, don't delete existing tags, just add on. If false, replace the tags with the new tags.
- * @return mixed Array of affected term IDs. WP_Error or false on failure.
+ * @return mixed Array of affected term IDs. WPError or false on failure.
  */
 function wp_set_post_tags( $post_id = 0, $tags = '', $append = false ) {
 	return wp_set_post_terms( $post_id, $tags, 'post_tag', $append);
@@ -3222,7 +3222,7 @@ function wp_set_post_tags( $post_id = 0, $tags = '', $append = false ) {
  * @param string $tags The tags to set for the post, separated by commas.
  * @param string $taxonomy Taxonomy name. Defaults to 'post_tag'.
  * @param bool $append If true, don't delete existing tags, just add on. If false, replace the tags with the new tags.
- * @return mixed Array of affected term IDs. WP_Error or false on failure.
+ * @return mixed Array of affected term IDs. WPError or false on failure.
  */
 function wp_set_post_terms( $post_id = 0, $tags = '', $taxonomy = 'post_tag', $append = false ) {
 	$post_id = (int) $post_id;

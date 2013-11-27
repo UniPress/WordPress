@@ -2,7 +2,7 @@
 
 namespace WordPress\Pomo;
 
-use WordPress\Pomo\Gettext_Translations;
+use WordPress\Pomo\GettextTranslations;
 
 /**
  * Class for working with PO files
@@ -19,7 +19,7 @@ ini_set('auto_detect_line_endings', 1);
 /**
  * Routines for working with PO files
  */
-class PO extends Gettext_Translations {
+class PO extends GettextTranslations {
 
 	var $comments_before_headers = '';
 

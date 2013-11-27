@@ -2670,7 +2670,7 @@ function sanitize_user_object($user, $context = 'display') {
 	if ( is_object($user) ) {
 		if ( !isset($user->ID) )
 			$user->ID = 0;
-		if ( !is_a( $user, 'WP_User' ) ) {
+		if ( !is_a( $user, 'WPUser' ) ) {
 			$vars = get_object_vars($user);
 			foreach ( array_keys($vars) as $field ) {
 				if ( is_string($user->$field) || is_numeric($user->$field) )
@@ -3245,7 +3245,7 @@ function wp_load_image( $file ) {
  * @param string $suffix Optional. File suffix.
  * @param string $dest_path Optional. New image file path.
  * @param int $jpeg_quality Optional, default is 90. Image quality percentage.
- * @return mixed WP_Error on failure. String with new destination path.
+ * @return mixed WPError on failure. String with new destination path.
  */
 function image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $dest_path = null, $jpeg_quality = 90 ) {
 	_deprecated_function( __FUNCTION__, '3.5', 'wp_get_image_editor()' );

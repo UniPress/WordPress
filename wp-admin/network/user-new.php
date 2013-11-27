@@ -48,7 +48,7 @@ if ( isset($_REQUEST['action']) && 'add-user' == $_REQUEST['action'] ) {
 		$user_id = wpmu_create_user( esc_html( strtolower( $user['username'] ) ), $password, esc_html( $user['email'] ) );
 
 		if ( ! $user_id ) {
-	 		$add_user_errors = new WordPress\WP_Error( 'add_user_fail', __( 'Cannot add user.' ) );
+	 		$add_user_errors = new WordPress\WPError( 'add_user_fail', __( 'Cannot add user.' ) );
 		} else {
 			wp_new_user_notification( $user_id, $password );
 			wp_redirect( add_query_arg( array('update' => 'added'), 'user-new.php' ) );

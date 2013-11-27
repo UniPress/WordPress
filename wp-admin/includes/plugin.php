@@ -516,7 +516,7 @@ function is_network_only_plugin( $plugin ) {
  * @param bool $network_wide Whether to enable the plugin for all sites in the
  *   network or just the current site. Multisite only. Default is false.
  * @param bool $silent Prevent calling activation hooks. Optional, default is false.
- * @return WP_Error|null WP_Error on invalid file or null on success.
+ * @return WPError|null WPError on invalid file or null on success.
  */
 function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silent = false ) {
 	$plugin = plugin_basename( trim( $plugin ) );
@@ -589,7 +589,7 @@ function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silen
 
 		if ( ob_get_length() > 0 ) {
 			$output = ob_get_clean();
-			return new WordPress\WP_Error('unexpected_output', __('The plugin generated unexpected output.'), $output);
+			return new WordPress\WPError('unexpected_output', __('The plugin generated unexpected output.'), $output);
 		}
 		ob_end_clean();
 	}
@@ -691,7 +691,7 @@ function deactivate_plugins( $plugins, $silent = false, $network_wide = null ) {
 /**
  * Activate multiple plugins.
  *
- * When WP_Error is returned, it does not mean that one of the plugins had
+ * When WPError is returned, it does not mean that one of the plugins had
  * errors. It means that one or more of the plugins file path was invalid.
  *
  * The execution will be halted as soon as one of the plugins has an error.
@@ -702,7 +702,7 @@ function deactivate_plugins( $plugins, $silent = false, $network_wide = null ) {
  * @param string $redirect Redirect to page after successful activation.
  * @param bool $network_wide Whether to enable the plugin for all sites in the network.
  * @param bool $silent Prevent calling activation hooks. Default is false.
- * @return bool|WP_Error True when finished or WP_Error if there were errors during a plugin activation.
+ * @return bool|WPError True when finished or WPError if there were errors during a plugin activation.
  */
 function activate_plugins( $plugins, $redirect = '', $network_wide = false, $silent = false ) {
 	if ( !is_array($plugins) )
@@ -718,7 +718,7 @@ function activate_plugins( $plugins, $redirect = '', $network_wide = false, $sil
 	}
 
 	if ( !empty($errors) )
-		return new WordPress\WP_Error('plugins_invalid', __('One of the plugins is invalid.'), $errors);
+		return new WordPress\WPError('plugins_invalid', __('One of the plugins is invalid.'), $errors);
 
 	return true;
 }
@@ -773,15 +773,15 @@ function delete_plugins($plugins, $redirect = '' ) {
 	}
 
 	if ( ! is_object($wp_filesystem) )
-		return new WordPress\WP_Error('fs_unavailable', __('Could not access filesystem.'));
+		return new WordPress\WPError('fs_unavailable', __('Could not access filesystem.'));
 
 	if ( is_wp_error($wp_filesystem->errors) && $wp_filesystem->errors->get_error_code() )
-		return new WordPress\WP_Error('fs_error', __('Filesystem error.'), $wp_filesystem->errors);
+		return new WordPress\WPError('fs_error', __('Filesystem error.'), $wp_filesystem->errors);
 
 	//Get the base plugin folder
 	$plugins_dir = $wp_filesystem->wp_plugins_dir();
 	if ( empty($plugins_dir) )
-		return new WordPress\WP_Error('fs_no_plugins_dir', __('Unable to locate WordPress Plugin directory.'));
+		return new WordPress\WPError('fs_no_plugins_dir', __('Unable to locate WordPress Plugin directory.'));
 
 	$plugins_dir = trailingslashit( $plugins_dir );
 
@@ -816,7 +816,7 @@ function delete_plugins($plugins, $redirect = '' ) {
 	}
 
 	if ( ! empty($errors) )
-		return new WordPress\WP_Error('could_not_remove_plugin', sprintf(__('Could not fully remove the plugin(s) %s.'), implode(', ', $errors)) );
+		return new WordPress\WPError('could_not_remove_plugin', sprintf(__('Could not fully remove the plugin(s) %s.'), implode(', ', $errors)) );
 
 	return true;
 }
@@ -867,17 +867,17 @@ function validate_active_plugins() {
  * @since 2.5.0
  *
  * @param string $plugin Plugin Path
- * @return WP_Error|int 0 on success, WP_Error on failure.
+ * @return WPError|int 0 on success, WPError on failure.
  */
 function validate_plugin($plugin) {
 	if ( validate_file($plugin) )
-		return new WordPress\WP_Error('plugin_invalid', __('Invalid plugin path.'));
+		return new WordPress\WPError('plugin_invalid', __('Invalid plugin path.'));
 	if ( ! file_exists(WP_PLUGIN_DIR . '/' . $plugin) )
-		return new WordPress\WP_Error('plugin_not_found', __('Plugin file does not exist.'));
+		return new WordPress\WPError('plugin_not_found', __('Plugin file does not exist.'));
 
 	$installed_plugins = get_plugins();
 	if ( ! isset($installed_plugins[$plugin]) )
-		return new WordPress\WP_Error('no_plugin_header', __('The plugin does not have a valid header.'));
+		return new WordPress\WPError('no_plugin_header', __('The plugin does not have a valid header.'));
 	return 0;
 }
 

@@ -423,13 +423,13 @@ function user_can( $user, $capability ) {
  * @since 2.0.0
  *
  * @param string $role Role name.
- * @return WP_Role|null WP_Role object if found, null if the role does not exist.
+ * @return WPRole|null WPRole object if found, null if the role does not exist.
  */
 function get_role( $role ) {
 	global $wp_roles;
 
 	if ( ! isset( $wp_roles ) )
-		$wp_roles = new WordPress\WP_Roles();
+		$wp_roles = new WordPress\WPRoles();
 
 	return $wp_roles->get_role( $role );
 }
@@ -443,7 +443,7 @@ function get_role( $role ) {
  * @param string $role Role name.
  * @param string $display_name Display name for role.
  * @param array $capabilities List of capabilities, e.g. array( 'edit_posts' => true, 'delete_posts' => false );
- * @return WP_Role|null WP_Role object if role is added, null if already exists.
+ * @return WPRole|null WPRole object if role is added, null if already exists.
  */
 function add_role( $role, $display_name, $capabilities = array() ) {
 	global $wp_roles;

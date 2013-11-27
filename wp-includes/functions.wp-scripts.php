@@ -12,17 +12,17 @@
  * Print scripts in document head that are in the $handles queue.
  *
  * Called by admin-header.php and wp_head hook. Since it is called by wp_head on every page load,
- * the function does not instantiate the WP_Scripts object unless script names are explicitly passed.
+ * the function does not instantiate the WPScripts object unless script names are explicitly passed.
  * Makes use of already-instantiated $wp_scripts global if present. Use provided wp_print_scripts
  * hook to register/enqueue new scripts.
  *
  * @see WP_Scripts::do_items()
- * @global WP_Scripts $wp_scripts The WP_Scripts object for printing scripts.
+ * @global WPScripts $wp_scripts The WPScripts object for printing scripts.
  *
  * @since 2.6.0
  *
  * @param array|bool $handles Optional. Scripts to be printed. Default 'false'.
- * @return array On success, a processed array of WP_Dependencies items; otherwise, an empty array.
+ * @return array On success, a processed array of WPDependencies items; otherwise, an empty array.
  */
 function wp_print_scripts( $handles = false ) {
 	/**
@@ -35,7 +35,7 @@ function wp_print_scripts( $handles = false ) {
 		$handles = false;
 
 	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, 'WP_Scripts' ) ) {
+	if ( ! is_a( $wp_scripts, 'WPScripts' ) ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
@@ -55,7 +55,7 @@ function wp_print_scripts( $handles = false ) {
  * Registers a script to be linked later using the wp_enqueue_script() function.
  *
  * @see WP_Dependencies::add(), WP_Dependencies::add_data()
- * @global WP_Scripts $wp_scripts The WP_Scripts object for printing scripts.
+ * @global WPScripts $wp_scripts The WPScripts object for printing scripts.
  *
  * @since 2.6.0
  *
@@ -72,7 +72,7 @@ function wp_print_scripts( $handles = false ) {
  */
 function wp_register_script( $handle, $src, $deps = array(), $ver = false, $in_footer = false ) {
 	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, 'WP_Scripts' ) ) {
+	if ( ! is_a( $wp_scripts, 'WPScripts' ) ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
@@ -100,7 +100,7 @@ function wp_register_script( $handle, $src, $deps = array(), $ver = false, $in_f
  *
  * @see WP_Dependencies::localize()
  * @link http://core.trac.wordpress.org/ticket/11520
- * @global WP_Scripts $wp_scripts The WP_Scripts object for printing scripts.
+ * @global WPScripts $wp_scripts The WPScripts object for printing scripts.
  *
  * @since 2.6.0
  *
@@ -112,7 +112,7 @@ function wp_register_script( $handle, $src, $deps = array(), $ver = false, $in_f
  */
 function wp_localize_script( $handle, $object_name, $l10n ) {
 	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, 'WP_Scripts' ) ) {
+	if ( ! is_a( $wp_scripts, 'WPScripts' ) ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
@@ -130,7 +130,7 @@ function wp_localize_script( $handle, $object_name, $l10n ) {
  * such as jQuery core, from being unregistered.
  *
  * @see WP_Dependencies::remove()
- * @global WP_Scripts $wp_scripts The WP_Scripts object for printing scripts.
+ * @global WPScripts $wp_scripts The WPScripts object for printing scripts.
  *
  * @since 2.6.0
  *
@@ -138,7 +138,7 @@ function wp_localize_script( $handle, $object_name, $l10n ) {
  */
 function wp_deregister_script( $handle ) {
 	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, 'WP_Scripts' ) ) {
+	if ( ! is_a( $wp_scripts, 'WPScripts' ) ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
@@ -179,7 +179,7 @@ function wp_deregister_script( $handle ) {
  * Registers the script if $src provided (does NOT overwrite), and enqueues it.
  *
  * @see WP_Dependencies::add(), WP_Dependencies::add_data(), WP_Dependencies::enqueue()
- * @global WP_Scripts $wp_scripts The WP_Scripts object for printing scripts.
+ * @global WPScripts $wp_scripts The WPScripts object for printing scripts.
  *
  * @since 2.6.0
 
@@ -194,7 +194,7 @@ function wp_deregister_script( $handle ) {
  */
 function wp_enqueue_script( $handle, $src = false, $deps = array(), $ver = false, $in_footer = false ) {
 	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, 'WP_Scripts' ) ) {
+	if ( ! is_a( $wp_scripts, 'WPScripts' ) ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
@@ -214,7 +214,7 @@ function wp_enqueue_script( $handle, $src = false, $deps = array(), $ver = false
  * Remove a previously enqueued script.
  *
  * @see WP_Dependencies::dequeue()
- * @global WP_Scripts $wp_scripts The WP_Scripts object for printing scripts.
+ * @global WPScripts $wp_scripts The WPScripts object for printing scripts.
  *
  * @since 3.1.0
  *
@@ -222,7 +222,7 @@ function wp_enqueue_script( $handle, $src = false, $deps = array(), $ver = false
  */
 function wp_dequeue_script( $handle ) {
 	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, 'WP_Scripts' ) ) {
+	if ( ! is_a( $wp_scripts, 'WPScripts' ) ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
@@ -235,7 +235,7 @@ function wp_dequeue_script( $handle ) {
 /**
  * Check whether a script has been added to the queue.
  *
- * @global WP_Scripts $wp_scripts The WP_Scripts object for printing scripts.
+ * @global WPScripts $wp_scripts The WPScripts object for printing scripts.
  *
  * @since 2.8.0
  * @since 3.5.0 'enqueued' added as an alias of the 'queue' list.
@@ -247,7 +247,7 @@ function wp_dequeue_script( $handle ) {
  */
 function wp_script_is( $handle, $list = 'enqueued' ) {
 	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, 'WP_Scripts' ) ) {
+	if ( ! is_a( $wp_scripts, 'WPScripts' ) ) {
 		if ( ! did_action( 'init' ) )
 			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
 				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );

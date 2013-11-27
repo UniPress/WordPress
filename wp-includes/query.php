@@ -874,7 +874,7 @@ class WP_Query {
 	 *
 	 * @since 3.7.0
 	 * @access public
-	 * @var object WP_Date_Query
+	 * @var object WPDateQuery
 	 */
 	var $date_query = false;
 
@@ -2315,14 +2315,14 @@ class WP_Query {
 			$date_parameters['day'] = $q['day'];
 
 		if ( $date_parameters ) {
-			$date_query = new WP_Date_Query( array( $date_parameters ) );
+			$date_query = new WPDateQuery( array( $date_parameters ) );
 			$where .= $date_query->get_sql();
 		}
 		unset( $date_parameters, $date_query );
 
 		// Handle complex date queries
 		if ( ! empty( $q['date_query'] ) ) {
-			$this->date_query = new WP_Date_Query( $q['date_query'] );
+			$this->date_query = new WPDateQuery( $q['date_query'] );
 			$where .= $this->date_query->get_sql();
 		}
 

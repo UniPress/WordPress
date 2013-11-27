@@ -2,13 +2,13 @@
 
 namespace WordPress\Pomo;
 
-use WordPress\Pomo\POMO_Reader;
+use WordPress\Pomo\POMOReader;
 
 /**
  * Provides file-like methods for manipulating a string instead
  * of a physical file.
  */
-class POMO_StringReader extends POMO_Reader {
+class POMO_StringReader extends POMOReader {
 
     var $_str = '';
 

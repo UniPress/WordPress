@@ -213,7 +213,7 @@ function media_handle_upload($file_id, $post_id, $post_data = array(), $override
 	$file = wp_handle_upload($_FILES[$file_id], $overrides, $time);
 
 	if ( isset($file['error']) )
-		return new WordPress\WP_Error( 'upload_error', $file['error'] );
+		return new WordPress\WPError( 'upload_error', $file['error'] );
 
 	$name_parts = pathinfo($name);
 	$name = trim( substr( $name, 0, -(1 + strlen($name_parts['extension'])) ) );
@@ -316,7 +316,7 @@ function media_handle_upload($file_id, $post_id, $post_data = array(), $override
  * @param int $post_id The post ID the media is associated with
  * @param string $desc Description of the sideloaded file
  * @param array $post_data allows you to overwrite some of the attachment
- * @return int|object The ID of the attachment or a WP_Error on failure
+ * @return int|object The ID of the attachment or a WPError on failure
  */
 function media_handle_sideload($file_array, $post_id, $desc = null, $post_data = array()) {
 	$overrides = array('test_form'=>false);
@@ -329,7 +329,7 @@ function media_handle_sideload($file_array, $post_id, $desc = null, $post_data =
 
 	$file = wp_handle_sideload( $file_array, $overrides, $time );
 	if ( isset($file['error']) )
-		return new WordPress\WP_Error( 'upload_error', $file['error'] );
+		return new WordPress\WPError( 'upload_error', $file['error'] );
 
 	$url = $file['url'];
 	$type = $file['type'];
@@ -482,7 +482,7 @@ function get_upload_iframe_src( $type = null, $post_id = null, $tab = null ) {
  *
  * @since 2.5.0
  *
- * @return mixed void|object WP_Error on failure
+ * @return mixed void|object WPError on failure
  */
 function media_upload_form_handler() {
 	check_admin_referer('media-form');

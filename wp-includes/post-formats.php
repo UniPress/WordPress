@@ -61,13 +61,13 @@ function has_post_format( $format = array(), $post = null ) {
  *
  * @param int|object $post The post for which to assign a format.
  * @param string $format A format to assign. Use an empty string or array to remove all formats from the post.
- * @return mixed WP_Error on error. Array of affected term IDs on success.
+ * @return mixed WPError on error. Array of affected term IDs on success.
  */
 function set_post_format( $post, $format ) {
 	$post = get_post( $post );
 
 	if ( empty( $post ) )
-		return new WordPress\WP_Error( 'invalid_post', __( 'Invalid post' ) );
+		return new WordPress\WPError( 'invalid_post', __( 'Invalid post' ) );
 
 	if ( ! empty( $format ) ) {
 		$format = sanitize_key( $format );

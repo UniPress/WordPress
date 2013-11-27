@@ -225,7 +225,7 @@ class WP {
 				$query = preg_replace("!^.+\?!", '', $query);
 
 				// Substitute the substring matches into the query.
-				$query = addslashes(WP_MatchesMapRegex::apply($query, $matches));
+				$query = addslashes(WPMatchesMapRegex::apply($query, $matches));
 
 				$this->matched_query = $query;
 
@@ -497,7 +497,7 @@ class WP {
 	 * @global string $request The SQL statement for the request.
 	 * @global int $more Only set, if single page or post.
 	 * @global int $single If single page or post. Only set, if single page or post.
-	 * @global WP_User $authordata Only set, if author archive.
+	 * @global WPUser $authordata Only set, if author archive.
 	 *
 	 * @since 2.0.0
 	 */

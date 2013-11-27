@@ -71,7 +71,7 @@ if ( get_option('db_upgraded') ) {
 			 *
 			 * @since 3.0.0
 			 *
-			 * @param array|WP_Error $response The upgrade response array or WP_Error on failure.
+			 * @param array|WPError $response The upgrade response array or WPError on failure.
 			 */
 			do_action( 'after_mu_upgrade', $response );
 			unset($response);

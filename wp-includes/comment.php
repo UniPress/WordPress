@@ -201,7 +201,7 @@ class WP_Comment_Query {
 	 *
 	 * @since 3.7.0
 	 * @access public
-	 * @var object WP_Date_Query
+	 * @var object WPDateQuery
 	 */
 	var $date_query = false;
 
@@ -240,7 +240,7 @@ class WP_Comment_Query {
 			'meta_key' => '',
 			'meta_value' => '',
 			'meta_query' => '',
-			'date_query' => null, // See WP_Date_Query
+			'date_query' => null, // See WPDateQuery
 		);
 
 		$groupby = '';
@@ -371,7 +371,7 @@ class WP_Comment_Query {
 		}
 
 		if ( ! empty( $date_query ) && is_array( $date_query ) ) {
-			$date_query_object = new WP_Date_Query( $date_query, 'comment_date' );
+			$date_query_object = new WPDateQuery( $date_query, 'comment_date' );
 			$where .= $date_query_object->get_sql();
 		}
 
@@ -1442,8 +1442,8 @@ function wp_new_comment( $commentdata ) {
  *
  * @param int $comment_id Comment ID.
  * @param string $comment_status New comment status, either 'hold', 'approve', 'spam', or 'trash'.
- * @param bool $wp_error Whether to return a WP_Error object if there is a failure. Default is false.
- * @return bool|WP_Error True on success, false or WP_Error on failure.
+ * @param bool $wp_error Whether to return a WPError object if there is a failure. Default is false.
+ * @return bool|WPError True on success, false or WPError on failure.
  */
 function wp_set_comment_status($comment_id, $comment_status, $wp_error = false) {
 	global $wpdb;
@@ -1475,7 +1475,7 @@ function wp_set_comment_status($comment_id, $comment_status, $wp_error = false) 
 
 	if ( !$wpdb->update( $wpdb->comments, array('comment_approved' => $status), array('comment_ID' => $comment_id) ) ) {
 		if ( $wp_error )
-			return new WordPress\WP_Error('db_update_error', __('Could not update comment status'), $wpdb->last_error);
+			return new WordPress\WPError('db_update_error', __('Could not update comment status'), $wpdb->last_error);
 		else
 			return false;
 	}
@@ -1819,7 +1819,7 @@ function generic_ping($post_id = 0) {
  *
  * @since 0.71
  * @uses $wp_version
- * @uses IXR_Client
+ * @uses IXRClient
  *
  * @param string $content Post content to check for links.
  * @param int $post_ID Post ID.
@@ -1941,7 +1941,7 @@ function trackback($trackback_url, $title, $excerpt, $ID) {
  *
  * @since 1.2.0
  * @uses $wp_version
- * @uses IXR_Client
+ * @uses IXRClient
  *
  * @param string $server Host of blog to connect to.
  * @param string $path Path to send the ping.

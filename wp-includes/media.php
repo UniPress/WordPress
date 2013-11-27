@@ -300,7 +300,7 @@ function wp_constrain_dimensions( $current_width, $current_height, $max_width=0,
 }
 
 /**
- * Retrieve calculated resized dimensions for use in WP_Image_Editor.
+ * Retrieve calculated resized dimensions for use in WPImageEditor.
  *
  * Calculate dimensions and coordinates for a resized image that fits within a
  * specified width and height. If $crop is true, the largest matching central
@@ -1369,7 +1369,7 @@ function wp_expand_dimensions( $example_width, $example_height, $max_width, $max
  * @see WP_oEmbed
  *
  * @uses _wp_oembed_get_object()
- * @uses WP_oEmbed::get_html()
+ * @uses WPoEmbed::get_html()
  *
  * @param string $url The URL that should be embedded.
  * @param array $args Additional arguments and parameters.
@@ -1534,14 +1534,14 @@ function wp_max_upload_size() {
 }
 
 /**
- * Returns a WP_Image_Editor instance and loads file into it.
+ * Returns a WPImageEditor instance and loads file into it.
  *
  * @since 3.5.0
  * @access public
  *
  * @param string $path Path to file to load
  * @param array $args Additional data. Accepts { 'mime_type'=>string, 'methods'=>{string, string, ...} }
- * @return WP_Image_Editor|WP_Error
+ * @return WPImageEditor|WP_Error
  */
 function wp_get_image_editor( $path, $args = array() ) {
 	$args['path'] = $path;
@@ -1567,7 +1567,7 @@ function wp_get_image_editor( $path, $args = array() ) {
 		return $editor;
 	}
 
-	return new WordPress\WP_Error( 'image_no_editor', __('No editor could be selected.') );
+	return new WordPress\WPError( 'image_no_editor', __('No editor could be selected.') );
 }
 
 /**
@@ -1598,7 +1598,7 @@ function _wp_image_editor_choose( $args = array() ) {
 	require_once ABSPATH . WPINC . '/class-wp-image-editor-imagick.php';
 
 	$implementations = apply_filters( 'wp_image_editors',
-		array( 'WP_Image_Editor_Imagick', 'WP_Image_Editor_GD' ) );
+		array( 'WPImageEditorImagick', 'WPImageEditorGD' ) );
 
 	foreach ( $implementations as $implementation ) {
 		if ( ! call_user_func( array( $implementation, 'test' ), $args ) )

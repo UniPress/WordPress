@@ -554,7 +554,7 @@ class WP_User_Search {
 		if ( $this->results )
 			$this->total_users_for_query = $wpdb->get_var("SELECT COUNT(DISTINCT($wpdb->users.ID))" . $this->query_from . $this->query_where); // no limit
 		else
-			$this->search_errors = new WordPress\WP_Error('no_matching_users_found', __('No matching users were found!'));
+			$this->search_errors = new WordPress\WPError('no_matching_users_found', __('No matching users were found!'));
 	}
 
 	/**
@@ -744,7 +744,7 @@ function wp_tiny_mce( $teeny = false, $settings = false ) {
 
 	static $num = 1;
 
-	if ( ! class_exists('_WP_Editors' ) )
+	if ( ! class_exists('WPEditors' ) )
 		require_once(ABSPATH . WPINC . '/class-wp-editor.php');
 
 	$editor_id = 'content' . $num++;
@@ -848,7 +848,7 @@ function screen_meta( $screen ) {
  * @deprecated 3.2.0
  */
 function favorite_actions() {
-	_deprecated_function( __FUNCTION__, '3.2', 'WP_Admin_Bar' );
+	_deprecated_function( __FUNCTION__, '3.2', 'WPAdminBar' );
 }
 
 function media_upload_image() {

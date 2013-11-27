@@ -2,7 +2,7 @@
 
 namespace WordPress\Pomo;
 
-use WordPress\Pomo\Gettext_Translations;
+use WordPress\Pomo\GettextTranslations;
 
 
 /**
@@ -16,7 +16,7 @@ use WordPress\Pomo\Gettext_Translations;
 require_once dirname(__FILE__) . '/Translations.php';
 require_once dirname(__FILE__) . '/streams.php';
 
-class MO extends Gettext_Translations {
+class MO extends GettextTranslations {
 
 	var $_nplurals = 2;
 
@@ -26,7 +26,7 @@ class MO extends Gettext_Translations {
 	 * @param string $filename MO file to load
 	 */
 	function import_from_file($filename) {
-		$reader = new POMO_FileReader($filename);
+		$reader = new POMOFileReader($filename);
 		if (!$reader->is_resource())
 			return false;
 		return $this->import_from_reader($reader);

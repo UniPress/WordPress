@@ -23,7 +23,7 @@ class WP_Filesystem_Direct extends WP_Filesystem_Base {
 	 */
 	function __construct($arg) {
 		$this->method = 'direct';
-		$this->errors = new WordPress\WP_Error();
+		$this->errors = new WordPress\WPError();
 	}
 
 	/**

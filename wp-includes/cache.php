@@ -138,7 +138,7 @@ function wp_cache_incr( $key, $offset = 1, $group = '' ) {
  * @global WP_Object_Cache $wp_object_cache WordPress Object Cache
  */
 function wp_cache_init() {
-	$GLOBALS['wp_object_cache'] = new \WordPress\WP_Object_Cache();
+	$GLOBALS['wp_object_cache'] = new \WordPress\WPObjectCache();
 }
 
 /**

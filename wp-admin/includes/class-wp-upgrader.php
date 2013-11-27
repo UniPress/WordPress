@@ -74,32 +74,32 @@ class WP_Upgrader {
 		}
 
 		if ( ! is_object($wp_filesystem) )
-			return new WordPress\WP_Error('fs_unavailable', $this->strings['fs_unavailable'] );
+			return new WordPress\WPError('fs_unavailable', $this->strings['fs_unavailable'] );
 
 		if ( is_wp_error($wp_filesystem->errors) && $wp_filesystem->errors->get_error_code() )
-			return new WordPress\WP_Error('fs_error', $this->strings['fs_error'], $wp_filesystem->errors);
+			return new WordPress\WPError('fs_error', $this->strings['fs_error'], $wp_filesystem->errors);
 
 		foreach ( (array)$directories as $dir ) {
 			switch ( $dir ) {
 				case ABSPATH:
 					if ( ! $wp_filesystem->abspath() )
-						return new WordPress\WP_Error('fs_no_root_dir', $this->strings['fs_no_root_dir']);
+						return new WordPress\WPError('fs_no_root_dir', $this->strings['fs_no_root_dir']);
 					break;
 				case WP_CONTENT_DIR:
 					if ( ! $wp_filesystem->wp_content_dir() )
-						return new WordPress\WP_Error('fs_no_content_dir', $this->strings['fs_no_content_dir']);
+						return new WordPress\WPError('fs_no_content_dir', $this->strings['fs_no_content_dir']);
 					break;
 				case WP_PLUGIN_DIR:
 					if ( ! $wp_filesystem->wp_plugins_dir() )
-						return new WordPress\WP_Error('fs_no_plugins_dir', $this->strings['fs_no_plugins_dir']);
+						return new WordPress\WPError('fs_no_plugins_dir', $this->strings['fs_no_plugins_dir']);
 					break;
 				case get_theme_root():
 					if ( ! $wp_filesystem->wp_themes_dir() )
-						return new WordPress\WP_Error('fs_no_themes_dir', $this->strings['fs_no_themes_dir']);
+						return new WordPress\WPError('fs_no_themes_dir', $this->strings['fs_no_themes_dir']);
 					break;
 				default:
 					if ( ! $wp_filesystem->find_folder($dir) )
-						return new WordPress\WP_Error( 'fs_no_folder', sprintf( $this->strings['fs_no_folder'], esc_html( basename( $dir ) ) ) );
+						return new WordPress\WPError( 'fs_no_folder', sprintf( $this->strings['fs_no_folder'], esc_html( basename( $dir ) ) ) );
 					break;
 			}
 		}
@@ -125,14 +125,14 @@ class WP_Upgrader {
 			return $package; //must be a local file..
 
 		if ( empty($package) )
-			return new WordPress\WP_Error('no_package', $this->strings['no_package']);
+			return new WordPress\WPError('no_package', $this->strings['no_package']);
 
 		$this->skin->feedback('downloading_package', $package);
 
 		$download_file = download_url($package);
 
 		if ( is_wp_error($download_file) )
-			return new WordPress\WP_Error('download_failed', $this->strings['download_failed'], $download_file->get_error_message());
+			return new WordPress\WPError('download_failed', $this->strings['download_failed'], $download_file->get_error_message());
 
 		return $download_file;
 	}
@@ -168,7 +168,7 @@ class WP_Upgrader {
 		if ( is_wp_error($result) ) {
 			$wp_filesystem->delete($working_dir, true);
 			if ( 'incompatible_archive' == $result->get_error_code() ) {
-				return new WordPress\WP_Error( 'incompatible_archive', $this->strings['incompatible_archive'], $result->get_error_data() );
+				return new WordPress\WPError( 'incompatible_archive', $this->strings['incompatible_archive'], $result->get_error_data() );
 			}
 			return $result;
 		}
@@ -194,7 +194,7 @@ class WP_Upgrader {
 		@set_time_limit( 300 );
 
 		if ( empty($source) || empty($destination) )
-			return new WordPress\WP_Error('bad_request', $this->strings['bad_request']);
+			return new WordPress\WPError('bad_request', $this->strings['bad_request']);
 
 		$this->skin->feedback('installing_package');
 
@@ -213,7 +213,7 @@ class WP_Upgrader {
 		if ( 1 == count($source_files) && $wp_filesystem->is_dir( trailingslashit($source) . $source_files[0] . '/') ) //Only one folder? Then we want its contents.
 			$source = trailingslashit($source) . trailingslashit($source_files[0]);
 		elseif ( count($source_files) == 0 )
-			return new WordPress\WP_Error( 'incompatible_archive_empty', $this->strings['incompatible_archive'], $this->strings['no_files'] ); // There are no files?
+			return new WordPress\WPError( 'incompatible_archive_empty', $this->strings['incompatible_archive'], $this->strings['no_files'] ); // There are no files?
 		else //It's only a single file, the upgrader will use the foldername of this file as the destination folder. foldername is based on zip filename.
 			$source = trailingslashit($source);
 
@@ -248,21 +248,21 @@ class WP_Upgrader {
 			if ( is_wp_error($removed) )
 				return $removed;
 			else if ( ! $removed )
-				return new WordPress\WP_Error('remove_old_failed', $this->strings['remove_old_failed']);
+				return new WordPress\WPError('remove_old_failed', $this->strings['remove_old_failed']);
 		} elseif ( $abort_if_destination_exists && $wp_filesystem->exists($remote_destination) ) {
 			//If we're not clearing the destination folder and something exists there already, Bail.
 			//But first check to see if there are actually any files in the folder.
 			$_files = $wp_filesystem->dirlist($remote_destination);
 			if ( ! empty($_files) ) {
 				$wp_filesystem->delete($remote_source, true); //Clear out the source files.
-				return new WordPress\WP_Error('folder_exists', $this->strings['folder_exists'], $remote_destination );
+				return new WordPress\WPError('folder_exists', $this->strings['folder_exists'], $remote_destination );
 			}
 		}
 
 		//Create destination if needed
 		if ( !$wp_filesystem->exists($remote_destination) )
 			if ( !$wp_filesystem->mkdir($remote_destination, FS_CHMOD_DIR) )
-				return new WordPress\WP_Error( 'mkdir_failed_destination', $this->strings['mkdir_failed'], $remote_destination );
+				return new WordPress\WPError( 'mkdir_failed_destination', $this->strings['mkdir_failed'], $remote_destination );
 
 		// Copy new version of item into place.
 		$result = copy_dir($source, $remote_destination);
@@ -634,7 +634,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 		}
 
 		if ( ! $plugins_found )
-			return new WordPress\WP_Error( 'incompatible_archive_no_plugins', $this->strings['incompatible_archive'], __( 'No valid plugins were found.' ) );
+			return new WordPress\WPError( 'incompatible_archive_no_plugins', $this->strings['incompatible_archive'], __( 'No valid plugins were found.' ) );
 
 		return $source;
 	}
@@ -667,7 +667,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 
 		$plugin = isset($plugin['plugin']) ? $plugin['plugin'] : '';
 		if ( empty($plugin) )
-			return new WordPress\WP_Error('bad_request', $this->strings['bad_request']);
+			return new WordPress\WPError('bad_request', $this->strings['bad_request']);
 
 		if ( is_plugin_active($plugin) ) {
 			//Deactivate the plugin silently, Prevent deactivation hooks from running.
@@ -684,7 +684,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 
 		$plugin = isset($plugin['plugin']) ? $plugin['plugin'] : '';
 		if ( empty($plugin) )
-			return new WordPress\WP_Error('bad_request', $this->strings['bad_request']);
+			return new WordPress\WPError('bad_request', $this->strings['bad_request']);
 
 		$plugins_dir = $wp_filesystem->wp_plugins_dir();
 		$this_plugin_dir = trailingslashit( dirname($plugins_dir . $plugin) );
@@ -699,7 +699,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 			$deleted = $wp_filesystem->delete($plugins_dir . $plugin);
 
 		if ( ! $deleted )
-			return new WordPress\WP_Error('remove_old_failed', $this->strings['remove_old_failed']);
+			return new WordPress\WPError('remove_old_failed', $this->strings['remove_old_failed']);
 
 		return true;
 	}
@@ -1011,16 +1011,16 @@ class Theme_Upgrader extends WP_Upgrader {
 
 		// A proper archive should have a style.css file in the single subdirectory
 		if ( ! file_exists( $working_directory . 'style.css' ) )
-			return new WordPress\WP_Error( 'incompatible_archive_theme_no_style', $this->strings['incompatible_archive'], __( 'The theme is missing the <code>style.css</code> stylesheet.' ) );
+			return new WordPress\WPError( 'incompatible_archive_theme_no_style', $this->strings['incompatible_archive'], __( 'The theme is missing the <code>style.css</code> stylesheet.' ) );
 
 		$info = get_file_data( $working_directory . 'style.css', array( 'Name' => 'Theme Name', 'Template' => 'Template' ) );
 
 		if ( empty( $info['Name'] ) )
-			return new WordPress\WP_Error( 'incompatible_archive_theme_no_name', $this->strings['incompatible_archive'], __( "The <code>style.css</code> stylesheet doesn't contain a valid theme header." ) );
+			return new WordPress\WPError( 'incompatible_archive_theme_no_name', $this->strings['incompatible_archive'], __( "The <code>style.css</code> stylesheet doesn't contain a valid theme header." ) );
 
 		// If it's not a child theme, it must have at least an index.php to be legit.
 		if ( empty( $info['Template'] ) && ! file_exists( $working_directory . 'index.php' ) )
-			return new WordPress\WP_Error( 'incompatible_archive_theme_no_index', $this->strings['incompatible_archive'], __( 'The theme is missing the <code>index.php</code> file.' ) );
+			return new WordPress\WPError( 'incompatible_archive_theme_no_index', $this->strings['incompatible_archive'], __( 'The theme is missing the <code>index.php</code> file.' ) );
 
 		return $source;
 	}
@@ -1193,7 +1193,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 		$remote_destination = $wp_filesystem->find_folder( WP_LANG_DIR );
 		if ( ! $wp_filesystem->exists( $remote_destination ) )
 			if ( ! $wp_filesystem->mkdir( $remote_destination, FS_CHMOD_DIR ) )
-				return new WordPress\WP_Error( 'mkdir_failed_lang_dir', $this->strings['mkdir_failed'], $remote_destination );
+				return new WordPress\WPError( 'mkdir_failed_lang_dir', $this->strings['mkdir_failed'], $remote_destination );
 
 		foreach ( $language_updates as $language_update ) {
 
@@ -1264,7 +1264,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 		}
 
 		if ( ! $mo || ! $po )
-			return new WordPress\WP_Error( 'incompatible_archive_pomo', $this->strings['incompatible_archive'],
+			return new WordPress\WPError( 'incompatible_archive_pomo', $this->strings['incompatible_archive'],
 				__( 'The language pack is missing either the <code>.po</code> or <code>.mo</code> files.' ) );
 
 		return $source;
@@ -1331,7 +1331,7 @@ class Core_Upgrader extends WP_Upgrader {
 
 		// Is an update available?
 		if ( !isset( $current->response ) || $current->response == 'latest' )
-			return new WordPress\WP_Error('up_to_date', $this->strings['up_to_date']);
+			return new WordPress\WPError('up_to_date', $this->strings['up_to_date']);
 
 		$res = $this->fs_connect( array(ABSPATH, WP_CONTENT_DIR) );
 		if ( ! $res || is_wp_error( $res ) ) {
@@ -1373,14 +1373,14 @@ class Core_Upgrader extends WP_Upgrader {
 		// Copy update-core.php from the new version into place.
 		if ( !$wp_filesystem->copy($working_dir . '/wordpress/wp-admin/includes/update-core.php', $wp_dir . 'wp-admin/includes/update-core.php', true) ) {
 			$wp_filesystem->delete($working_dir, true);
-			return new WordPress\WP_Error( 'copy_failed_for_update_core_file', __( 'The update cannot be installed because we will be unable to copy some files. This is usually due to inconsistent file permissions.' ), 'wp-admin/includes/update-core.php' );
+			return new WordPress\WPError( 'copy_failed_for_update_core_file', __( 'The update cannot be installed because we will be unable to copy some files. This is usually due to inconsistent file permissions.' ), 'wp-admin/includes/update-core.php' );
 		}
 		$wp_filesystem->chmod($wp_dir . 'wp-admin/includes/update-core.php', FS_CHMOD_FILE);
 
 		require_once( ABSPATH . 'wp-admin/includes/update-core.php' );
 
 		if ( ! function_exists( 'update_core' ) )
-			return new WordPress\WP_Error( 'copy_failed_space', $this->strings['copy_failed_space'] );
+			return new WordPress\WPError( 'copy_failed_space', $this->strings['copy_failed_space'] );
 
 		$result = update_core( $working_dir, $wp_dir );
 
@@ -1407,7 +1407,7 @@ class Core_Upgrader extends WP_Upgrader {
 				$rollback_result = $this->upgrade( $current, array_merge( $parsed_args, array( 'do_rollback' => true ) ) );
 
 				$original_result = $result;
-				$result = new WordPress\WP_Error( 'rollback_was_required', $this->strings['rollback_was_required'], (object) array( 'update' => $original_result, 'rollback' => $rollback_result ) );
+				$result = new WordPress\WPError( 'rollback_was_required', $this->strings['rollback_was_required'], (object) array( 'update' => $original_result, 'rollback' => $rollback_result ) );
 			}
 		}
 
@@ -1902,7 +1902,7 @@ class WP_Automatic_Updater {
 
 		// if the filesystem is unavailable, false is returned.
 		if ( false === $upgrade_result ) {
-			$upgrade_result = new WordPress\WP_Error( 'fs_unavailable', __( 'Could not access filesystem.' ) );
+			$upgrade_result = new WordPress\WPError( 'fs_unavailable', __( 'Could not access filesystem.' ) );
 		}
 
 		// Core doesn't output this, so lets append it so we don't get confused
@@ -2064,7 +2064,7 @@ class WP_Automatic_Updater {
 
 		$error_code = $result->get_error_code();
 
-		// Any of these WP_Error codes are critical failures, as in they occurred after we started to copy core files.
+		// Any of these WPError codes are critical failures, as in they occurred after we started to copy core files.
 		// We should not try to perform a background update again until there is a successful one-click update performed by the user.
 		$critical = false;
 		if ( $error_code === 'disk_full' || false !== strpos( $error_code, '__copy_dir' ) ) {
@@ -2096,7 +2096,7 @@ class WP_Automatic_Updater {
 		}
 
 		/*
-		 * Any other WP_Error code (like download_failed or files_not_writable) occurs before
+		 * Any other WPError code (like download_failed or files_not_writable) occurs before
 		 * we tried to copy over core files. Thus, the failures are early and graceful.
 		 *
 		 * We should avoid trying to perform a background update again for the same version.
@@ -2138,7 +2138,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @param string $type        The type of email to send. Can be one of 'success', 'fail', 'manual', 'critical'.
 	 * @param object $core_update The update offer that was attempted.
-	 * @param mixed  $result      Optional. The result for the core update. Can be WP_Error.
+	 * @param mixed  $result      Optional. The result for the core update. Can be WPError.
 	 */
 	protected function send_email( $type, $core_update, $result = null ) {
 		update_site_option( 'auto_core_update_notified', array(
@@ -2162,7 +2162,7 @@ class WP_Automatic_Updater {
 		 * @param bool   $send        Whether to send the email. Default true.
 		 * @param string $type        The type of email to send. Can be one of 'success', 'fail', 'critical'.
 		 * @param object $core_update The update offer that was attempted.
-		 * @param mixed  $result      The result for the core update. Can be WP_Error.
+		 * @param mixed  $result      The result for the core update. Can be WPError.
 		 */
 		if ( 'manual' !== $type && ! apply_filters( 'auto_core_update_send_email', true, $type, $core_update, $result ) )
 			return;
@@ -2265,7 +2265,7 @@ class WP_Automatic_Updater {
 			$body .= ' ' . __( 'Your hosting company, support forum volunteers, or a friendly developer may be able to use this information to help you:' );
 
 			// If we had a rollback and we're still critical, then the rollback failed too.
-			// Loop through all errors (the main WP_Error, the update result, the rollback result) for code, data, etc.
+			// Loop through all errors (the main WPError, the update result, the rollback result) for code, data, etc.
 			if ( 'rollback_was_required' == $result->get_error_code() )
 				$errors = array( $result, $result->get_error_data()->update, $result->get_error_data()->rollback );
 			else
@@ -2306,7 +2306,7 @@ class WP_Automatic_Updater {
 		 * }
 		 * @param string $type        The type of email being sent. Can be one of 'success', 'fail', 'manual', 'critical'.
 		 * @param object $core_update The update offer that was attempted.
-		 * @param mixed  $result      The result for the core update. Can be WP_Error.
+		 * @param mixed  $result      The result for the core update. Can be WPError.
 		 */
 		$email = apply_filters( 'auto_core_update_email', $email, $type, $core_update, $result );
 

@@ -21,17 +21,8 @@
  * @package WordPress
  */
 
-/** BackPress: WordPress Dependencies Class */
-require(ABSPATH . WPINC . '/class.wp-dependencies.php');
-
-/** BackPress: WordPress Scripts Class */
-require(ABSPATH . WPINC . '/class.wp-scripts.php');
-
 /** BackPress: WordPress Scripts Functions */
 require( ABSPATH . WPINC . '/functions.wp-scripts.php' );
-
-/** BackPress: WordPress Styles Class */
-require(ABSPATH . WPINC . '/class.wp-styles.php');
 
 /** BackPress: WordPress Styles Functions */
 require( ABSPATH . WPINC . '/functions.wp-styles.php' );
@@ -45,7 +36,7 @@ require( ABSPATH . WPINC . '/functions.wp-styles.php' );
  *
  * @since 2.6.0
  *
- * @param object $scripts WP_Scripts object.
+ * @param object $scripts WPScripts object.
  */
 function wp_default_scripts( &$scripts ) {
 	include ABSPATH . WPINC . '/version.php'; // include an unmodified $wp_version
@@ -723,7 +714,7 @@ function print_head_scripts() {
 		do_action( 'wp_print_scripts' );
 	}
 
-	if ( !is_a($wp_scripts, 'WP_Scripts') )
+	if ( !is_a($wp_scripts, 'WPScripts') )
 		$wp_scripts = new WP_Scripts();
 
 	script_concat_settings();
@@ -745,7 +736,7 @@ function print_head_scripts() {
 function print_footer_scripts() {
 	global $wp_scripts, $concatenate_scripts;
 
-	if ( !is_a($wp_scripts, 'WP_Scripts') )
+	if ( !is_a($wp_scripts, 'WPScripts') )
 		return array(); // No need to run if not instantiated.
 
 	script_concat_settings();
@@ -806,7 +797,7 @@ function wp_print_head_scripts() {
 
 	global $wp_scripts;
 
-	if ( !is_a($wp_scripts, 'WP_Scripts') )
+	if ( !is_a($wp_scripts, 'WPScripts') )
 		return array(); // no need to run if nothing is queued
 
 	return print_head_scripts();
@@ -851,7 +842,7 @@ function wp_enqueue_scripts() {
 function print_admin_styles() {
 	global $wp_styles, $concatenate_scripts, $compress_css;
 
-	if ( !is_a($wp_styles, 'WP_Styles') )
+	if ( !is_a($wp_styles, 'WPStyles') )
 		$wp_styles = new WP_Styles();
 
 	script_concat_settings();
@@ -877,7 +868,7 @@ function print_admin_styles() {
 function print_late_styles() {
 	global $wp_styles, $concatenate_scripts;
 
-	if ( !is_a($wp_styles, 'WP_Styles') )
+	if ( !is_a($wp_styles, 'WPStyles') )
 		return;
 
 	$wp_styles->do_concat = $concatenate_scripts;

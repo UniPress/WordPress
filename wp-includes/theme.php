@@ -7,7 +7,7 @@
  */
 
 /**
- * Returns an array of WP_Theme objects based on the arguments.
+ * Returns an array of WPTheme objects based on the arguments.
  *
  * Despite advances over get_themes(), this function is quite expensive, and grows
  * linearly with additional themes. Stick to wp_get_theme() if possible.
@@ -22,7 +22,7 @@
  *                      to return only network-allowed themes. Null to return all themes. Defaults to null.
  * - blog_id     int    (Multisite) The blog ID used to calculate which themes are allowed. Defaults to 0,
  *                      synonymous for the current blog.
- * @return Array of WP_Theme objects.
+ * @return Array of WPTheme objects.
  */
 function wp_get_themes( $args = array() ) {
 	global $wp_theme_directories;
@@ -80,14 +80,14 @@ function wp_get_themes( $args = array() ) {
 }
 
 /**
- * Gets a WP_Theme object for a theme.
+ * Gets a WPTheme object for a theme.
  *
  * @since 3.4.0
  *
  * @param string $stylesheet Directory name for the theme. Optional. Defaults to current theme.
  * @param string $theme_root Absolute path of the theme root to look in. Optional. If not specified, get_raw_theme_root()
  * 	is used to calculate the theme root for the $stylesheet provided (or current theme).
- * @return WP_Theme Theme object. Be sure to check the object's exists() method if you need to confirm the theme's existence.
+ * @return WPTheme Theme object. Be sure to check the object's exists() method if you need to confirm the theme's existence.
  */
 function wp_get_theme( $stylesheet = null, $theme_root = null ) {
 	global $wp_theme_directories;
@@ -107,7 +107,7 @@ function wp_get_theme( $stylesheet = null, $theme_root = null ) {
 }
 
 /**
- * Clears the cache held by get_theme_roots() and WP_Theme.
+ * Clears the cache held by get_theme_roots() and WPTheme.
  *
  * @since 3.5.0
  * @param bool $clear_update_cache Whether to clear the Theme updates cache
@@ -410,7 +410,7 @@ function search_theme_directories( $force = false ) {
 					$found_theme = true;
 				}
 				// Never mind the above, it's just a theme missing a style.css.
-				// Return it; WP_Theme will catch the error.
+				// Return it; WPTheme will catch the error.
 				if ( ! $found_theme )
 					$found_themes[ $dir ] = array(
 						'theme_file' => $dir . '/style.css',
@@ -1651,7 +1651,7 @@ function check_theme_switched() {
 }
 
 /**
- * Includes and instantiates the WP_Customize_Manager class.
+ * Includes and instantiates the WPCustomizeManager class.
  *
  * Fires when ?wp_customize=on or on wp-admin/customize.php.
  *

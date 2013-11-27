@@ -31,9 +31,9 @@ function _wp_admin_bar_init() {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @param string $wp_admin_bar_class Admin bar class to use. Default 'WP_Admin_Bar'.
+	 * @param string $wp_admin_bar_class Admin bar class to use. Default 'WPAdminBar'.
 	 */
-	$admin_bar_class = apply_filters( 'wp_admin_bar_class', 'WP_Admin_Bar' );
+	$admin_bar_class = apply_filters( 'wp_admin_bar_class', 'WPAdminBar' );
 	if ( class_exists( $admin_bar_class ) )
 		$wp_admin_bar = new $admin_bar_class;
 	else
@@ -72,7 +72,7 @@ function wp_admin_bar_render() {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @param WP_Admin_Bar $wp_admin_bar WP_Admin_Bar instance, passed by reference
+	 * @param WPAdminBar $wp_admin_bar WPAdminBar instance, passed by reference
 	 */
 	do_action_ref_array( 'admin_bar_menu', array( &$wp_admin_bar ) );
 

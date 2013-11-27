@@ -20,7 +20,7 @@
  *
  * @param array $credentials Optional. User info in order to sign on.
  * @param bool $secure_cookie Optional. Whether to use secure cookie.
- * @return object Either WP_Error on failure, or WP_User on success.
+ * @return object Either WPError on failure, or WPUser on success.
  */
 function wp_signon( $credentials = '', $secure_cookie = '' ) {
 	if ( empty($credentials) ) {
@@ -54,7 +54,7 @@ function wp_signon( $credentials = '', $secure_cookie = '' ) {
 
 	if ( is_wp_error($user) ) {
 		if ( $user->get_error_codes() == array('empty_username', 'empty_password') ) {
-			$user = new WordPress\WP_Error('', '');
+			$user = new WordPress\WPError('', '');
 		}
 
 		return $user;
@@ -70,13 +70,13 @@ function wp_signon( $credentials = '', $secure_cookie = '' ) {
  */
 add_filter('authenticate', 'wp_authenticate_username_password', 20, 3);
 function wp_authenticate_username_password($user, $username, $password) {
-	if ( is_a($user, 'WP_User') ) { return $user; }
+	if ( is_a($user, 'WPUser') ) { return $user; }
 
 	if ( empty($username) || empty($password) ) {
 		if ( is_wp_error( $user ) )
 			return $user;
 
-		$error = new WordPress\WP_Error();
+		$error = new WordPress\WPError();
 
 		if ( empty($username) )
 			$error->add('empty_username', __('<strong>ERROR</strong>: The username field is empty.'));
@@ -90,14 +90,14 @@ function wp_authenticate_username_password($user, $username, $password) {
 	$user = get_user_by('login', $username);
 
 	if ( !$user )
-		return new WordPress\WP_Error( 'invalid_username', sprintf( __( '<strong>ERROR</strong>: Invalid username. <a href="%s" title="Password Lost and Found">Lost your password</a>?' ), wp_lostpassword_url() ) );
+		return new WordPress\WPError( 'invalid_username', sprintf( __( '<strong>ERROR</strong>: Invalid username. <a href="%s" title="Password Lost and Found">Lost your password</a>?' ), wp_lostpassword_url() ) );
 
 	$user = apply_filters('wp_authenticate_user', $user, $password);
 	if ( is_wp_error($user) )
 		return $user;
 
 	if ( !wp_check_password($password, $user->user_pass, $user->ID) )
-		return new WordPress\WP_Error( 'incorrect_password', sprintf( __( '<strong>ERROR</strong>: The password you entered for the username <strong>%1$s</strong> is incorrect. <a href="%2$s" title="Password Lost and Found">Lost your password</a>?' ),
+		return new WordPress\WPError( 'incorrect_password', sprintf( __( '<strong>ERROR</strong>: The password you entered for the username <strong>%1$s</strong> is incorrect. <a href="%2$s" title="Password Lost and Found">Lost your password</a>?' ),
 		$username, wp_lostpassword_url() ) );
 
 	return $user;
@@ -107,12 +107,12 @@ function wp_authenticate_username_password($user, $username, $password) {
  * Authenticate the user using the WordPress auth cookie.
  */
 function wp_authenticate_cookie($user, $username, $password) {
-	if ( is_a($user, 'WP_User') ) { return $user; }
+	if ( is_a($user, 'WPUser') ) { return $user; }
 
 	if ( empty($username) && empty($password) ) {
 		$user_id = wp_validate_auth_cookie();
 		if ( $user_id )
-			return new WordPress\WP_User($user_id);
+			return new WordPress\WPUser($user_id);
 
 		global $auth_secure_cookie;
 
@@ -122,7 +122,7 @@ function wp_authenticate_cookie($user, $username, $password) {
 			$auth_cookie = AUTH_COOKIE;
 
 		if ( !empty($_COOKIE[$auth_cookie]) )
-			return new WordPress\WP_Error('expired_session', __('Please log in again.'));
+			return new WordPress\WPError('expired_session', __('Please log in again.'));
 
 		// If the cookie is not set, be silent.
 	}
@@ -137,11 +137,11 @@ function wp_authenticate_cookie($user, $username, $password) {
  * @since 3.7.0
  */
 function wp_authenticate_spam_check( $user ) {
-	if ( $user && is_a( $user, 'WP_User' ) && is_multisite() ) {
+	if ( $user && is_a( $user, 'WPUser' ) && is_multisite() ) {
 		$spammed = apply_filters( 'check_is_user_spammed', is_user_spammy(), $user );
 
 		if ( $spammed )
-			return new WordPress\WP_Error( 'spammer_account', __( '<strong>ERROR</strong>: Your account has been marked as a spammer.' ) );
+			return new WordPress\WPError( 'spammer_account', __( '<strong>ERROR</strong>: Your account has been marked as a spammer.' ) );
 	}
 	return $user;
 }
@@ -579,12 +579,12 @@ class WP_User_Query {
 
 			$r = array();
 			foreach ( $this->results as $userid )
-				$r[ $userid ] = new WordPress\WP_User( $userid, '', $qv['blog_id'] );
+				$r[ $userid ] = new WordPress\WPUser( $userid, '', $qv['blog_id'] );
 
 			$this->results = $r;
 		} elseif ( 'all' == $qv['fields'] ) {
 			foreach ( $this->results as $key => $user ) {
-				$this->results[ $key ] = new WordPress\WP_User( $user );
+				$this->results[ $key ] = new WordPress\WPUser( $user );
 			}
 		}
 	}
@@ -1197,7 +1197,7 @@ function update_user_caches($user) {
  */
 function clean_user_cache( $user ) {
 	if ( is_numeric( $user ) )
-		$user = new WordPress\WP_User( $user );
+		$user = new WordPress\WPUser( $user );
 
 	if ( ! $user->exists() )
 		return;
@@ -1292,15 +1292,15 @@ function validate_username( $username ) {
  * @uses do_action() Calls 'profile_update' hook when updating giving the user's ID
  * @uses do_action() Calls 'user_register' hook when creating a new user giving the user's ID
  *
- * @param mixed $userdata An array of user data or a user object of type stdClass or WP_User.
- * @return int|WP_Error The newly created user's ID or a WP_Error object if the user could not be created.
+ * @param mixed $userdata An array of user data or a user object of type stdClass or WPUser.
+ * @return int|WPError The newly created user's ID or a WPError object if the user could not be created.
  */
 function wp_insert_user( $userdata ) {
 	global $wpdb;
 
 	if ( is_a( $userdata, 'stdClass' ) )
 		$userdata = get_object_vars( $userdata );
-	elseif ( is_a( $userdata, 'WP_User' ) )
+	elseif ( is_a( $userdata, 'WPUser' ) )
 		$userdata = $userdata->to_array();
 
 	extract( $userdata, EXTR_SKIP );
@@ -1309,7 +1309,7 @@ function wp_insert_user( $userdata ) {
 	if ( !empty($ID) ) {
 		$ID = (int) $ID;
 		$update = true;
-		$old_user_data = WordPress\WP_User::get_data_by( 'id', $ID );
+		$old_user_data = WordPress\WPUser::get_data_by( 'id', $ID );
 	} else {
 		$update = false;
 		// Hash the password
@@ -1323,10 +1323,10 @@ function wp_insert_user( $userdata ) {
 	$user_login = trim($user_login);
 
 	if ( empty($user_login) )
-		return new WordPress\WP_Error('empty_user_login', __('Cannot create a user with an empty login name.') );
+		return new WordPress\WPError('empty_user_login', __('Cannot create a user with an empty login name.') );
 
 	if ( !$update && username_exists( $user_login ) )
-		return new WordPress\WP_Error( 'existing_user_login', __( 'Sorry, that username already exists!' ) );
+		return new WordPress\WPError( 'existing_user_login', __( 'Sorry, that username already exists!' ) );
 
 	if ( empty($user_nicename) )
 		$user_nicename = sanitize_title( $user_login );
@@ -1341,7 +1341,7 @@ function wp_insert_user( $userdata ) {
 	$user_email = apply_filters('pre_user_email', $user_email);
 
 	if ( !$update && ! defined( 'WP_IMPORTING' ) && email_exists($user_email) )
-		return new WordPress\WP_Error( 'existing_user_email', __( 'Sorry, that email address is already used!' ) );
+		return new WordPress\WPError( 'existing_user_email', __( 'Sorry, that email address is already used!' ) );
 
 	if ( empty($nickname) )
 		$nickname = $user_login;
@@ -1416,7 +1416,7 @@ function wp_insert_user( $userdata ) {
 		$user_id = (int) $wpdb->insert_id;
 	}
 
-	$user = new WordPress\WP_User( $user_id );
+	$user = new WordPress\WPUser( $user_id );
 
 	foreach ( _get_additional_user_keys( $user ) as $key ) {
 		if ( isset( $$key ) )
@@ -1451,13 +1451,13 @@ function wp_insert_user( $userdata ) {
  * @since 2.0.0
  * @see wp_insert_user() For what fields can be set in $userdata
  *
- * @param mixed $userdata An array of user data or a user object of type stdClass or WP_User.
- * @return int|WP_Error The updated user's ID or a WP_Error object if the user could not be updated.
+ * @param mixed $userdata An array of user data or a user object of type stdClass or WPUser.
+ * @return int|WPError The updated user's ID or a WPError object if the user could not be updated.
  */
 function wp_update_user($userdata) {
 	if ( is_a( $userdata, 'stdClass' ) )
 		$userdata = get_object_vars( $userdata );
-	elseif ( is_a( $userdata, 'WP_User' ) )
+	elseif ( is_a( $userdata, 'WPUser' ) )
 		$userdata = $userdata->to_array();
 
 	$ID = (int) $userdata['ID'];
@@ -1465,7 +1465,7 @@ function wp_update_user($userdata) {
 	// First, get all of the original fields
 	$user_obj = get_userdata( $ID );
 	if ( ! $user_obj )
-		return new WordPress\WP_Error( 'invalid_user_id', __( 'Invalid user ID.' ) );
+		return new WordPress\WPError( 'invalid_user_id', __( 'Invalid user ID.' ) );
 
 	$user = $user_obj->to_array();
 
@@ -1530,7 +1530,7 @@ function wp_create_user($username, $password, $email = '') {
  * @since 3.3.0
  * @access private
  *
- * @param object $user WP_User instance.
+ * @param object $user WPUser instance.
  * @return array
  */
 function _get_additional_user_keys( $user ) {
@@ -1545,7 +1545,7 @@ function _get_additional_user_keys( $user ) {
  *
  * @since 3.7.0
  *
- * @param WP_User $user Optional. WP_User object.
+ * @param WPUser $user Optional. WPUser object.
  * @return array Array of contact methods and their labels.
  */
 function wp_get_user_contact_methods( $user = null ) {
@@ -1564,7 +1564,7 @@ function wp_get_user_contact_methods( $user = null ) {
 	 * @since 2.9.0
 	 *
 	 * @param array   $methods Array of contact methods and their labels.
- 	 * @param WP_User $user    Optional. WP_User object.
+ 	 * @param WPUser $user    Optional. WPUser object.
 	 */
 	return apply_filters( 'user_contactmethods', $methods, $user );
 }
@@ -1585,13 +1585,13 @@ function _wp_get_user_contactmethods( $user = null ) {
  * A key is considered 'expired' if it exactly matches the value of the
  * user_activation_key field, rather than being matched after going through the
  * hashing process. This field is now hashed; old values are no longer accepted
- * but have a different WP_Error code so good user feedback can be provided.
+ * but have a different WPError code so good user feedback can be provided.
  *
  * @uses $wpdb WordPress Database object
  *
  * @param string $key       Hash to validate sending user's password.
  * @param string $login     The user login.
- * @return WP_User|WP_Error WP_User object on success, WP_Error object for invalid or expired keys.
+ * @return WPUser|WPError WPUser object on success, WPError object for invalid or expired keys.
  */
 function check_password_reset_key($key, $login) {
 	global $wpdb, $wp_hasher;
@@ -1599,14 +1599,14 @@ function check_password_reset_key($key, $login) {
 	$key = preg_replace('/[^a-z0-9]/i', '', $key);
 
 	if ( empty( $key ) || !is_string( $key ) )
-		return new WordPress\WP_Error('invalid_key', __('Invalid key'));
+		return new WordPress\WPError('invalid_key', __('Invalid key'));
 
 	if ( empty($login) || !is_string($login) )
-		return new WordPress\WP_Error('invalid_key', __('Invalid key'));
+		return new WordPress\WPError('invalid_key', __('Invalid key'));
 
 	$row = $wpdb->get_row( $wpdb->prepare( "SELECT ID, user_activation_key FROM $wpdb->users WHERE user_login = %s", $login ) );
 	if ( ! $row )
-		return new WordPress\WP_Error('invalid_key', __('Invalid key'));
+		return new WordPress\WPError('invalid_key', __('Invalid key'));
 
 	if ( empty( $wp_hasher ) ) {
 		require_once ABSPATH . 'wp-includes/class-phpass.php';
@@ -1617,7 +1617,7 @@ function check_password_reset_key($key, $login) {
 		return get_userdata( $row->ID );
 
 	if ( $key === $row->user_activation_key ) {
-		$return = new WordPress\WP_Error( 'expired_key', __( 'Invalid key' ) );
+		$return = new WordPress\WPError( 'expired_key', __( 'Invalid key' ) );
 		$user_id = $row->ID;
 
 		/**
@@ -1626,14 +1626,14 @@ function check_password_reset_key($key, $login) {
 		 *
 		 * @since 3.7.0
 		 *
-		 * @param WP_Error $return  A WP_Error object denoting an expired key.
-		 *                          Return a WP_User object to validate the key.
+		 * @param WPError $return  A WPError object denoting an expired key.
+		 *                          Return a WPUser object to validate the key.
 		 * @param int      $user_id The matched user ID.
 		 */
 		return apply_filters( 'password_reset_key_expired', $return, $user_id );
 	}
 
-	return new WordPress\WP_Error( 'invalid_key', __( 'Invalid key' ) );
+	return new WordPress\WPError( 'invalid_key', __( 'Invalid key' ) );
 }
 
 /**
@@ -1659,7 +1659,7 @@ function reset_password( $user, $new_pass ) {
  * @return int|WP_Error Either user's ID or error on failure.
  */
 function register_new_user( $user_login, $user_email ) {
-	$errors = new WordPress\WP_Error();
+	$errors = new WordPress\WPError();
 
 	$sanitized_user_login = sanitize_user( $user_login );
 	$user_email = apply_filters( 'user_registration_email', $user_email );

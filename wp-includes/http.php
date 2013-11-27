@@ -12,18 +12,18 @@
  */
 
 /**
- * Returns the initialized WP_Http Object
+ * Returns the initialized WPHttp Object
  *
  * @since 2.7.0
  * @access private
  *
- * @return WP_Http HTTP Transport object.
+ * @return WPHttp HTTP Transport object.
  */
 function _wp_http_get_object() {
 	static $http;
 
 	if ( is_null($http) )
-		$http = new WP_Http();
+		$http = new WPHttp();
 
 	return $http;
 }
@@ -41,7 +41,7 @@ function _wp_http_get_object() {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_safe_remote_request( $url, $args = array() ) {
 	$args['reject_unsafe_urls'] = true;
@@ -62,7 +62,7 @@ function wp_safe_remote_request( $url, $args = array() ) {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_safe_remote_get( $url, $args = array() ) {
 	$args['reject_unsafe_urls'] = true;
@@ -83,7 +83,7 @@ function wp_safe_remote_get( $url, $args = array() ) {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_safe_remote_post( $url, $args = array() ) {
 	$args['reject_unsafe_urls'] = true;
@@ -104,7 +104,7 @@ function wp_safe_remote_post( $url, $args = array() ) {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_safe_remote_head( $url, $args = array() ) {
 	$args['reject_unsafe_urls'] = true;
@@ -156,7 +156,7 @@ function wp_safe_remote_head( $url, $args = array() ) {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_remote_request($url, $args = array()) {
 	$objFetchSite = _wp_http_get_object();
@@ -172,7 +172,7 @@ function wp_remote_request($url, $args = array()) {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_remote_get($url, $args = array()) {
 	$objFetchSite = _wp_http_get_object();
@@ -188,7 +188,7 @@ function wp_remote_get($url, $args = array()) {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_remote_post($url, $args = array()) {
 	$objFetchSite = _wp_http_get_object();
@@ -204,7 +204,7 @@ function wp_remote_post($url, $args = array()) {
  *
  * @param string $url Site URL to retrieve.
  * @param array $args Optional. Override the defaults.
- * @return WP_Error|array The response or WP_Error on failure.
+ * @return WPError|array The response or WPError on failure.
  */
 function wp_remote_head($url, $args = array()) {
 	$objFetchSite = _wp_http_get_object();
