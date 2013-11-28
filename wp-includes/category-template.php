@@ -731,7 +731,7 @@ function _wp_object_count_sort_cb( $a, $b ) {
 function walk_category_tree() {
 	$args = func_get_args();
 	// the user's options are the third parameter
-	if ( empty($args[2]['walker']) || !is_a($args[2]['walker'], 'Walker') )
+	if ( empty($args[2]['walker']) || !is_a($args[2]['walker'], '\WordPress\Walker') )
 		$walker = new Walker_Category;
 	else
 		$walker = $args[2]['walker'];
@@ -749,7 +749,7 @@ function walk_category_tree() {
 function walk_category_dropdown_tree() {
 	$args = func_get_args();
 	// the user's options are the third parameter
-	if ( empty($args[2]['walker']) || !is_a($args[2]['walker'], 'Walker') )
+	if ( empty($args[2]['walker']) || !is_a($args[2]['walker'], '\WordPress\Walker') )
 		$walker = new Walker_CategoryDropdown;
 	else
 		$walker = $args[2]['walker'];

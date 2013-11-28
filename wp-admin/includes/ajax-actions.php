@@ -300,7 +300,7 @@ function _wp_ajax_delete_comment_response( $comment_id, $delta = -1 ) {
 
 	$time = time(); // The time since the last comment count
 
-	$x = new WP_Ajax_Response( array(
+	$x = new \WordPress\WPAjaxResponse( array(
 		'what' => 'comment',
 		'id' => $comment_id, // here for completeness - not used
 		'supplemental' => array(
@@ -393,7 +393,7 @@ function _wp_ajax_add_hierarchical_term() {
 	ob_end_clean();
 	$add['supplemental'] = array( 'newcat_parent' => $sup );
 
-	$x = new WP_Ajax_Response( $add );
+	$x = new \WordPress\WPAjaxResponse( $add );
 	$x->send();
 }
 
@@ -560,7 +560,7 @@ function wp_ajax_dim_comment() {
 	$id = isset( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 
 	if ( !$comment = get_comment( $id ) ) {
-		$x = new WP_Ajax_Response( array(
+		$x = new \WordPress\WPAjaxResponse( array(
 			'what' => 'comment',
 			'id' => new WordPress\WPError('invalid_comment', sprintf(__('Comment %d does not exist'), $id))
 		) );
@@ -581,7 +581,7 @@ function wp_ajax_dim_comment() {
 		$result = wp_set_comment_status( $comment->comment_ID, 'hold', true );
 
 	if ( is_wp_error($result) ) {
-		$x = new WP_Ajax_Response( array(
+		$x = new \WordPress\WPAjaxResponse( array(
 			'what' => 'comment',
 			'id' => $result
 		) );
@@ -600,7 +600,7 @@ function wp_ajax_add_link_category( $action ) {
 	if ( !current_user_can( 'manage_categories' ) )
 		wp_die( -1 );
 	$names = explode(',', wp_unslash( $_POST['newcat'] ) );
-	$x = new WP_Ajax_Response();
+	$x = new \WordPress\WPAjaxResponse();
 	foreach ( $names as $cat_name ) {
 		$cat_name = trim($cat_name);
 		$slug = sanitize_title($cat_name);
@@ -634,7 +634,7 @@ function wp_ajax_add_tag() {
 	if ( !current_user_can( $tax->cap->edit_terms ) )
 		wp_die( -1 );
 
-	$x = new WP_Ajax_Response();
+	$x = new \WordPress\WPAjaxResponse();
 
 	$tag = wp_insert_term($_POST['tag-name'], $taxonomy, $_POST );
 
@@ -738,7 +738,7 @@ function wp_ajax_get_comments( $action ) {
 	if ( !$wp_list_table->has_items() )
 		wp_die( 1 );
 
-	$x = new WP_Ajax_Response();
+	$x = new \WordPress\WPAjaxResponse();
 	ob_start();
 	foreach ( $wp_list_table->items as $comment ) {
 		if ( ! current_user_can( 'edit_comment', $comment->comment_ID ) )
@@ -845,7 +845,7 @@ function wp_ajax_replyto_comment( $action ) {
 	if ( $comment_auto_approved )
 		$response['supplemental'] = array( 'parent_approved' => $parent->comment_ID );
 
-	$x = new WP_Ajax_Response();
+	$x = new \WordPress\WPAjaxResponse();
 	$x->add( $response );
 	$x->send();
 }
@@ -880,7 +880,7 @@ function wp_ajax_edit_comment() {
 	$wp_list_table->single_row( $comment );
 	$comment_list_item = ob_get_clean();
 
-	$x = new WP_Ajax_Response();
+	$x = new \WordPress\WPAjaxResponse();
 
 	$x->add( array(
 		'what' => 'edit_comment',
@@ -994,7 +994,7 @@ function wp_ajax_add_meta() {
 
 			if ( $pid = edit_post() ) {
 				if ( is_wp_error( $pid ) ) {
-					$x = new WP_Ajax_Response( array(
+					$x = new \WordPress\WPAjaxResponse( array(
 						'what' => 'meta',
 						'data' => $pid
 					) );
@@ -1013,7 +1013,7 @@ function wp_ajax_add_meta() {
 		$meta = get_metadata_by_mid( 'post', $mid );
 		$pid = (int) $meta->post_id;
 		$meta = get_object_vars( $meta );
-		$x = new WP_Ajax_Response( array(
+		$x = new \WordPress\WPAjaxResponse( array(
 			'what' => 'meta',
 			'id' => $mid,
 			'data' => _list_meta_row( $meta, $c ),
@@ -1039,7 +1039,7 @@ function wp_ajax_add_meta() {
 				wp_die( 0 ); // We know meta exists; we also know it's unchanged (or DB error, in which case there are bigger problems).
 		}
 
-		$x = new WP_Ajax_Response( array(
+		$x = new \WordPress\WPAjaxResponse( array(
 			'what' => 'meta',
 			'id' => $mid, 'old_id' => $mid,
 			'data' => _list_meta_row( array(
@@ -1065,7 +1065,7 @@ function wp_ajax_add_user( $action ) {
 	if ( ! $user_id = edit_user() ) {
 		wp_die( 0 );
 	} elseif ( is_wp_error( $user_id ) ) {
-		$x = new WP_Ajax_Response( array(
+		$x = new \WordPress\WPAjaxResponse( array(
 			'what' => 'user',
 			'id' => $user_id
 		) );
@@ -1077,7 +1077,7 @@ function wp_ajax_add_user( $action ) {
 
 	$role = current( $user_object->roles );
 
-	$x = new WP_Ajax_Response( array(
+	$x = new \WordPress\WPAjaxResponse( array(
 		'what' => 'user',
 		'id' => $user_id,
 		'data' => $wp_list_table->single_row( $user_object, '', $role ),
@@ -1142,7 +1142,7 @@ function wp_ajax_autosave() {
 	}
 
 	// @todo Consider exposing any errors, rather than having 'Saving draft...'
-	$x = new WP_Ajax_Response( array(
+	$x = new \WordPress\WPAjaxResponse( array(
 		'what' => 'autosave',
 		'id' => $id,
 		'data' => $data,
@@ -1513,7 +1513,7 @@ function wp_ajax_find_posts() {
 
 	$html .= '</tbody></table>';
 
-	$x = new WP_Ajax_Response();
+	$x = new \WordPress\WPAjaxResponse();
 	$x->add( array(
 		'data' => $html
 	));

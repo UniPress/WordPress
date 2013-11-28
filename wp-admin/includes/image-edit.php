@@ -202,7 +202,7 @@ function wp_image_editor($post_id, $msg = false) {
  * @return boolean
  */
 function wp_stream_image( $image, $mime_type, $post_id ) {
-	if ( $image instanceof WP_Image_Editor ) {
+	if ( $image instanceof \WordPress\WPImageEditor ) {
 		$image = apply_filters('image_editor_save_pre', $image, $post_id);
 
 		if ( is_wp_error( $image->stream( $mime_type ) ) )
@@ -234,13 +234,13 @@ function wp_stream_image( $image, $mime_type, $post_id ) {
  * Saves Image to File
  *
  * @param string $filename
- * @param WP_Image_Editor $image
+ * @param \WordPress\WPImageEditor $image
  * @param string $mime_type
  * @param int $post_id
  * @return boolean
  */
 function wp_save_image_file( $filename, $image, $mime_type, $post_id ) {
-	if ( $image instanceof WP_Image_Editor ) {
+	if ( $image instanceof \WordPress\WPImageEditor ) {
 		$image = apply_filters('image_editor_save_pre', $image, $post_id);
 		$saved = apply_filters('wp_save_image_editor_file', null, $filename, $image, $mime_type, $post_id);
 
@@ -343,9 +343,9 @@ function _crop_image_resource($img, $x, $y, $w, $h) {
 /**
  * Performs group of changes on Editor specified.
  *
- * @param WP_Image_Editor $image
+ * @param \WordPress\WPImageEditor $image
  * @param type $changes
- * @return WP_Image_Editor
+ * @return \WordPress\WPImageEditor
  */
 function image_edit_apply_changes( $image, $changes ) {
 	if ( is_resource( $image ) )
@@ -397,7 +397,7 @@ function image_edit_apply_changes( $image, $changes ) {
 	}
 
 	// image resource before applying the changes
-	if ( $image instanceof WP_Image_Editor )
+	if ( $image instanceof \WordPress\WPImageEditor )
 		$image = apply_filters('wp_image_editor_before_change', $image, $changes);
 	elseif ( is_resource( $image ) )
 		$image = apply_filters('image_edit_before_change', $image, $changes);
@@ -406,7 +406,7 @@ function image_edit_apply_changes( $image, $changes ) {
 		switch ( $operation->type ) {
 			case 'rotate':
 				if ( $operation->angle != 0 ) {
-					if ( $image instanceof WP_Image_Editor )
+					if ( $image instanceof \WordPress\WPImageEditor )
 						$image->rotate( $operation->angle );
 					else
 						$image = _rotate_image_resource( $image, $operation->angle );
@@ -414,7 +414,7 @@ function image_edit_apply_changes( $image, $changes ) {
 				break;
 			case 'flip':
 				if ( $operation->axis != 0 )
-					if ( $image instanceof WP_Image_Editor )
+					if ( $image instanceof \WordPress\WPImageEditor )
 						$image->flip( ($operation->axis & 1) != 0, ($operation->axis & 2) != 0 );
 					else
 						$image = _flip_image_resource( $image, ( $operation->axis & 1 ) != 0, ( $operation->axis & 2 ) != 0 );
@@ -422,7 +422,7 @@ function image_edit_apply_changes( $image, $changes ) {
 			case 'crop':
 				$sel = $operation->sel;
 
-				if ( $image instanceof WP_Image_Editor ) {
+				if ( $image instanceof \WordPress\WPImageEditor ) {
 					$size = $image->get_size();
 					$w = $size['width'];
 					$h = $size['height'];

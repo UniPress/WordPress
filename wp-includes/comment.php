@@ -1871,7 +1871,7 @@ function pingback($content, $post_ID) {
 			$pagelinkedfrom = get_permalink($post_ID);
 
 			// using a timeout of 3 seconds should be enough to cover slow servers
-			$client = new WP_HTTP_IXR_Client($pingback_server_url);
+			$client = new \WordPress\WPHTTPIXRClient($pingback_server_url);
 			$client->timeout = 3;
 			$client->useragent = apply_filters( 'pingback_useragent', $client->useragent . ' -- WordPress/' . $wp_version, $client->useragent, $pingback_server_url, $pagelinkedto, $pagelinkedfrom);
 			// when set to true, this outputs debug messages by itself
@@ -1952,7 +1952,7 @@ function weblog_ping($server = '', $path = '') {
 	include_once(ABSPATH . WPINC . '/class-wp-http-ixr-client.php');
 
 	// using a timeout of 3 seconds should be enough to cover slow servers
-	$client = new WP_HTTP_IXR_Client($server, ((!strlen(trim($path)) || ('/' == $path)) ? false : $path));
+	$client = new \WordPress\WPHTTPIXRClient($server, ((!strlen(trim($path)) || ('/' == $path)) ? false : $path));
 	$client->timeout = 3;
 	$client->useragent .= ' -- WordPress/'.$wp_version;
 

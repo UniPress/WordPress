@@ -147,7 +147,7 @@ function wp_terms_checklist($post_id = 0, $args = array()) {
 
 	extract( wp_parse_args($args, $defaults), EXTR_SKIP );
 
-	if ( empty($walker) || !is_a($walker, 'Walker') )
+	if ( empty($walker) || !is_a($walker, '\WordPress\Walker') )
 		$walker = new Walker_Category_Checklist;
 
 	$descendants_and_self = (int) $descendants_and_self;

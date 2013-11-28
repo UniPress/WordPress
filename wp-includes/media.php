@@ -1376,8 +1376,8 @@ function wp_expand_dimensions( $example_width, $example_height, $max_width, $max
  * @return bool|string False on failure or the embed HTML on success.
  */
 function wp_oembed_get( $url, $args = '' ) {
-	require_once(ABSPATH . WPINC . '/class-oembed.php');
-	$oembed = WP_oEmbed::getInstance();//_wp_oembed_get_object();
+	//require_once(ABSPATH . WPINC . '/class-oembed.php');
+	$oembed = \WordPress\WPoEmbed::getInstance();//_wp_oembed_get_object();
 	return $oembed->get_html( $url, $args );
 }
 
