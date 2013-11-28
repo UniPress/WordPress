@@ -11,6 +11,9 @@ error_reporting(0);
 define( 'ABSPATH', dirname(dirname(__FILE__)) . '/' );
 define( 'WPINC', 'wp-includes' );
 
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../src/functions.php';
+
 /**
  * @ignore
  */
