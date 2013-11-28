@@ -141,7 +141,7 @@ class ServicesJSON
      *                                   strings or numbers, if you return an object, make sure it does
      *                                   not have a toJSON method, otherwise an error will occur.
      */
-    function ServicesJSON($use = 0)
+    public function __construct($use = 0)
     {
         $this->use = $use;
         $this->_mb_strlen            = function_exists('mb_strlen');

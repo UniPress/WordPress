@@ -20,7 +20,7 @@
  * @see wp_terms_checklist()
  * @since 2.5.1
  */
-class Walker_Category_Checklist extends Walker {
+class Walker_Category_Checklist extends \WordPress\Walker {
 	var $tree_type = 'category';
 	var $db_fields = array ('parent' => 'parent', 'id' => 'term_id'); //TODO: decouple this
 

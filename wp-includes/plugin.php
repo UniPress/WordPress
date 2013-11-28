@@ -425,8 +425,11 @@ function do_action($tag, $arg = '') {
 
 	do {
 		foreach ( (array) current($wp_filter[$tag]) as $the_ )
-			if ( !is_null($the_['function']) )
+			if ( !is_null($the_['function']) ){
+                var_dump($tag);
+                var_dump($the_);
 				call_user_func_array($the_['function'], array_slice($args, 0, (int) $the_['accepted_args']));
+            }
 
 	} while ( next($wp_filter[$tag]) !== false );
 

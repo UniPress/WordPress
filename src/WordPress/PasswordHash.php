@@ -42,7 +42,7 @@ class PasswordHash {
 	var $portable_hashes;
 	var $random_state;
 
-	function PasswordHash($iteration_count_log2, $portable_hashes)
+	public function __construct($iteration_count_log2, $portable_hashes)
 	{
 		$this->itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
@@ -113,6 +113,7 @@ class PasswordHash {
 
 	function crypt_private($password, $setting)
 	{
+
 		$output = '*0';
 		if (substr($setting, 0, 2) == $output)
 			$output = '*1';
@@ -122,15 +123,23 @@ class PasswordHash {
 		if ($id != '$P$' && $id != '$H$')
 			return $output;
 
-		$count_log2 = strpos($this->itoa64, $setting[3]);
-		if ($count_log2 < 7 || $count_log2 > 30)
+
+
+        $count_log2 = strpos($this->itoa64, $setting[3]);
+
+
+
+        if ($count_log2 < 7 || $count_log2 > 30)
 			return $output;
 
 		$count = 1 << $count_log2;
 
+
+
 		$salt = substr($setting, 4, 8);
 		if (strlen($salt) != 8)
 			return $output;
+
 
 		# We're kind of forced to use MD5 here since it's the only
 		# cryptographic primitive available in all versions of PHP

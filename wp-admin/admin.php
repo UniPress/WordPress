@@ -11,6 +11,10 @@
  *
  * @since 2.3.2
  */
+
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../src/functions.php';
+
 if ( ! defined('WP_ADMIN') )
 	define('WP_ADMIN', true);
 

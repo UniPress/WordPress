@@ -31,10 +31,6 @@ final class WPCustomizeManager {
 	 * @since 3.4.0
 	 */
 	public function __construct() {
-		require(ABSPATH . WPINC . '/class-wp-customize-setting.php');
-		require(ABSPATH . WPINC . '/class-wp-customize-section.php');
-		require(ABSPATH . WPINC . '/class-wp-customize-control.php');
-
 		add_filter( 'wp_die_handler', array( $this, 'wp_die_handler' ) );
 
 		add_action( 'setup_theme',  array( $this, 'setup_theme' ) );

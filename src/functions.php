@@ -14,7 +14,7 @@
  * @return bool True, if WPError. False, if not WPError.
  */
 function is_wp_error($thing) {
-    if ( is_object($thing) && is_a($thing, 'WPError') )
+    if ( is_object($thing) && is_a($thing, '\WordPress\WPError') )
         return true;
     return false;
 }

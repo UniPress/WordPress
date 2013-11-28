@@ -22,7 +22,6 @@ function _wp_admin_bar_init() {
 		return false;
 
 	/* Load the admin bar class code ready for instantiation */
-	require(ABSPATH . WPINC . '/class-wp-admin-bar.php');
 
 	/* Instantiate the admin bar */
 
