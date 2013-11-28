@@ -59,7 +59,7 @@ define('SIMPLEPIE_VERSION', '1.3.1');
  * SimplePie Build
  * @todo Hardcode for release (there's no need to have to call SimplePie_Misc::get_build() only every load of simplepie.inc)
  */
-define('SIMPLEPIE_BUILD', gmdate('YmdHis', SimplePie_Misc::get_build()));
+define('SIMPLEPIE_BUILD', gmdate('YmdHis', \SimplePie_Misc::get_build()));
 
 /**
  * SimplePie Website URL
@@ -634,8 +634,8 @@ class SimplePie
 		}
 
 		// Other objects, instances created here so we can set options on them
-		$this->sanitize = new SimplePie_Sanitize();
-		$this->registry = new SimplePie_Registry();
+		$this->sanitize = new \SimplePie_Sanitize();
+		$this->registry = new \SimplePie_Registry();
 
 		if (func_num_args() > 0)
 		{

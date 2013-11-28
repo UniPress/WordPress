@@ -528,14 +528,14 @@ function feed_content_type( $type = '' ) {
  * @return WPError|SimplePie WPError object on failure or SimplePie object on success
  */
 function fetch_feed( $url ) {
-	require_once(ABSPATH . WPINC . '/class-feed.php');
+	//require_once(ABSPATH . WPINC . '/class-feed.php');
 
-	$feed = new SimplePie();
+	$feed = new \WordPress\SimplePie();
 
 	$feed->set_sanitize_class( 'WPSimplePieSanitizeKSES' );
 	// We must manually overwrite $feed->sanitize because SimplePie's
 	// constructor sets it before we have a chance to set the sanitization class
-	$feed->sanitize = new WP_SimplePie_Sanitize_KSES();
+	$feed->sanitize = new WordPress\WPSimplePieSanitizeKSES();
 
 	$feed->set_cache_class( 'WPFeedCache' );
 	$feed->set_file_class( 'WPSimplePieFile' );
