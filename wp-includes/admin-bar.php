@@ -32,7 +32,7 @@ function _wp_admin_bar_init() {
 	 *
 	 * @param string $wp_admin_bar_class Admin bar class to use. Default 'WPAdminBar'.
 	 */
-	$admin_bar_class = apply_filters( 'wp_admin_bar_class', 'WPAdminBar' );
+	$admin_bar_class = apply_filters( 'wp_admin_bar_class', '\WordPress\WPAdminBar' );
 	if ( class_exists( $admin_bar_class ) )
 		$wp_admin_bar = new $admin_bar_class;
 	else

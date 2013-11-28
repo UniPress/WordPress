@@ -28,7 +28,7 @@ class WPAdminBar {
 	}
 
 	public function initialize() {
-		$this->user = new stdClass;
+		$this->user = new \stdClass;
 
 		if ( is_user_logged_in() ) {
 			/* Populate settings we need for the menu based on the current user. */
