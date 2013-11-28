@@ -1264,8 +1264,8 @@ function wp_ajax_wp_link_ajax() {
 		$args['s'] = wp_unslash( $_POST['search'] );
 	$args['pagenum'] = ! empty( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
 
-	require(ABSPATH . WPINC . '/class-wp-editor.php');
-	$results = _WP_Editors::wp_link_query( $args );
+	//require(ABSPATH . WPINC . '/class-wp-editor.php');
+	$results = \WordPress\WPEditors::wp_link_query( $args );
 
 	if ( ! isset( $results ) )
 		wp_die( 0 );

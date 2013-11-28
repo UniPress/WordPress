@@ -549,7 +549,7 @@ function wp_mce_translation() {
 		'alt' => __('Alternative Text')
 	);
 
-	$locale = _WP_Editors::$mce_locale;
+	$locale = \WordPress\WPEditors::$mce_locale;
 
 	$translated = 'tinyMCE.addI18n({' . $locale . ':' . json_encode( $default ) . "});\n";
 	$translated .= 'tinyMCE.addI18n("' . $locale . '.advanced", ' . json_encode( $advanced ) . ");\n";

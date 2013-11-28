@@ -1871,10 +1871,10 @@ function wp_default_editor() {
  * @param array $settings See WPEditors::editor().
  */
 function wp_editor( $content, $editor_id, $settings = array() ) {
-	if ( ! class_exists( 'WPEditors' ) )
-		require(ABSPATH . WPINC . '/class-wp-editor.php');
+	//if ( ! class_exists( 'WPEditors' ) )
+		//require(ABSPATH . WPINC . '/class-wp-editor.php');
 
-	_WP_Editors::editor($content, $editor_id, $settings);
+	\WordPress\WPEditors::editor($content, $editor_id, $settings);
 }
 
 /**

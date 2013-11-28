@@ -755,8 +755,8 @@ function wp_tiny_mce( $teeny = false, $settings = false ) {
 		'quicktags' => false
 	);
 
-	$set = _WP_Editors::parse_settings($editor_id, $set);
-	_WP_Editors::editor_settings($editor_id, $set);
+	$set = \WordPress\WPEditors::parse_settings($editor_id, $set);
+    \WordPress\WPEditors::editor_settings($editor_id, $set);
 }
 
 /**
