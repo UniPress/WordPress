@@ -2179,7 +2179,7 @@ function wp_admin_css_uri( $file = 'wp-admin' ) {
  */
 function wp_admin_css( $file = 'wp-admin', $force_echo = false ) {
 	global $wp_styles;
-	if ( !is_a($wp_styles, 'WPStyles') )
+	if ( !is_a($wp_styles, '\WordPress\WPStyles') )
 		$wp_styles = new \WordPress\WPStyles();
 
 	// For backward compatibility

@@ -24,7 +24,7 @@ if ( ! $return )
 global $wp_scripts, $wp_customize;
 
 $registered = $wp_scripts->registered;
-$wp_scripts = new \WordPress\WP_Scripts;
+$wp_scripts = new \WordPress\WPScripts();
 $wp_scripts->registered = $registered;
 
 add_action( 'customize_controls_print_scripts',        'print_head_scripts', 20 );

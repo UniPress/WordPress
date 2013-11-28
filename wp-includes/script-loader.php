@@ -714,7 +714,7 @@ function print_head_scripts() {
 		do_action( 'wp_print_scripts' );
 	}
 
-	if ( !is_a($wp_scripts, 'WPScripts') )
+	if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
 		$wp_scripts = new \WordPress\WPScripts();
 
 	script_concat_settings();
@@ -736,7 +736,7 @@ function print_head_scripts() {
 function print_footer_scripts() {
 	global $wp_scripts, $concatenate_scripts;
 
-	if ( !is_a($wp_scripts, 'WPScripts') )
+	if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
 		return array(); // No need to run if not instantiated.
 
 	script_concat_settings();
@@ -797,7 +797,7 @@ function wp_print_head_scripts() {
 
 	global $wp_scripts;
 
-	if ( !is_a($wp_scripts, 'WPScripts') )
+	if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
 		return array(); // no need to run if nothing is queued
 
 	return print_head_scripts();
@@ -842,7 +842,7 @@ function wp_enqueue_scripts() {
 function print_admin_styles() {
 	global $wp_styles, $concatenate_scripts, $compress_css;
 
-	if ( !is_a($wp_styles, 'WPStyles') )
+	if ( !is_a($wp_styles, '\WordPress\WPStyles') )
 		$wp_styles = new \WordPress\WPStyles();
 
 	script_concat_settings();
@@ -868,7 +868,7 @@ function print_admin_styles() {
 function print_late_styles() {
 	global $wp_styles, $concatenate_scripts;
 
-	if ( !is_a($wp_styles, 'WPStyles') )
+	if ( !is_a($wp_styles, '\WordPress\WPStyles') )
 		return;
 
 	$wp_styles->do_concat = $concatenate_scripts;
