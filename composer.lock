@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "52bbf073d33dbbc74be1fa3ad65317ae",
+    "hash": "c0e598417fbc5866ab02ea728aea6149",
     "packages": [
         {
             "name": "simplepie/simplepie",
