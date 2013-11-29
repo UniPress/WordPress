@@ -1,5 +1,7 @@
 <?php
 
+include __DIR__.'/class_alias.php';
+
 //include __DIR__.'/../wp-includes/formatting.php';
 //include __DIR__.'/../wp-includes/taxonomy.php';
 
