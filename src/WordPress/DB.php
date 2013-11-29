@@ -663,7 +663,7 @@ class DB {
 	function set_prefix( $prefix, $set_table_names = true ) {
 
 		if ( preg_match( '|[^a-z0-9_]|i', $prefix ) )
-			return new WordPress\WP_Error('invalid_db_prefix', 'Invalid database prefix' );
+			return new WPError('invalid_db_prefix', 'Invalid database prefix' );
 
 		$old_prefix = is_multisite() ? '' : $prefix;
 
