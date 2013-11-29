@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteRule ^/wp-admin(.*) /wp/wp-admin$1 [L]
+RewriteRule ^/(.*) /wp/$1 [L]
