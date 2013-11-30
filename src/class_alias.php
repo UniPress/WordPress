@@ -101,7 +101,7 @@ class_alias('\WordPress\Widget\RecentPostsWidget', '\WP_Widget_Recent_posts');
 class_alias('\WordPress\Widget\RSSWidget', '\RSSWidget');
 //class_alias('\WordPress\SearchWidget', '\SearchWidget');
 //class_alias('\WordPress\WP_Widget_Tag_cloud', '\WP_Widget_Tag_cloud');
-class_alias('\WordPress\TextWidget', '\TextWidget');
+class_alias('\WordPress\Widget\TextWidget', '\TextWidget');
 class_alias('\WordPress\Widget\Factory', '\WP_Widget_Factory');
 class_alias('\WordPress\WPXmlrpcServer', '\wp_xmlrpc_server');
 //class_alias('\WordPress\wpdb', '\wpdb');
