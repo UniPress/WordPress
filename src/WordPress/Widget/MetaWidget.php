@@ -2,8 +2,6 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Meta widget class
  *
@@ -11,7 +9,7 @@ use WordPress\WPWidget;
  *
  * @since 2.8.0
  */
-class MetaWidget extends WPWidget {
+class MetaWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'widget_meta', 'description' => __( "Log in/out, admin, feed and WordPress links") );

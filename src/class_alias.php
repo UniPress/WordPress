@@ -89,7 +89,7 @@ class_alias('\WordPress\WPStyles', '\WP_Styles');
 //class_alias('\WordPress\Theme_Upgrader_Skin', '\Theme_Upgrader_Skin');
 class_alias('\WordPress\WPUser', '\WP_User');
 //class_alias('\WordPress\WP_User_Query', '\WP_User_Query');
-class_alias('\WordPress\WPWidget', '\WP_Widget');
+class_alias('\WordPress\Widget\Widget', '\WP_Widget');
 class_alias('\WordPress\Widget\ArchivesWidget', '\WP_Widget_Archives');
 class_alias('\WordPress\Widget\CalendarWidget', '\WP_Widget_Calendar');
 class_alias('\WordPress\Widget\CategoriesWidget', '\WP_Widget_Categories');

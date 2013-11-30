@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Pages widget class
  *
  * @since 2.8.0
  */
-class PagesWidget extends WPWidget {
+class PagesWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'widget_pages', 'description' => __( 'Your site&#8217;s WordPress Pages') );

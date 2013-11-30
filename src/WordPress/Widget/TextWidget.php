@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Text widget class
  *
  * @since 2.8.0
  */
-class TextWidget extends WPWidget {
+class TextWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'widget_text', 'description' => __('Arbitrary text or HTML'));

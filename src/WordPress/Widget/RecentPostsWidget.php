@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Recent_Posts widget class
  *
  * @since 2.8.0
  */
-class RecentPostsWidget extends WPWidget {
+class RecentPostsWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'widget_recent_entries', 'description' => __( "The most recent posts on your site") );

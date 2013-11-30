@@ -244,7 +244,7 @@ function wp_widget_rss_process( $widget_rss, $check_feed = true ) {
  *
  * @since 2.8.0
  */
-class WP_Widget_Tag_Cloud extends \WordPress\WPWidget {
+class WP_Widget_Tag_Cloud extends \WordPress\Widget\Widget {
 
 	function __construct() {
 		$widget_ops = array( 'description' => __( "Your most used tags in cloud format") );
@@ -311,7 +311,7 @@ class WP_Widget_Tag_Cloud extends \WordPress\WPWidget {
  *
  * @since 3.0.0
  */
- class WP_Nav_Menu_Widget extends \WordPress\WPWidget {
+ class WP_Nav_Menu_Widget extends \WordPress\Widget\Widget {
 
 	function __construct() {
 		$widget_ops = array( 'description' => __('Use this widget to add one of your custom menus as a widget.') );

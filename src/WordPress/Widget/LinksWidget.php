@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Links widget class
  *
  * @since 2.8.0
  */
-class LinksWidget extends WPWidget {
+class LinksWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('description' => __( "Your blogroll" ) );

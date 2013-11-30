@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Recent_Comments widget class
  *
  * @since 2.8.0
  */
-class RecentCommentsWidget extends WPWidget {
+class RecentCommentsWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'widget_recent_comments', 'description' => __( 'The most recent comments' ) );

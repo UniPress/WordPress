@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * RSS widget class
  *
  * @since 2.8.0
  */
-class RSSWidget extends WPWidget {
+class RSSWidget extends Widget {
 
     function __construct() {
         $widget_ops = array( 'description' => __('Entries from any RSS or Atom feed') );

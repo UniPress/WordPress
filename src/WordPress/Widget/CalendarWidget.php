@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Calendar widget class
  *
  * @since 2.8.0
  */
-class CalendarWidget extends WPWidget {
+class CalendarWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'widget_calendar', 'description' => __( 'A calendar of your site&#8217;s posts') );

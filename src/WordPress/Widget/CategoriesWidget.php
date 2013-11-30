@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Categories widget class
  *
  * @since 2.8.0
  */
-class CategoriesWidget extends WPWidget {
+class CategoriesWidget extends Widget {
 
     function __construct() {
         $widget_ops = array( 'classname' => 'widget_categories', 'description' => __( "A list or dropdown of categories" ) );

@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Archives widget class
  *
  * @since 2.8.0
  */
-class ArchivesWidget extends WPWidget
+class ArchivesWidget extends Widget
 {
 
     function __construct()

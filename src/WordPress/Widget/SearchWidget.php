@@ -2,14 +2,12 @@
 
 namespace WordPress\Widget;
 
-use WordPress\WPWidget;
-
 /**
  * Search widget class
  *
  * @since 2.8.0
  */
-class SearchWidget extends WPWidget {
+class SearchWidget extends Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'widget_search', 'description' => __( "A search form for your site") );
