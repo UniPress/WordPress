@@ -25,6 +25,10 @@ class UniPress
             self::$container->register('wp_customize', 'WordPress\WPCustomizeManager');
             self::$container->register('wp_scripts', 'WordPress\WPScripts');
             self::$container->register('wp_styles', 'WordPress\WPStyles');
+
+            foreach (self::$container->getServiceIds() as $id) {
+                $GLOBALS[$id] = self::$container->get($id);
+            }
         }
 
         return self::$container;
