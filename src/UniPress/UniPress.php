@@ -3,6 +3,7 @@
 namespace UniPress;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class UniPress
 {
@@ -16,5 +17,15 @@ class UniPress
         }
 
         return self::$container;
+    }
+
+    public static function getService($serviceId)
+    {
+        $container = self::getContainer();
+        if ($container->has($serviceId)) {
+            return $container->get($serviceId);
+        }
+
+        throw new ServiceNotFoundException($serviceId);
     }
 }
