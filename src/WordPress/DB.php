@@ -640,13 +640,13 @@ class DB {
 		if ( ! isset( $collate ) )
 			$collate = $this->collate;
 		if ( $this->has_cap( 'collation' ) && ! empty( $charset ) ) {
-			if ( function_exists( 'mysql_set_charset' ) && $this->has_cap( 'set_charset' ) ) {
-				mysql_set_charset( $charset, $dbh );
+			if ( function_exists( 'mysqli_set_charset' ) && $this->has_cap( 'set_charset' ) ) {
+				mysqli_set_charset( $dbh, $charset );
 			} else {
 				$query = $this->prepare( 'SET NAMES %s', $charset );
 				if ( ! empty( $collate ) )
 					$query .= $this->prepare( ' COLLATE %s', $collate );
-				mysql_query( $query, $dbh );
+                mysqli_query( $dbh, $query);
 			}
 		}
 	}
@@ -833,7 +833,7 @@ class DB {
 		if ( is_null($dbh) )
 			$dbh = $this->dbh;
 
-		if ( !@mysql_select_db( $db, $dbh ) ) {
+		if ( !@mysqli_select_db( $dbh, $db ) ) {
 			$this->ready = false;
 			wp_load_translations_early();
 			$this->bail( sprintf( __( '<h1>Can&#8217;t select database</h1>
@@ -869,9 +869,9 @@ class DB {
 	}
 
 	/**
-	 * Real escape, using mysql_real_escape_string()
+	 * Real escape, using mysqli_real_escape_string()
 	 *
-	 * @see mysql_real_escape_string()
+	 * @see mysqli_real_escape_string()
 	 * @since 2.8.0
 	 * @access private
 	 *
@@ -880,7 +880,7 @@ class DB {
 	 */
 	function _real_escape( $string ) {
 		if ( $this->dbh )
-			return mysql_real_escape_string( $string, $this->dbh );
+			return mysqli_real_escape_string( $this->dbh, $string );
 
 		$class = get_class( $this );
 		_doing_it_wrong( $class, "$class must set a database connection for use with escaping.", E_USER_NOTICE );
@@ -1022,7 +1022,7 @@ class DB {
 		global $EZSQL_ERROR;
 
 		if ( !$str )
-			$str = mysql_error( $this->dbh );
+			$str = mysqli_error( $this->dbh );
 		$EZSQL_ERROR[] = array( 'query' => $this->last_query, 'error_str' => $str );
 
 		if ( $this->suppress_errors )
@@ -1126,7 +1126,7 @@ class DB {
 		$this->last_error  = '';
 
 		if ( is_resource( $this->result ) )
-			mysql_free_result( $this->result );
+            mysqli_free_result( $this->result );
 	}
 
 	/**
@@ -1142,10 +1142,11 @@ class DB {
 		$client_flags = defined( 'MYSQL_CLIENT_FLAGS' ) ? MYSQL_CLIENT_FLAGS : 0;
 
 		if ( WP_DEBUG ) {
-			$this->dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, $new_link, $client_flags );
+			$this->dbh = mysqli_connect( $this->dbhost, $this->dbuser, $this->dbpassword );
 		} else {
-			$this->dbh = @mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, $new_link, $client_flags );
+			$this->dbh = @mysqli_connect( $this->dbhost, $this->dbuser, $this->dbpassword);
 		}
+
 
 		if ( !$this->dbh ) {
 			wp_load_translations_early();
@@ -1205,14 +1206,14 @@ class DB {
 		if ( defined( 'SAVEQUERIES' ) && SAVEQUERIES )
 			$this->timer_start();
 
-		$this->result = @mysql_query( $query, $this->dbh );
+		$this->result = @mysqli_query( $this->dbh,  $query);
 		$this->num_queries++;
 
 		if ( defined( 'SAVEQUERIES' ) && SAVEQUERIES )
 			$this->queries[] = array( $query, $this->timer_stop(), $this->get_caller() );
 
 		// If there is an error then take note of it..
-		if ( $this->last_error = mysql_error( $this->dbh ) ) {
+		if ( $this->last_error = mysqli_error( $this->dbh ) ) {
 			// Clear insert_id on a subsequent failed insert.
 			if ( $this->insert_id && preg_match( '/^\s*(insert|replace)\s/i', $query ) )
 				$this->insert_id = 0;
@@ -1224,16 +1225,16 @@ class DB {
 		if ( preg_match( '/^\s*(create|alter|truncate|drop)\s/i', $query ) ) {
 			$return_val = $this->result;
 		} elseif ( preg_match( '/^\s*(insert|delete|update|replace)\s/i', $query ) ) {
-			$this->rows_affected = mysql_affected_rows( $this->dbh );
+			$this->rows_affected = mysqli_affected_rows( $this->dbh );
 			// Take note of the insert_id
 			if ( preg_match( '/^\s*(insert|replace)\s/i', $query ) ) {
-				$this->insert_id = mysql_insert_id($this->dbh);
+				$this->insert_id = mysqli_insert_id($this->dbh);
 			}
 			// Return number of rows affected
 			$return_val = $this->rows_affected;
 		} else {
 			$num_rows = 0;
-			while ( $row = @mysql_fetch_object( $this->result ) ) {
+			while ( $row = @mysqli_fetch_object( $this->result ) ) {
 				$this->last_result[$num_rows] = $row;
 				$num_rows++;
 			}
@@ -1577,8 +1578,8 @@ class DB {
 		if ( $this->col_info )
 			return;
 
-		for ( $i = 0; $i < @mysql_num_fields( $this->result ); $i++ ) {
-			$this->col_info[ $i ] = @mysql_fetch_field( $this->result, $i );
+		for ( $i = 0; $i < @mysqli_num_fields( $this->result ); $i++ ) {
+			$this->col_info[ $i ] = @mysqli_fetch_field( $this->result, $i );
 		}
 	}
 
@@ -1667,7 +1668,7 @@ class DB {
 		global $wp_version, $required_mysql_version;
 		// Make sure the server has the required MySQL version
 		if ( version_compare($this->db_version(), $required_mysql_version, '<') )
-			return new WordPress\WP_Error('database_version', sprintf( __( '<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher' ), $wp_version, $required_mysql_version ));
+			return new \WordPress\WP_Error('database_version', sprintf( __( '<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher' ), $wp_version, $required_mysql_version ));
 	}
 
 	/**
@@ -1750,6 +1751,6 @@ class DB {
 	 * @return false|string false on failure, version number on success
 	 */
 	function db_version() {
-		return preg_replace( '/[^0-9.].*/', '', mysql_get_server_info( $this->dbh ) );
+		return preg_replace( '/[^0-9.].*/', '', mysqli_get_server_info( $this->dbh ) );
 	}
 }
