@@ -21,7 +21,9 @@ if ( $return )
 if ( ! $return )
 	$return = $url;
 
-global $wp_scripts, $wp_customize;
+//global $wp_scripts, $wp_customize;
+$wp_scripts = \UniPress\UniPress::getService('wp_scripts');
+$wp_customize = \UniPress\UniPress::getService('wp_customize');
 
 $registered = $wp_scripts->registered;
 $wp_scripts = new \WordPress\WPScripts();

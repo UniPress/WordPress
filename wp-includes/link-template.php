@@ -176,14 +176,14 @@ function get_permalink( $id = 0, $leavename = false ) {
  * @return string
  */
 function get_post_permalink( $id = 0, $leavename = false, $sample = false ) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 
 	$post = get_post($id);
 
 	if ( is_wp_error( $post ) )
 		return $post;
 
-	$post_link = $wp_rewrite->get_extra_permastruct($post->post_type);
+	$post_link = UniPress\UniPress::getService('wp_rewrite')->get_extra_permastruct($post->post_type);
 
 	$slug = $post->post_name;
 
@@ -262,13 +262,13 @@ function get_page_link( $post = false, $leavename = false, $sample = false ) {
  * @return string
  */
 function _get_page_link( $post = false, $leavename = false, $sample = false ) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 
 	$post = get_post( $post );
 
 	$draft_or_pending = in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
 
-	$link = $wp_rewrite->get_page_permastruct();
+	$link = UniPress\UniPress::getService('wp_rewrite')->get_page_permastruct();
 
 	if ( !empty($link) && ( ( isset($post->post_status) && !$draft_or_pending ) || $sample ) ) {
 		if ( ! $leavename ) {
@@ -296,14 +296,14 @@ function _get_page_link( $post = false, $leavename = false, $sample = false ) {
  * @return string
  */
 function get_attachment_link( $post = null, $leavename = false ) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 
 	$link = false;
 
 	$post = get_post( $post );
 	$parent = ( $post->post_parent > 0 && $post->post_parent != $post->ID ) ? get_post( $post->post_parent ) : false;
 
-	if ( $wp_rewrite->using_permalinks() && $parent ) {
+	if ( UniPress\UniPress::getService('wp_rewrite')->using_permalinks() && $parent ) {
 		if ( 'page' == $parent->post_type )
 			$parentlink = _get_page_link( $post->post_parent ); // Ignores page_on_front
 		else
@@ -336,10 +336,10 @@ function get_attachment_link( $post = null, $leavename = false ) {
  * @return string
  */
 function get_year_link($year) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 	if ( !$year )
 		$year = gmdate('Y', current_time('timestamp'));
-	$yearlink = $wp_rewrite->get_year_permastruct();
+	$yearlink = UniPress\UniPress::getService('wp_rewrite')->get_year_permastruct();
 	if ( !empty($yearlink) ) {
 		$yearlink = str_replace('%year%', $year, $yearlink);
 		return apply_filters('year_link', home_url( user_trailingslashit($yearlink, 'year') ), $year);
@@ -358,12 +358,12 @@ function get_year_link($year) {
  * @return string
  */
 function get_month_link($year, $month) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 	if ( !$year )
 		$year = gmdate('Y', current_time('timestamp'));
 	if ( !$month )
 		$month = gmdate('m', current_time('timestamp'));
-	$monthlink = $wp_rewrite->get_month_permastruct();
+	$monthlink = UniPress\UniPress::getService('wp_rewrite')->get_month_permastruct();
 	if ( !empty($monthlink) ) {
 		$monthlink = str_replace('%year%', $year, $monthlink);
 		$monthlink = str_replace('%monthnum%', zeroise(intval($month), 2), $monthlink);
@@ -384,7 +384,7 @@ function get_month_link($year, $month) {
  * @return string
  */
 function get_day_link($year, $month, $day) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 	if ( !$year )
 		$year = gmdate('Y', current_time('timestamp'));
 	if ( !$month )
@@ -392,7 +392,7 @@ function get_day_link($year, $month, $day) {
 	if ( !$day )
 		$day = gmdate('j', current_time('timestamp'));
 
-	$daylink = $wp_rewrite->get_day_permastruct();
+	$daylink = UniPress\UniPress::getService('wp_rewrite')->get_day_permastruct();
 	if ( !empty($daylink) ) {
 		$daylink = str_replace('%year%', $year, $daylink);
 		$daylink = str_replace('%monthnum%', zeroise(intval($month), 2), $daylink);
@@ -425,7 +425,8 @@ function the_feed_link( $anchor, $feed = '' ) {
  * @return string
  */
 function get_feed_link($feed = '') {
-	global $wp_rewrite;
+	//global $wp_rewrite;
+    $wp_rewrite = UniPress\UniPress::getService('wp_rewrite');
 
 	$permalink = $wp_rewrite->get_feed_permastruct();
 	if ( '' != $permalink ) {
@@ -744,14 +745,14 @@ function edit_term_link( $link = '', $before = '', $after = '', $term = null, $e
  * @return string
  */
 function get_search_link( $query = '' ) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 
 	if ( empty($query) )
 		$search = get_search_query( false );
 	else
 		$search = stripslashes($query);
 
-	$permastruct = $wp_rewrite->get_search_permastruct();
+	$permastruct = UniPress\UniPress::getService('wp_rewrite')->get_search_permastruct();
 
 	if ( empty( $permastruct ) ) {
 		$link = home_url('?s=' . urlencode($search) );
@@ -775,13 +776,13 @@ function get_search_link( $query = '' ) {
  * @return string
  */
 function get_search_feed_link($search_query = '', $feed = '') {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 	$link = get_search_link($search_query);
 
 	if ( empty($feed) )
 		$feed = get_default_feed();
 
-	$permastruct = $wp_rewrite->get_search_permastruct();
+	$permastruct = UniPress\UniPress::getService('wp_rewrite')->get_search_permastruct();
 
 	if ( empty($permastruct) ) {
 		$link = add_query_arg('feed', $feed, $link);
@@ -805,14 +806,14 @@ function get_search_feed_link($search_query = '', $feed = '') {
  * @return string
  */
 function get_search_comments_feed_link($search_query = '', $feed = '') {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 
 	if ( empty($feed) )
 		$feed = get_default_feed();
 
 	$link = get_search_feed_link($search_query, $feed);
 
-	$permastruct = $wp_rewrite->get_search_permastruct();
+	$permastruct = UniPress\UniPress::getService('wp_rewrite')->get_search_permastruct();
 
 	if ( empty($permastruct) )
 		$link = add_query_arg('feed', 'comments-' . $feed, $link);
@@ -833,7 +834,8 @@ function get_search_comments_feed_link($search_query = '', $feed = '') {
  * @return string
  */
 function get_post_type_archive_link( $post_type ) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
+    $wp_rewrite = UniPress\UniPress::getService('wp_rewrite');
 	if ( ! $post_type_obj = get_post_type_object( $post_type ) )
 		return false;
 
@@ -1501,8 +1503,8 @@ function adjacent_post_link( $format, $link, $in_same_cat = false, $excluded_ter
  * @return string
  */
 function get_pagenum_link($pagenum = 1, $escape = true ) {
-	global $wp_rewrite;
-
+	//global $wp_rewrite;
+    $wp_rewrite = UniPress\UniPress::getService('wp_rewrite');
 	$pagenum = (int) $pagenum;
 
 	$request = remove_query_arg( 'paged' );
@@ -1770,8 +1772,8 @@ function posts_nav_link( $sep = '', $prelabel = '', $nxtlabel = '' ) {
  * @return string
  */
 function get_comments_pagenum_link( $pagenum = 1, $max_page = 0 ) {
-	global $wp_rewrite;
-
+	//global $wp_rewrite;
+    $wp_rewrite = UniPress\UniPress::getService('wp_rewrite');
 	$pagenum = (int) $pagenum;
 
 	$result = get_permalink();
@@ -1889,7 +1891,7 @@ function previous_comments_link( $label = '' ) {
  * @return string Markup for pagination links.
 */
 function paginate_comments_links($args = array()) {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 
 	if ( !is_singular() || !get_option('page_comments') )
 		return;
@@ -1906,7 +1908,7 @@ function paginate_comments_links($args = array()) {
 		'echo' => true,
 		'add_fragment' => '#comments'
 	);
-	if ( $wp_rewrite->using_permalinks() )
+	if ( UniPress\UniPress::getService('wp_rewrite')->using_permalinks() )
 		$defaults['base'] = user_trailingslashit(trailingslashit(get_permalink()) . 'comment-page-%#%', 'commentpaged');
 
 	$args = wp_parse_args( $args, $defaults );

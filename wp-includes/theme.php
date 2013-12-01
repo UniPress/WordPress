@@ -1663,9 +1663,9 @@ function _wp_customize_include() {
 	) )
 		return;
 
-	require(ABSPATH . WPINC . '/class-wp-customize-manager.php');
+	//require(ABSPATH . WPINC . '/class-wp-customize-manager.php');
 	// Init Customize class
-	$GLOBALS['wp_customize'] = new \WordPress\WPCustomizeManager;
+	//$GLOBALS['wp_customize'] = new \WordPress\WPCustomizeManager;
 }
 add_action( 'plugins_loaded', '_wp_customize_include' );
 
@@ -1675,7 +1675,9 @@ add_action( 'plugins_loaded', '_wp_customize_include' );
  * @since 3.4.0
  */
 function _wp_customize_loader_settings() {
-	global $wp_scripts;
+	//global $wp_scripts;
+
+    $wp_scripts = UniPress\UniPress::getService('wp_scripts');
 
 	$admin_origin = parse_url( admin_url() );
 	$home_origin  = parse_url( home_url() );

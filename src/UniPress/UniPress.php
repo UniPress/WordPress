@@ -14,6 +14,17 @@ class UniPress
     {
         if (!self::$container) {
             self::$container = new ContainerBuilder();
+
+            self::$container->register('wp_embed', 'WordPress\WPEmbed');
+            self::$container->register('wp_rewrite', 'WordPress\Rewrite');
+            self::$container->register('wp_widget_factory', 'WordPress\Widget\Factory');
+            self::$container->register('wp_roles', 'WordPress\WPRoles');
+            self::$container->register('wp_locale', 'WordPress\WPLocale');
+            self::$container->register('wp_object_cache', 'WordPress\WPObjectCache');
+            self::$container->register('wp_query', 'WP_Query');
+            self::$container->register('wp_customize', 'WordPress\WPCustomizeManager');
+            self::$container->register('wp_scripts', 'WordPress\WPScripts');
+            self::$container->register('wp_styles', 'WordPress\WPStyles');
         }
 
         return self::$container;

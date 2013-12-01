@@ -34,19 +34,19 @@ function wp_print_scripts( $handles = false ) {
 	if ( '' === $handles ) // for wp_head
 		$handles = false;
 
-	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//	global $wp_scripts;
+//	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//
+//		if ( !$handles )
+//			return array(); // No need to instantiate if nothing is there.
+//		else
+//			$wp_scripts = new \WordPress\WPScripts();
+//	}
 
-		if ( !$handles )
-			return array(); // No need to instantiate if nothing is there.
-		else
-			$wp_scripts = new \WordPress\WPScripts();
-	}
-
-	return $wp_scripts->do_items( $handles );
+	return UniPress\UniPress::getService('wp_scripts')->do_items( $handles );
 }
 
 /**
@@ -71,13 +71,15 @@ function wp_print_scripts( $handles = false ) {
  *                               Default 'false'. Accepts 'false' or 'true'.
  */
 function wp_register_script( $handle, $src, $deps = array(), $ver = false, $in_footer = false ) {
-	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new \WordPress\WPScripts();
-	}
+//	global $wp_scripts;
+//	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_scripts = new \WordPress\WPScripts();
+//	}
+
+    $wp_scripts = UniPress\UniPress::getService('wp_scripts');
 
 	$wp_scripts->add( $handle, $src, $deps, $ver );
 	if ( $in_footer )
@@ -111,16 +113,16 @@ function wp_register_script( $handle, $src, $deps = array(), $ver = false, $in_f
  * @return bool True if the script was successfully localized, false otherwise.
  */
 function wp_localize_script( $handle, $object_name, $l10n ) {
-	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//	global $wp_scripts;
+//	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//
+//		return false;
+//	}
 
-		return false;
-	}
-
-	return $wp_scripts->localize( $handle, $object_name, $l10n );
+	return UniPress\UniPress::getService('wp_scripts')->localize( $handle, $object_name, $l10n );
 }
 
 /**
@@ -137,13 +139,13 @@ function wp_localize_script( $handle, $object_name, $l10n ) {
  * @param string $handle Name of the script to be removed.
  */
 function wp_deregister_script( $handle ) {
-	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new \WordPress\WPScripts();
-	}
+//	global $wp_scripts;
+//	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_scripts = new \WordPress\WPScripts();
+//	}
 
 	/**
 	 * Do not allow accidental or negligent de-registering of critical scripts in the admin.
@@ -170,7 +172,7 @@ function wp_deregister_script( $handle ) {
 		}
 	}
 
-	$wp_scripts->remove( $handle );
+    UniPress\UniPress::getService('wp_scripts')->remove( $handle );
 }
 
 /**
@@ -193,13 +195,15 @@ function wp_deregister_script( $handle ) {
  *                               Default 'false'. Accepts 'false' or 'true'.
  */
 function wp_enqueue_script( $handle, $src = false, $deps = array(), $ver = false, $in_footer = false ) {
-	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new \WordPress\WPScripts();
-	}
+//	global $wp_scripts;
+//	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_scripts = new \WordPress\WPScripts();
+//	}
+
+    $wp_scripts = UniPress\UniPress::getService('wp_scripts');
 
 	if ( $src ) {
 		$_handle = explode('?', $handle);
@@ -221,15 +225,15 @@ function wp_enqueue_script( $handle, $src = false, $deps = array(), $ver = false
  * @param string $handle Name of the script to be removed.
  */
 function wp_dequeue_script( $handle ) {
-	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new \WordPress\WPScripts();
-	}
+//	global $wp_scripts;
+//	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_scripts = new \WordPress\WPScripts();
+//	}
 
-	$wp_scripts->dequeue( $handle );
+    UniPress\UniPress::getService('wp_scripts')->dequeue( $handle );
 }
 
 /**
@@ -246,13 +250,13 @@ function wp_dequeue_script( $handle ) {
  * @return bool Whether the script script is queued.
  */
 function wp_script_is( $handle, $list = 'enqueued' ) {
-	global $wp_scripts;
-	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_scripts = new \WordPress\WPScripts();
-	}
+//	global $wp_scripts;
+//	if ( ! is_a( $wp_scripts, '\WordPress\WPScripts' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_scripts = new \WordPress\WPScripts();
+//	}
 
-	return (bool) $wp_scripts->query( $handle, $list );
+	return (bool) UniPress\UniPress::getService('wp_scripts')->query( $handle, $list );
 }

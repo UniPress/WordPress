@@ -94,9 +94,9 @@ $_wp_sidebars_widgets = array();
  */
 function register_widget($widget_class) {
     /** @var \WordPress\Widget\Factory $wp_widget_factory */
-	global $wp_widget_factory;
+	//global $wp_widget_factory;
 
-	$wp_widget_factory->register($widget_class);
+    UniPress\UniPress::getService('wp_widget_factory')->register($widget_class);
 }
 
 /**
@@ -114,9 +114,9 @@ function register_widget($widget_class) {
  * @param string $widget_class The name of a class that extends WP_Widget
  */
 function unregister_widget($widget_class) {
-	global $wp_widget_factory;
+	//global $wp_widget_factory;
 
-	$wp_widget_factory->unregister($widget_class);
+    UniPress\UniPress::getService('wp_widget_factory')->unregister($widget_class);
 }
 
 /**

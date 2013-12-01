@@ -87,8 +87,9 @@ function set_query_var($var, $value) {
  * @return array List of posts
  */
 function query_posts($query) {
-	$GLOBALS['wp_query'] = new WP_Query();
-	return $GLOBALS['wp_query']->query($query);
+	//$GLOBALS['wp_query'] = new WP_Query();
+    //return $GLOBALS['wp_query']->query($query);
+    return \UniPress\UniPress::getService('wp_query')->query($query);
 }
 
 /**

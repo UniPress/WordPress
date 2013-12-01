@@ -135,7 +135,8 @@ $force_gzip = ( $compress && 'gzip' == $_GET['c'] );
 $expires_offset = 31536000; // 1 year
 $out = '';
 
-$wp_scripts = new \WordPress\WPScripts();
+//$wp_scripts = new \WordPress\WPScripts();
+$wp_scripts = \UniPress\UniPress::getService('wp_scripts');
 wp_default_scripts($wp_scripts);
 
 foreach( $load as $handle ) {

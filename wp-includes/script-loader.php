@@ -707,15 +707,16 @@ function wp_style_loader_src( $src, $handle ) {
  * @see wp_print_scripts()
  */
 function print_head_scripts() {
-	global $wp_scripts, $concatenate_scripts;
+	global /*$wp_scripts, */$concatenate_scripts;
+    $wp_scripts = \UniPress\UniPress::getService('wp_scripts');
 
 	if ( ! did_action('wp_print_scripts') ) {
 		/** This action is documented in wp-includes/functions.wp-scripts.php */
 		do_action( 'wp_print_scripts' );
 	}
 
-	if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
-		$wp_scripts = new \WordPress\WPScripts();
+	//if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
+	//	$wp_scripts = new \WordPress\WPScripts();
 
 	script_concat_settings();
 	$wp_scripts->do_concat = $concatenate_scripts;
@@ -734,10 +735,11 @@ function print_head_scripts() {
  * @since 2.8
  */
 function print_footer_scripts() {
-	global $wp_scripts, $concatenate_scripts;
+	global /*$wp_scripts, */$concatenate_scripts;
+    $wp_scripts = UniPress\UniPress::getService('wp_scripts');
 
-	if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
-		return array(); // No need to run if not instantiated.
+	//if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
+	//	return array(); // No need to run if not instantiated.
 
 	script_concat_settings();
 	$wp_scripts->do_concat = $concatenate_scripts;
@@ -795,10 +797,10 @@ function wp_print_head_scripts() {
 		do_action( 'wp_print_scripts' );
 	}
 
-	global $wp_scripts;
-
-	if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
-		return array(); // no need to run if nothing is queued
+//	global $wp_scripts;
+//
+//	if ( !is_a($wp_scripts, '\WordPress\WPScripts') )
+//		return array(); // no need to run if nothing is queued
 
 	return print_head_scripts();
 }
