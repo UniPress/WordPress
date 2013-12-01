@@ -1,24 +1,19 @@
 /*------------------------------------------------------------------------------
 
-This is MP6 as of r800130
-
 Howdy! This is the CSS file that controls the
 fresh color style on the WordPress Dashboard.
-
-This file contains both LTR and RTL styles.
 
 
 TABLE OF CONTENTS:
 ------------------
- 1.0 - Left to Right Styles
- 2.0 - Right to Left Styles
+ 1.0 - General
 
 
 ------------------------------------------------------------------------------*/
 
 
 /*------------------------------------------------------------------------------
-  1.0 - Left to Right Styles
+  1.0 - General
 ------------------------------------------------------------------------------*/
 
 html {
@@ -165,6 +160,10 @@ body > #upload-menu {
 div.dashboard-widget,
 #dashboard-widgets p.dashboard-widget-links {
 	border-color: #ccc;
+}
+
+#dashboard-widgets h4 {
+	color: #222;	
 }
 
 #poststuff .inside label.spam,
@@ -966,8 +965,8 @@ p.popular-tags,
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
-.wp-editor-container {
-	border-bottom: none;
+#post-status-info {
+	border-top: none;
 }
 
 .postbox table.widefat {
@@ -1166,7 +1165,8 @@ table.widefat .spam a:hover {
 
 /* menu */
 #adminmenuback,
-#adminmenuwrap {
+#adminmenuwrap,
+#adminmenu {
 	background-color: #222;
 }
 
@@ -1307,6 +1307,20 @@ table.widefat .spam a:hover {
 	color: #fff;
 }
 
+/* Collapse button in theme preview */
+
+.wp-full-overlay a.collapse-sidebar {
+	color: #777;
+}
+
+.wp-full-overlay a.collapse-sidebar:hover {
+	color: #0074a2;
+}
+
+.wp-full-overlay .collapse-sidebar-arrow:before {
+	background: #eee;
+}
+
 /* Diff */
 
 table.diff .diff-deletedline del {
@@ -1373,24 +1387,13 @@ table.diff .diff-addedline ins {
 .wp-slider .ui-slider-handle.ui-state-hover,
 .wp-slider .ui-slider-handle.focus {
 	background: #2ea2cc;
-	background: -webkit-gradient(linear, right top, left bottom, color-stop(0%,#2ea2cc), color-stop(100%,#1e8cbe));
-	background: -webkit-linear-gradient(-45deg, #2ea2cc 0%,#1e8cbe 100%);
-	background: linear-gradient(135deg, #2ea2cc 0%,#1e8cbe 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2ea2cc', endColorstr='#1e8cbe',GradientType=1 );
-	box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+	border: 1px solid #0074a2;
+	-webkit-box-shadow: inset 0 1px 0 #78c8e6, 0 1px 0 rgba(0,0,0,.15);
+	box-shadow: inset 0 1px 0 #78c8e6, 0 1px 0 rgba(0,0,0,.15);
 }
 
 .wp-slider .ui-slider-handle:before {
 	color: #fff;
-	text-shadow: 0 1px 1px rgba(0,116,162,1);
-}
-
-.wp-slider .ui-slider-handle.ui-state-active {
-	background: #0074a2;
-	background: -webkit-gradient(linear, right top, left bottom, color-stop(0%,#0074a2), color-stop(100%,#005684));
-	background: -webkit-linear-gradient(-45deg,  #0074a2 0%,#005684 100%);
-	background: linear-gradient(135deg,  #0074a2 0%,#005684 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0074a2', endColorstr='#005684',GradientType=1 );
 }
 
 /* edit image */
