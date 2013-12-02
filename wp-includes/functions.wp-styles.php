@@ -33,19 +33,19 @@ function wp_print_styles( $handles = false ) {
 	if ( ! $handles )
 		do_action( 'wp_print_styles' );
 
-	global $wp_styles;
-	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//	global $wp_styles;
+//	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//
+//		if ( !$handles )
+//			return array(); // No need to instantiate if nothing is there.
+//		else
+//			$wp_styles = new \WordPress\WPStyles();
+//	}
 
-		if ( !$handles )
-			return array(); // No need to instantiate if nothing is there.
-		else
-			$wp_styles = new \WordPress\WPStyles();
-	}
-
-	return $wp_styles->do_items( $handles );
+	return \UniPress\UniPress::getService('wp_styles')->do_items( $handles );
 }
 
 /**
@@ -66,20 +66,20 @@ function wp_print_styles( $handles = false ) {
  * @return bool True on success, false on failure.
  */
 function wp_add_inline_style( $handle, $data ) {
-	global $wp_styles;
-	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new \WordPress\WPStyles();
-	}
+//	global $wp_styles;
+//	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_styles = new \WordPress\WPStyles();
+//	}
 
 	if ( false !== stripos( $data, '</style>' ) ) {
 		_doing_it_wrong( __FUNCTION__, 'Do not pass style tags to wp_add_inline_style().', '3.7' );
 		$data = trim( preg_replace( '#<style[^>]*>(.*)</style>#is', '$1', $data ) );
 	}
 
-	return $wp_styles->add_inline_style( $handle, $data );
+	return \UniPress\UniPress::getService('wp_styles')->add_inline_style( $handle, $data );
 }
 
 /**
@@ -102,14 +102,14 @@ function wp_add_inline_style( $handle, $data ) {
  */
 function wp_register_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ) {
 	global $wp_styles;
-	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new \WordPress\WPStyles();
-	}
+//	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_styles = new \WordPress\WPStyles();
+//	}
 
-	$wp_styles->add( $handle, $src, $deps, $ver, $media );
+    \UniPress\UniPress::getService('wp_styles')->add( $handle, $src, $deps, $ver, $media );
 }
 
 /**
@@ -123,15 +123,15 @@ function wp_register_style( $handle, $src, $deps = array(), $ver = false, $media
  * @param string $handle Name of the stylesheet to be removed.
  */
 function wp_deregister_style( $handle ) {
-	global $wp_styles;
-	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new \WordPress\WPStyles();
-	}
+//	global $wp_styles;
+//	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_styles = new \WordPress\WPStyles();
+//	}
 
-	$wp_styles->remove( $handle );
+    \UniPress\UniPress::getService('wp_styles')->remove( $handle );
 }
 
 /**
@@ -156,13 +156,15 @@ function wp_deregister_style( $handle ) {
  *                            'screen', 'tty', or 'tv'.
  */
 function wp_enqueue_style( $handle, $src = false, $deps = array(), $ver = false, $media = 'all' ) {
-	global $wp_styles;
-	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new \WordPress\WPStyles();
-	}
+//	global $wp_styles;
+//	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_styles = new \WordPress\WPStyles();
+//	}
+
+    $wp_styles = \UniPress\UniPress::getService('wp_styles');
 
 	if ( $src ) {
 		$_handle = explode('?', $handle);
@@ -183,14 +185,14 @@ function wp_enqueue_style( $handle, $src = false, $deps = array(), $ver = false,
  */
 function wp_dequeue_style( $handle ) {
 	global $wp_styles;
-	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new \WordPress\WPStyles();
-	}
+//	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_styles = new \WordPress\WPStyles();
+//	}
 
-	$wp_styles->dequeue( $handle );
+    \UniPress\UniPress::getService('wp_styles')->dequeue( $handle );
 }
 
 /**
@@ -206,15 +208,15 @@ function wp_dequeue_style( $handle ) {
  * @return bool Whether style is queued.
  */
 function wp_style_is( $handle, $list = 'enqueued' ) {
-	global $wp_styles;
-	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
-		if ( ! did_action( 'init' ) )
-			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
-				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
-		$wp_styles = new \WordPress\WPStyles();
-	}
+//	global $wp_styles;
+//	if ( ! is_a( $wp_styles, '\WordPress\WPStyles' ) ) {
+//		if ( ! did_action( 'init' ) )
+//			_doing_it_wrong( __FUNCTION__, sprintf( __( 'Scripts and styles should not be registered or enqueued until the %1$s, %2$s, or %3$s hooks.' ),
+//				'<code>wp_enqueue_scripts</code>', '<code>admin_enqueue_scripts</code>', '<code>login_enqueue_scripts</code>' ), '3.3' );
+//		$wp_styles = new \WordPress\WPStyles();
+//	}
 
-	return (bool) $wp_styles->query( $handle, $list );
+	return (bool) \UniPress\UniPress::getService('wp_styles')->query( $handle, $list );
 }
 
 /**
@@ -240,6 +242,6 @@ function wp_style_is( $handle, $list = 'enqueued' ) {
  * @return bool True on success, false on failure.
  */
 function wp_style_add_data( $handle, $key, $value ) {
-	global $wp_styles;
-	return $wp_styles->add_data( $handle, $key, $value );
+	//global $wp_styles;
+	return \UniPress\UniPress::getService('wp_styles')->add_data( $handle, $key, $value );
 }

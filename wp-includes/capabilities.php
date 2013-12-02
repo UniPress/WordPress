@@ -446,12 +446,12 @@ function get_role( $role ) {
  * @return WPRole|null WPRole object if role is added, null if already exists.
  */
 function add_role( $role, $display_name, $capabilities = array() ) {
-	global $wp_roles;
+//	global $wp_roles;
+//
+//	if ( ! isset( $wp_roles ) )
+//		$wp_roles = new WP_Roles();
 
-	if ( ! isset( $wp_roles ) )
-		$wp_roles = new WP_Roles();
-
-	return $wp_roles->add_role( $role, $display_name, $capabilities );
+	return \UniPress\UniPress::getService('wp_roles')->add_role( $role, $display_name, $capabilities );
 }
 
 /**
@@ -463,12 +463,12 @@ function add_role( $role, $display_name, $capabilities = array() ) {
  * @param string $role Role name.
  */
 function remove_role( $role ) {
-	global $wp_roles;
+//	global $wp_roles;
+//
+//	if ( ! isset( $wp_roles ) )
+//		$wp_roles = new WP_Roles();
 
-	if ( ! isset( $wp_roles ) )
-		$wp_roles = new WP_Roles();
-
-	$wp_roles->remove_role( $role );
+    \UniPress\UniPress::getService('wp_roles')->remove_role( $role );
 }
 
 /**

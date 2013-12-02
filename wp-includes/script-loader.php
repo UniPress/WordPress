@@ -842,10 +842,12 @@ function wp_enqueue_scripts() {
  * @since 2.8
  */
 function print_admin_styles() {
-	global $wp_styles, $concatenate_scripts, $compress_css;
+	global /*$wp_styles,*/ $concatenate_scripts, $compress_css;
 
-	if ( !is_a($wp_styles, '\WordPress\WPStyles') )
-		$wp_styles = new \WordPress\WPStyles();
+//	if ( !is_a($wp_styles, '\WordPress\WPStyles') )
+//		$wp_styles = new \WordPress\WPStyles();
+
+    $wp_styles = \UniPress\UniPress::getService('wp_styles');
 
 	script_concat_settings();
 	$wp_styles->do_concat = $concatenate_scripts;

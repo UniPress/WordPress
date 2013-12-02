@@ -35,7 +35,7 @@ class Parser {
 
     function AtomParser() {
 
-        $this->feed = new \WordPress\Atom\Feed();
+        $this->feed = new Feed();
         $this->current = null;
         $this->map_attrs_func = create_function('$k,$v', 'return "$k=\"$v\"";');
         $this->map_xmlns_func = create_function('$p,$n', '$xd = "xmlns"; if(strlen($n[0])>0) $xd .= ":{$n[0]}"; return "{$xd}=\"{$n[1]}\"";');
@@ -101,7 +101,7 @@ class Parser {
                 $this->current = $this->feed;
                 break;
             case $this->NS . ':entry':
-                $this->current = new \WordPress\Atom\Entry();
+                $this->current = new Entry();
                 break;
         };
 

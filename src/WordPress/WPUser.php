@@ -357,7 +357,7 @@ class WPUser {
         global $wp_roles;
 
         if ( ! isset( $wp_roles ) )
-            $wp_roles = new \WP_Roles();
+            $wp_roles = new WPRoles();
 
         //Filter out caps that are not role names and assign to $this->roles
         if ( is_array( $this->caps ) )
