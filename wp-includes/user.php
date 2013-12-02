@@ -902,12 +902,12 @@ function count_users($strategy = 'time') {
 	$result = array();
 
 	if ( 'time' == $strategy ) {
-		global $wp_roles;
+//      global $wp_roles;
+//
+//		if ( ! isset( $wp_roles ) )
+//			$wp_roles = new WP_Roles();
 
-		if ( ! isset( $wp_roles ) )
-			$wp_roles = new WP_Roles();
-
-		$avail_roles = $wp_roles->get_names();
+		$avail_roles = \UniPress\UniPress::getService('wp_roles')->get_names();
 
 		// Build a CPU-intensive query that will return concise information.
 		$select_count = array();

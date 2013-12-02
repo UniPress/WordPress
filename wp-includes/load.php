@@ -664,7 +664,7 @@ function get_current_blog_id() {
  * @access private
  */
 function wp_load_translations_early() {
-	global $text_direction, $wp_locale;
+	global $text_direction;//, $wp_locale;
 
 	static $loaded = false;
 	if ( $loaded )
@@ -729,5 +729,5 @@ function wp_load_translations_early() {
 		break;
 	}
 
-	$wp_locale = new \WordPress\WPLocale();
+	//$wp_locale = new \WordPress\WPLocale();
 }

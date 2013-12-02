@@ -1300,8 +1300,8 @@ function wp_imagecreatetruecolor($width, $height) {
  * @see WP_Embed::register_handler()
  */
 function wp_embed_register_handler( $id, $regex, $callback, $priority = 10 ) {
-	global $wp_embed;
-	$wp_embed->register_handler( $id, $regex, $callback, $priority );
+	//global $wp_embed;
+    UniPress\UniPress::getService('wp_embed')->register_handler( $id, $regex, $callback, $priority );
 }
 
 /**
@@ -1311,8 +1311,8 @@ function wp_embed_register_handler( $id, $regex, $callback, $priority = 10 ) {
  * @see WP_Embed::unregister_handler()
  */
 function wp_embed_unregister_handler( $id, $priority = 10 ) {
-	global $wp_embed;
-	$wp_embed->unregister_handler( $id, $priority );
+	//global $wp_embed;
+	UniPress\UniPress::getService('wp_embed')->unregister_handler( $id, $priority );
 }
 
 /**

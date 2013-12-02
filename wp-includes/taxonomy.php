@@ -19,7 +19,8 @@
  * registering rewrite rules before the 'init' action.
  */
 function create_initial_taxonomies() {
-	global $wp_rewrite;
+	//global $wp_rewrite;
+    $wp_rewrite = UniPress\UniPress::getService('wp_rewrite');
 
 	if ( ! did_action( 'init' ) ) {
 		$rewrite = array( 'category' => false, 'post_tag' => false, 'post_format' => false );
@@ -3147,7 +3148,7 @@ function _update_generic_term_count( $terms, $taxonomy ) {
  * @return string|WPError HTML link to taxonomy term archive on success, WPError if term does not exist.
  */
 function get_term_link( $term, $taxonomy = '') {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 
 	if ( !is_object($term) ) {
 		if ( is_int($term) ) {
@@ -3165,7 +3166,7 @@ function get_term_link( $term, $taxonomy = '') {
 
 	$taxonomy = $term->taxonomy;
 
-	$termlink = $wp_rewrite->get_extra_permastruct($taxonomy);
+	$termlink = UniPress\UniPress::getService('wp_rewrite')->get_extra_permastruct($taxonomy);
 
 	$slug = $term->slug;
 	$t = get_taxonomy($taxonomy);

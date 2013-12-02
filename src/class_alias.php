@@ -65,7 +65,7 @@ class_alias('\WordPress\WPMatchesMapRegex', '\WP_matchesmapregex');
 class_alias('\WordPress\WPObjectCache', '\WP_Object_Cache');
 class_alias('\WordPress\WPoEmbed', '\WP_Oembed');
 //class_alias('\WordPress\WP_Query', '\WP_Query');
-//class_alias('\WordPress\WP_Rewrite', '\WP_Rewrite');
+class_alias('\WordPress\Rewrite', '\WP_Rewrite');
 class_alias('\WordPress\WPRole', '\WP_Role');
 class_alias('\WordPress\WPRoles', '\WP_Roles');
 class_alias('\WordPress\WPTheme', '\WP_Theme');

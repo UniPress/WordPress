@@ -2,6 +2,8 @@
 
 namespace WordPress;
 
+use UniPress\UniPress;
+
 /**
  * WordPress environment setup class.
  *
@@ -146,7 +148,7 @@ class WP {
 		// Process PATH_INFO, REQUEST_URI, and 404 for permalinks.
 
 		// Fetch the rewrite rules.
-		$rewrite = $wp_rewrite->wp_rewrite_rules();
+		$rewrite = UniPress::getService('wp_rewrite')->wp_rewrite_rules();
 
 		if ( ! empty($rewrite) ) {
 			// If we match a rewrite rule, this will be cleared.

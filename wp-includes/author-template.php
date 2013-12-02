@@ -260,9 +260,9 @@ function the_author_posts_link($deprecated = '') {
  * @return string The URL to the author's page.
  */
 function get_author_posts_url($author_id, $author_nicename = '') {
-	global $wp_rewrite;
+	//global $wp_rewrite;
 	$auth_ID = (int) $author_id;
-	$link = $wp_rewrite->get_author_permastruct();
+	$link = \UniPress\UniPress::getService('wp_rewrite')->get_author_permastruct();
 
 	if ( empty($link) ) {
 		$file = home_url( '/' );

@@ -136,7 +136,7 @@ require( ABSPATH . WPINC . '/taxonomy.php' );
 require( ABSPATH . WPINC . '/update.php' );
 require( ABSPATH . WPINC . '/canonical.php' );
 require( ABSPATH . WPINC . '/shortcodes.php' );
-$GLOBALS['wp_embed'] = new \WordPress\WPEmbed();
+//$GLOBALS['wp_embed'] = new \WordPress\WPEmbed();
 
 //require(ABSPATH . WPINC . '/class-wp-embed.php');
 require( ABSPATH . WPINC . '/media.php' );
@@ -254,7 +254,7 @@ $wp_query = $wp_the_query;
  * @global object $wp_rewrite
  * @since 1.5.0
  */
-$GLOBALS['wp_rewrite'] = new WP_Rewrite();
+//$GLOBALS['wp_rewrite'] = new WP_Rewrite();
 
 /**
  * WordPress Object
@@ -268,14 +268,14 @@ $wp = new \WordPress\WP();
  * @global object $wp_widget_factory
  * @since 2.8.0
  */
-$GLOBALS['wp_widget_factory'] = new WordPress\Widget\Factory();
+//$GLOBALS['wp_widget_factory'] = new WordPress\Widget\Factory();
 
 /**
  * WordPress User Roles
  * @global object $wp_roles
  * @since 2.0.0
  */
-$GLOBALS['wp_roles'] = new \WordPress\WPRoles();
+//$GLOBALS['wp_roles'] = new \WordPress\WPRoles();
 
 
 
@@ -306,8 +306,8 @@ unset( $locale_file );
  * @return bool Whether locale is RTL.
  */
 function is_rtl() {
-    global $wp_locale;
-    return $wp_locale->is_rtl();
+    //global $wp_locale;
+    return UniPress\UniPress::getService('wp_locale')->is_rtl();
 }
 
 
@@ -316,7 +316,7 @@ function is_rtl() {
  * @global object $wp_locale
  * @since 2.1.0
  */
-$GLOBALS['wp_locale'] = new \WordPress\WPLocale();
+//$GLOBALS['wp_locale'] = new \WordPress\WPLocale();
 
 // Load the functions for the active theme, for both parent and child theme if applicable.
 if ( ! defined( 'WP_INSTALLING' ) || 'wp-activate.php' === $pagenow ) {
