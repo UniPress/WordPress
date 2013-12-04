@@ -834,8 +834,6 @@ function copy_dir($from, $to, $skip_list = array() ) {
 function WP_Filesystem( $args = false, $context = false ) {
 	global $wp_filesystem;
 
-	require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
-
 	$method = get_filesystem_method($args, $context);
 
 	if ( ! $method )

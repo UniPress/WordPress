@@ -1,4 +1,6 @@
 <?php
+use WordPress\Admin\WPListTable;
+
 /**
  * Helper functions for displaying a list of items in an ajaxified HTML table.
  *
@@ -8,7 +10,7 @@
  */
 
 /**
- * Fetch an instance of a WP_List_Table class.
+ * Fetch an instance of a WPListTable class.
  *
  * @access private
  * @since 3.1.0
@@ -20,26 +22,24 @@
 function _get_list_table( $class, $args = array() ) {
 	$core_classes = array(
 		//Site Admin
-		'WP_Posts_List_Table' => 'posts',
-		'WP_Media_List_Table' => 'media',
-		'WP_Terms_List_Table' => 'terms',
-		'WP_Users_List_Table' => 'users',
-		'WP_Comments_List_Table' => 'comments',
-		'WP_Post_Comments_List_Table' => 'comments',
-		'WP_Links_List_Table' => 'links',
-		'WP_Plugin_Install_List_Table' => 'plugin-install',
-		'WP_Themes_List_Table' => 'themes',
-		'WP_Theme_Install_List_Table' => array( 'themes', 'theme-install' ),
-		'WP_Plugins_List_Table' => 'plugins',
+		'\WordPress\Admin\WPPostsListTable' => 'posts',
+		'\WordPress\Admin\WPMediaListTable' => 'media',
+		'\WordPress\Admin\WPTermsListTable' => 'terms',
+		'\WordPress\Admin\WPUsersListTable' => 'users',
+		'\WordPress\Admin\WPCommentsListTable' => 'comments',
+		'\WordPress\Admin\WPPostCommentsListTable' => 'comments',
+		'\WordPress\Admin\WPLinksListTable' => 'links',
+		'\WordPress\Admin\WPPluginInstallListTable' => 'plugin-install',
+		'\WordPress\Admin\WPThemesListTable' => 'themes',
+		'\WordPress\Admin\WPThemeInstallListTable' => array( 'themes', 'theme-install' ),
+		'\WordPress\Admin\WPPluginsListTable' => 'plugins',
 		// Network Admin
-		'WP_MS_Sites_List_Table' => 'ms-sites',
-		'WP_MS_Users_List_Table' => 'ms-users',
-		'WP_MS_Themes_List_Table' => 'ms-themes',
+		'\WordPress\Admin\WPMSSitesListTable' => 'ms-sites',
+		'\WordPress\Admin\WPMSUsersListTable' => 'ms-users',
+		'\WordPress\Admin\WPMSThemesListTable' => 'ms-themes',
 	);
 
 	if ( isset( $core_classes[ $class ] ) ) {
-		foreach ( (array) $core_classes[ $class ] as $required )
-			require_once( ABSPATH . 'wp-admin/includes/class-wp-' . $required . '-list-table.php' );
 
 		if ( isset( $args['screen'] ) )
 			$args['screen'] = convert_to_screen( $args['screen'] );
@@ -83,7 +83,7 @@ function print_column_headers($screen, $id = true) {
  *
  * @since 3.1.0
  */
-class _WP_List_Table_Compat extends WP_List_Table {
+class _WP_List_Table_Compat extends WPListTable {
 	var $_screen;
 	var $_columns;
 

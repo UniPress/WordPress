@@ -11,7 +11,7 @@ require_once( dirname( __FILE__ ) . '/admin.php' );
 if ( ! current_user_can( 'manage_links' ) )
 	wp_die( __( 'You do not have sufficient permissions to edit the links for this site.' ) );
 
-$wp_list_table = _get_list_table('WP_Links_List_Table');
+$wp_list_table = _get_list_table('\WordPress\Admin\WPLinksListTable');
 
 // Handle bulk deletes
 $doaction = $wp_list_table->current_action();

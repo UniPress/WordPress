@@ -1,4 +1,8 @@
 <?php
+use WordPress\Admin\CoreUpgrader;
+use WordPress\Admin\PluginUpgrader;
+use WordPress\Admin\ThemeUpgrader;
+
 /**
  * Deprecated admin functions from past WordPress versions. You shouldn't use these
  * functions and look for the alternatives instead. The functions will be removed
@@ -1057,7 +1061,7 @@ function wp_nav_menu_locations_meta_box() {
 /**
  * This was once used to kick-off the Core Updater.
  *
- * Deprecated in favor of instantating a Core_Upgrader instance directly,
+ * Deprecated in favor of instantating a CoreUpgrader instance directly,
  * and calling the 'upgrade' method.
  *
  * @since 2.7.0
@@ -1065,13 +1069,13 @@ function wp_nav_menu_locations_meta_box() {
  * @see Core_Upgrader
  */
 function wp_update_core($current, $feedback = '') {
-	_deprecated_function( __FUNCTION__, '3.7', 'new Core_Upgrader();' );
+	_deprecated_function( __FUNCTION__, '3.7', 'new CoreUpgrader();' );
 
 	if ( !empty($feedback) )
 		add_filter('update_feedback', $feedback);
 
 	include ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-	$upgrader = new Core_Upgrader();
+	$upgrader = new CoreUpgrader();
 	return $upgrader->upgrade($current);
 
 }
@@ -1079,7 +1083,7 @@ function wp_update_core($current, $feedback = '') {
 /**
  * This was once used to kick-off the Plugin Updater.
  *
- * Deprecated in favor of instantating a Plugin_Upgrader instance directly,
+ * Deprecated in favor of instantating a PluginUpgrader instance directly,
  * and calling the 'upgrade' method.
  * Unused since 2.8.0.
  *
@@ -1088,20 +1092,20 @@ function wp_update_core($current, $feedback = '') {
  * @see Plugin_Upgrader
  */
 function wp_update_plugin($plugin, $feedback = '') {
-	_deprecated_function( __FUNCTION__, '3.7', 'new Plugin_Upgrader();' );
+	_deprecated_function( __FUNCTION__, '3.7', 'new PluginUpgrader();' );
 
 	if ( !empty($feedback) )
 		add_filter('update_feedback', $feedback);
 
 	include ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-	$upgrader = new Plugin_Upgrader();
+	$upgrader = new PluginUpgrader();
 	return $upgrader->upgrade($plugin);
 }
 
 /**
  * This was once used to kick-off the Theme Updater.
  *
- * Deprecated in favor of instantating a Theme_Upgrader instance directly,
+ * Deprecated in favor of instantating a ThemeUpgrader instance directly,
  * and calling the 'upgrade' method.
  * Unused since 2.8.0.
  *
@@ -1110,13 +1114,13 @@ function wp_update_plugin($plugin, $feedback = '') {
  * @see Theme_Upgrader
  */
 function wp_update_theme($theme, $feedback = '') {
-	_deprecated_function( __FUNCTION__, '3.7', 'new Theme_Upgrader();' );
+	_deprecated_function( __FUNCTION__, '3.7', 'new ThemeUpgrader();' );
 
 	if ( !empty($feedback) )
 		add_filter('update_feedback', $feedback);
 
 	include ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-	$upgrader = new Theme_Upgrader();
+	$upgrader = new ThemeUpgrader();
 	return $upgrader->upgrade($theme);
 }
 

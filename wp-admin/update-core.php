@@ -1,4 +1,9 @@
 <?php
+use WordPress\Admin\CoreUpgrader;
+use WordPress\Admin\LanguagePackUpgrader;
+use WordPress\Admin\LanguagePackUpgraderSkin;
+use WordPress\Admin\WPAutomaticUpdater;
+
 /**
  * Update Core administration panel.
  *
@@ -148,7 +153,7 @@ function core_upgrade_preamble() {
 
 		if ( wp_http_supports( array( 'ssl' ) ) ) {
 			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-			$upgrader = new WP_Automatic_Updater;
+			$upgrader = new WPAutomaticUpdater;
 			$future_minor_update = (object) array(
 				'current'       => $wp_version . '.1.next.minor',
 				'version'       => $wp_version . '.1.next.minor',
@@ -172,7 +177,7 @@ function core_upgrade_preamble() {
 
 	if ( isset( $updates[0] ) && $updates[0]->response == 'development' ) {
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-		$upgrader = new WP_Automatic_Updater;
+		$upgrader = new WPAutomaticUpdater;
 		if ( wp_http_supports( 'ssl' ) && $upgrader->should_update( 'core', $updates[0], ABSPATH ) )
 			echo '<div class="updated inline"><p><strong>BETA TESTERS:</strong> This site is set up to install updates of future beta versions automatically.</p></div>';
 	}
@@ -404,7 +409,7 @@ function do_core_upgrade( $reinstall = false ) {
 
 	add_filter( 'update_feedback', 'show_message' );
 
-	$upgrader = new Core_Upgrader();
+	$upgrader = new CoreUpgrader();
 	$result = $upgrader->upgrade( $update );
 
 	if ( is_wp_error($result) ) {
@@ -619,7 +624,7 @@ if ( 'upgrade-core' == $action ) {
 	$title = __( 'Update Translations' );
 	$context = WP_LANG_DIR;
 
-	$upgrader = new Language_Pack_Upgrader( new Language_Pack_Upgrader_Skin( compact( 'url', 'nonce', 'title', 'context' ) ) );
+	$upgrader = new LanguagePackUpgrader( new LanguagePackUpgraderSkin( compact( 'url', 'nonce', 'title', 'context' ) ) );
 	$result = $upgrader->bulk_upgrade();
 
 	require_once( ABSPATH . 'wp-admin/admin-footer.php' );

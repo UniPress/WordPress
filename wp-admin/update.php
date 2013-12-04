@@ -1,4 +1,14 @@
 <?php
+use WordPress\Admin\BulkThemeUpgraderSkin;
+use WordPress\Admin\BulkPluginUpgraderSkin;
+use WordPress\Admin\FileUploadUpgrader;
+use WordPress\Admin\PluginInstallerSkin;
+use WordPress\Admin\PluginUpgrader;
+use WordPress\Admin\Plugin_Upgrader_Skin;
+use WordPress\Admin\ThemeInstallerSkin;
+use WordPress\Admin\ThemeUpgrader;
+use WordPress\Admin\ThemeUpgraderSkin;
+
 /**
  * Update/Install Plugin/Theme administration panel.
  *
@@ -40,7 +50,7 @@ if ( isset($_GET['action']) ) {
 		wp_enqueue_script('jquery');
 		iframe_header();
 
-		$upgrader = new Plugin_Upgrader( new Bulk_Plugin_Upgrader_Skin( compact( 'nonce', 'url' ) ) );
+		$upgrader = new PluginUpgrader( new BulkPluginUpgraderSkin( compact( 'nonce', 'url' ) ) );
 		$upgrader->bulk_upgrade( $plugins );
 
 		iframe_footer();
@@ -59,7 +69,7 @@ if ( isset($_GET['action']) ) {
 		$nonce = 'upgrade-plugin_' . $plugin;
 		$url = 'update.php?action=upgrade-plugin&plugin=' . urlencode( $plugin );
 
-		$upgrader = new Plugin_Upgrader( new Plugin_Upgrader_Skin( compact('title', 'nonce', 'url', 'plugin') ) );
+		$upgrader = new PluginUpgrader( new Plugin_Upgrader_Skin( compact('title', 'nonce', 'url', 'plugin') ) );
 		$upgrader->upgrade($plugin);
 
 		include(ABSPATH . 'wp-admin/admin-footer.php');
@@ -113,7 +123,7 @@ if ( isset($_GET['action']) ) {
 
 		$type = 'web'; //Install plugin type, From Web or an Upload.
 
-		$upgrader = new Plugin_Upgrader( new Plugin_Installer_Skin( compact('title', 'url', 'nonce', 'plugin', 'api') ) );
+		$upgrader = new PluginUpgrader( new PluginInstallerSkin( compact('title', 'url', 'nonce', 'plugin', 'api') ) );
 		$upgrader->install($api->download_link);
 
 		include(ABSPATH . 'wp-admin/admin-footer.php');
@@ -125,7 +135,7 @@ if ( isset($_GET['action']) ) {
 
 		check_admin_referer('plugin-upload');
 
-		$file_upload = new File_Upload_Upgrader('pluginzip', 'package');
+		$file_upload = new FileUploadUpgrader('pluginzip', 'package');
 
 		$title = __('Upload Plugin');
 		$parent_file = 'plugins.php';
@@ -137,7 +147,7 @@ if ( isset($_GET['action']) ) {
 		$url = add_query_arg(array('package' => $file_upload->id), 'update.php?action=upload-plugin');
 		$type = 'upload'; //Install plugin type, From Web or an Upload.
 
-		$upgrader = new Plugin_Upgrader( new Plugin_Installer_Skin( compact('type', 'title', 'nonce', 'url') ) );
+		$upgrader = new PluginUpgrader( new PluginInstallerSkin( compact('type', 'title', 'nonce', 'url') ) );
 		$result = $upgrader->install( $file_upload->package );
 
 		if ( $result || is_wp_error($result) )
@@ -162,7 +172,7 @@ if ( isset($_GET['action']) ) {
 		$nonce = 'upgrade-theme_' . $theme;
 		$url = 'update.php?action=upgrade-theme&theme=' . urlencode( $theme );
 
-		$upgrader = new Theme_Upgrader( new Theme_Upgrader_Skin( compact('title', 'nonce', 'url', 'theme') ) );
+		$upgrader = new ThemeUpgrader( new ThemeUpgraderSkin( compact('title', 'nonce', 'url', 'theme') ) );
 		$upgrader->upgrade($theme);
 
 		include(ABSPATH . 'wp-admin/admin-footer.php');
@@ -187,7 +197,7 @@ if ( isset($_GET['action']) ) {
 		wp_enqueue_script('jquery');
 		iframe_header();
 
-		$upgrader = new Theme_Upgrader( new Bulk_Theme_Upgrader_Skin( compact( 'nonce', 'url' ) ) );
+		$upgrader = new ThemeUpgrader( new BulkThemeUpgraderSkin( compact( 'nonce', 'url' ) ) );
 		$upgrader->bulk_upgrade( $themes );
 
 		iframe_footer();
@@ -216,7 +226,7 @@ if ( isset($_GET['action']) ) {
 		$url = 'update.php?action=install-theme&theme=' . urlencode( $theme );
 		$type = 'web'; //Install theme type, From Web or an Upload.
 
-		$upgrader = new Theme_Upgrader( new Theme_Installer_Skin( compact('title', 'url', 'nonce', 'plugin', 'api') ) );
+		$upgrader = new ThemeUpgrader( new ThemeInstallerSkin( compact('title', 'url', 'nonce', 'plugin', 'api') ) );
 		$upgrader->install($api->download_link);
 
 		include(ABSPATH . 'wp-admin/admin-footer.php');
@@ -228,7 +238,7 @@ if ( isset($_GET['action']) ) {
 
 		check_admin_referer('theme-upload');
 
-		$file_upload = new File_Upload_Upgrader('themezip', 'package');
+		$file_upload = new FileUploadUpgrader('themezip', 'package');
 
 		wp_enqueue_script( 'customize-loader' );
 
@@ -243,7 +253,7 @@ if ( isset($_GET['action']) ) {
 		$url = add_query_arg(array('package' => $file_upload->id), 'update.php?action=upload-theme');
 		$type = 'upload'; //Install plugin type, From Web or an Upload.
 
-		$upgrader = new Theme_Upgrader( new Theme_Installer_Skin( compact('type', 'title', 'nonce', 'url') ) );
+		$upgrader = new ThemeUpgrader( new ThemeInstallerSkin( compact('type', 'title', 'nonce', 'url') ) );
 		$result = $upgrader->install( $file_upload->package );
 
 		if ( $result || is_wp_error($result) )

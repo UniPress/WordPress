@@ -22,7 +22,7 @@ if ( is_multisite() && ! is_network_admin() ) {
 	exit();
 }
 
-$wp_list_table = _get_list_table('WP_Plugin_Install_List_Table');
+$wp_list_table = _get_list_table('\WordPress\Admin\WPPluginInstallListTable');
 $pagenum = $wp_list_table->get_pagenum();
 $wp_list_table->prepare_items();
 

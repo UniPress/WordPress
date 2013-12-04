@@ -33,7 +33,7 @@ get_current_screen()->set_help_sidebar(
 	'<p>' . __('<a href="http://wordpress.org/support/forum/multisite/" target="_blank">Support Forums</a>') . '</p>'
 );
 
-$wp_list_table = _get_list_table('WP_MS_Themes_List_Table');
+$wp_list_table = _get_list_table('\WordPress\Admin\WPMSThemesListTable');
 
 $action = $wp_list_table->current_action();
 

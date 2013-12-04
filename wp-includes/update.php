@@ -1,4 +1,6 @@
 <?php
+use WordPress\Admin\WPAutomaticUpdater;
+
 /**
  * A simple set of functions to check our version 1.0 update service.
  *
@@ -434,7 +436,7 @@ function wp_maybe_auto_update() {
 	include_once ABSPATH . '/wp-admin/includes/admin.php';
 	include_once ABSPATH . '/wp-admin/includes/class-wp-upgrader.php';
 
-	$upgrader = new WP_Automatic_Updater;
+	$upgrader = new WPAutomaticUpdater;
 	$upgrader->run();
 }
 

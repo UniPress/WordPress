@@ -358,9 +358,9 @@ function wp_comment_reply($position = '1', $checkbox = false, $mode = 'single', 
 	}
 
 	if ( $mode == 'single' ) {
-		$wp_list_table = _get_list_table('WP_Post_Comments_List_Table');
+		$wp_list_table = _get_list_table('\WordPress\Admin\WPPostCommentsListTable');
 	} else {
-		$wp_list_table = _get_list_table('WP_Comments_List_Table');
+		$wp_list_table = _get_list_table('\WordPress\Admin\WPCommentsListTable');
 	}
 
 ?>

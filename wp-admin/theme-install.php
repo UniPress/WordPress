@@ -20,7 +20,7 @@ if ( is_multisite() && ! is_network_admin() ) {
 	exit();
 }
 
-$wp_list_table = _get_list_table('WP_Theme_Install_List_Table');
+$wp_list_table = _get_list_table('WPThemeInstallListTable');
 $pagenum = $wp_list_table->get_pagenum();
 $wp_list_table->prepare_items();
 

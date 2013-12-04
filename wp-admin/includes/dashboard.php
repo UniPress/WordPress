@@ -612,7 +612,7 @@ function dashboard_comments( $total_items = 5 ) {
 		echo '</div>';
 
 		if ( current_user_can('edit_posts') )
-			_get_list_table('WP_Comments_List_Table')->views();
+			_get_list_table('\WordPress\Admin\WPCommentsListTable')->views();
 
 		wp_comment_reply( -1, false, 'dashboard', false );
 		wp_comment_trashnotice();

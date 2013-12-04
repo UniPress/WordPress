@@ -1,4 +1,6 @@
 <?php
+use WordPress\Admin\WPAutomaticUpdater;
+
 /**
  * About This Version administration panel.
  *
@@ -60,7 +62,7 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
 				'mysql_version' => $required_mysql_version,
 			);
 			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-			$updater = new WP_Automatic_Updater;
+			$updater = new WPAutomaticUpdater;
 			$can_auto_update = wp_http_supports( array( 'ssl' ) ) && $updater->should_update( 'core', $future_minor_update, ABSPATH );
 
 			if ( $can_auto_update ) {

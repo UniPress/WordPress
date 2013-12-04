@@ -650,7 +650,7 @@ function wp_ajax_add_tag() {
 		$x->send();
 	}
 
-	$wp_list_table = _get_list_table( 'WP_Terms_List_Table', array( 'screen' => $_POST['screen'] ) );
+	$wp_list_table = _get_list_table( '\WordPress\Admin\WPTermsListTable', array( 'screen' => $_POST['screen'] ) );
 
 	$level = 0;
 	if ( is_taxonomy_hierarchical($taxonomy) ) {
@@ -728,7 +728,7 @@ function wp_ajax_get_comments( $action ) {
 	if ( empty( $post_id ) )
 		wp_die( -1 );
 
-	$wp_list_table = _get_list_table( 'WP_Post_Comments_List_Table', array( 'screen' => 'edit-comments' ) );
+	$wp_list_table = _get_list_table( '\WordPress\Admin\WPPostCommentsListTable', array( 'screen' => 'edit-comments' ) );
 
 	if ( ! current_user_can( 'edit_post', $post_id ) )
 		wp_die( -1 );
@@ -827,9 +827,9 @@ function wp_ajax_replyto_comment( $action ) {
 		_wp_dashboard_recent_comments_row( $comment );
 	} else {
 		if ( isset( $_REQUEST['mode'] ) && 'single' == $_REQUEST['mode'] ) {
-			$wp_list_table = _get_list_table('WP_Post_Comments_List_Table', array( 'screen' => 'edit-comments' ) );
+			$wp_list_table = _get_list_table('\WordPress\Admin\WPPostCommentsListTable', array( 'screen' => 'edit-comments' ) );
 		} else {
-			$wp_list_table = _get_list_table('WP_Comments_List_Table', array( 'screen' => 'edit-comments' ) );
+			$wp_list_table = _get_list_table('\WordPress\Admin\WPCommentsListTable', array( 'screen' => 'edit-comments' ) );
 		}
 		$wp_list_table->single_row( $comment );
 	}
@@ -870,7 +870,7 @@ function wp_ajax_edit_comment() {
 	$comments_status = isset($_POST['comments_listing']) ? $_POST['comments_listing'] : '';
 
 	$checkbox = ( isset($_POST['checkbox']) && true == $_POST['checkbox'] ) ? 1 : 0;
-	$wp_list_table = _get_list_table( $checkbox ? 'WP_Comments_List_Table' : 'WP_Post_Comments_List_Table', array( 'screen' => 'edit-comments' ) );
+	$wp_list_table = _get_list_table( $checkbox ? '\WordPress\Admin\WPCommentsListTable' : '\WordPress\Admin\WPPostCommentsListTable', array( 'screen' => 'edit-comments' ) );
 
 	$comment = get_comment( $comment_id );
 	if ( empty( $comment->comment_ID ) )
@@ -1073,7 +1073,7 @@ function wp_ajax_add_user( $action ) {
 	}
 	$user_object = get_userdata( $user_id );
 
-	$wp_list_table = _get_list_table('WP_Users_List_Table');
+	$wp_list_table = _get_list_table('\WordPress\Admin\WPUsersListTable');
 
 	$role = current( $user_object->roles );
 
@@ -1393,7 +1393,7 @@ function wp_ajax_inline_save() {
 	// update the post
 	edit_post();
 
-	$wp_list_table = _get_list_table( 'WP_Posts_List_Table', array( 'screen' => $_POST['screen'] ) );
+	$wp_list_table = _get_list_table( '\WordPress\Admin\WPPostsListTable', array( 'screen' => $_POST['screen'] ) );
 
 	$mode = $_POST['post_view'];
 
@@ -1425,7 +1425,7 @@ function wp_ajax_inline_save_tax() {
 	if ( ! current_user_can( $tax->cap->edit_terms ) )
 		wp_die( -1 );
 
-	$wp_list_table = _get_list_table( 'WP_Terms_List_Table', array( 'screen' => 'edit-' . $taxonomy ) );
+	$wp_list_table = _get_list_table( '\WordPress\Admin\WPTermsListTable', array( 'screen' => 'edit-' . $taxonomy ) );
 
 	if ( ! isset($_POST['tax_ID']) || ! ( $id = (int) $_POST['tax_ID'] ) )
 		wp_die( -1 );

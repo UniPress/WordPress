@@ -1,4 +1,6 @@
 <?php
+use WordPress\Admin\WPAutomaticUpdater;
+
 /**
  * WordPress Administration Update API
  *
@@ -77,7 +79,7 @@ function find_core_auto_update() {
 	include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
 	$auto_update = false;
-	$upgrader = new WP_Automatic_Updater;
+	$upgrader = new WPAutomaticUpdater;
 	foreach ( $updates->updates as $update ) {
 		if ( 'autoupdate' != $update->response )
 			continue;
@@ -273,7 +275,7 @@ function wp_plugin_update_row( $file, $plugin_data ) {
 
 	$details_url = self_admin_url('plugin-install.php?tab=plugin-information&plugin=' . $r->slug . '&section=changelog&TB_iframe=true&width=600&height=800');
 
-	$wp_list_table = _get_list_table('WP_Plugins_List_Table');
+	$wp_list_table = _get_list_table('\WordPress\Admin\WPPluginsListTable');
 
 	if ( is_network_admin() || !is_multisite() ) {
 		echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message">';
@@ -332,7 +334,7 @@ function wp_theme_update_row( $theme_key, $theme ) {
 
 	$details_url = add_query_arg( array( 'TB_iframe' => 'true', 'width' => 1024, 'height' => 800 ), $current->response[ $theme_key ]['url'] );
 
-	$wp_list_table = _get_list_table('WP_MS_Themes_List_Table');
+	$wp_list_table = _get_list_table('WPMSThemesListTable');
 
 	echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message">';
 	if ( ! current_user_can('update_themes') )
@@ -361,7 +363,7 @@ function maintenance_nag() {
 		 * If we simply failed to update before we tried to copy any files, then assume things are
 		 * OK if they are now running the latest.
 		 *
-		 * This flag is cleared whenever a successful update occurs using Core_Upgrader.
+		 * This flag is cleared whenever a successful update occurs using CoreUpgrader.
 		 */
 		$comparison = ! empty( $failed['critical'] ) ? '>=' : '>';
 		if ( version_compare( $failed['attempted'], $wp_version, $comparison ) )
